@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Altor Technologies — court green palette, light + minimal.
+       Source palette: #90B9A5 / #9FC3B0 / #978E94 / #1B252B */
+    --background: 220 25% 6%;
+    --foreground: 150 15% 93%;
+    --card: 220 20% 9%;
+    --card-foreground: 150 15% 93%;
+    --popover: 220 22% 8%;
+    --popover-foreground: 150 15% 93%;
+    --primary: 151 22% 65%;
+    --primary-foreground: 202 23% 14%;
+    --primary-deep: 148 23% 72%;
+    --secondary: 220 15% 14%;
+    --secondary-foreground: 150 12% 88%;
+    --muted: 220 12% 14%;
+    --muted-foreground: 215 10% 65%;
+    --accent: 220 15% 14%;
+    --accent-foreground: 148 23% 72%;
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 0 0% 99%;
+    --border: 220 12% 18%;
+    --input: 220 12% 24%;
+    --ring: 151 40% 65%;
+    --radius: 0.5rem;
+  }
+
+  /* Dark hero band: #1B252B backdrop, lighter court green accents */
+  .hero-scope {
+    --background: 202 23% 14%;
+    --foreground: 140 16% 96%;
+    --card: 202 18% 18%;
+    --muted-foreground: 150 8% 70%;
+    --border: 200 14% 26%;
+    --primary-deep: 148 23% 69%;
+    --secondary: 200 16% 21%;
+    --ring: 151 40% 70%;
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: hsl(var(--primary) / 0.4);
+    color: hsl(var(--primary-foreground));
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 28px hsl(151 45% 70% / 0.45);
+  }
+}
+
+/* Scroll-reveal: transform/opacity only, interruptible transitions */
+.reveal,
+.reveal-left {
+  opacity: 0;
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s ease-out;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal {
+  transform: translateY(20px) scale(0.98);
+}
+.reveal-left {
+  transform: translateX(-28px);
+}
+.reveal.revealed,
+.reveal-left.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .reveal-left {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
