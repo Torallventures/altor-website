@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 /**
- * Altor hero scene: a starfield shell around a particle "data core"
+ * Torall hero scene: a starfield shell around a particle "data core"
  * sampled from a parametric torus-knot geometry, orbited by a faint
  * wireframe icosahedron — rendered in court green on the dark hero band.
  * Purely decorative — the DOM glow underneath ensures the hero is

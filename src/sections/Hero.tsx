@@ -57,7 +57,7 @@ export function Hero() {
       >
         <div className="max-w-3xl">
           <p className="reveal revealed font-mono text-[13px] uppercase tracking-[0.25em] text-primary-deep">
-            Altor Technologies
+            Torall Ventures
           </p>
           <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
             Intelligent systems,

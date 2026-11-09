@@ -43,11 +43,11 @@ export function Navbar() {
         <a
           href="#top"
           className="flex items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          aria-label="Altor Technologies — home"
+          aria-label="Torall Ventures — home"
         >
           <Hexagon className="h-6 w-6 text-primary-deep" strokeWidth={2.2} />
           <span className="font-display text-lg font-bold tracking-wide">
-            ALTOR
+            TORALL
             <span className="text-primary-deep">.</span>
           </span>
         </a>

@@ -14,11 +14,11 @@ export function Footer() {
         <a
           href="#top"
           className="flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          aria-label="Altor Technologies — back to top"
+          aria-label="Torall Ventures — back to top"
         >
           <Hexagon className="h-5 w-5 text-primary-deep" strokeWidth={2.2} />
           <span className="font-display text-base font-bold tracking-wide">
-            ALTOR<span className="text-primary-deep">.</span>
+            TORALL<span className="text-primary-deep">.</span>
           </span>
         </a>
 
@@ -35,7 +35,7 @@ export function Footer() {
         </nav>
 
         <p className="text-sm text-muted-foreground">
-          © 2026 Altor Technologies. All rights reserved.
+          © 2026 Torall Ventures. All rights reserved.
         </p>
       </div>
     </footer>

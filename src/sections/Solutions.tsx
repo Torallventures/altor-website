@@ -5,7 +5,7 @@ const solutions = [
   {
     id: "cloudcore",
     index: "01",
-    name: "Altor CloudCore",
+    name: "Torall CloudCore",
     tag: "Managed Cloud Platform",
     description:
       "A hardened Kubernetes foundation with GitOps delivery, observability, and FinOps guardrails baked in. Your team ships features; CloudCore keeps the platform boring.",
@@ -14,7 +14,7 @@ const solutions = [
   {
     id: "insight",
     index: "02",
-    name: "Altor Insight",
+    name: "Torall Insight",
     tag: "AI Analytics Suite",
     description:
       "Retrieval-augmented intelligence over your own documents and data. Ask questions in plain language, get answers with citations — inside your security perimeter.",
@@ -23,7 +23,7 @@ const solutions = [
   {
     id: "shield",
     index: "03",
-    name: "Altor Shield",
+    name: "Torall Shield",
     tag: "Security Operations",
     description:
       "Continuous monitoring, detection engineering, and incident response run by certified analysts — enterprise-grade security without building a SOC from scratch.",

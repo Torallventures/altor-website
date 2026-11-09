@@ -1,6 +1,6 @@
-# Altor Technologies — Website
+# Torall Ventures — Website
 
-Company website for Altor Technologies. Deep-space theme: animated nebula
+Company website for Torall Ventures. Deep-space theme: animated nebula
 shader background, particle hero, scroll-replay animations, court green
 brand palette.
 

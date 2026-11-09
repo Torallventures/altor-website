@@ -76,10 +76,10 @@ export function Contact() {
                   <Mail className="h-4 w-4" />
                 </span>
                 <a
-                  href="mailto:hello@altor.tech"
+                  href="mailto:hello@torallventures.com"
                   className="rounded-md text-foreground transition-colors hover:text-primary-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  hello@altor.tech
+                  hello@torallventures.com
                 </a>
               </li>
               <li className="flex items-center gap-4">

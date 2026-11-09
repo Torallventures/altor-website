@@ -114,7 +114,7 @@ export function About() {
               Engineers first. Consultants second. Vendors never.
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              Altor Technologies was founded on a simple observation: the best
+              Torall Ventures was founded on a simple observation: the best
               technology partners don't sell hours — they take responsibility
               for outcomes. Today our team of architects, engineers, and
               security specialists builds the systems that ambitious companies
