@@ -76,10 +76,10 @@ export function Contact() {
                   <Mail className="h-4 w-4" />
                 </span>
                 <a
-                  href="mailto:hello@torallventures.com"
+                  href="mailto:info@torallventures.com"
                   className="rounded-md text-foreground transition-colors hover:text-primary-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  hello@torallventures.com
+                  info@torallventures.com
                 </a>
               </li>
               <li className="flex items-center gap-4">
@@ -87,17 +87,17 @@ export function Contact() {
                   <Phone className="h-4 w-4" />
                 </span>
                 <a
-                  href="tel:+13055550142"
+                  href="tel:+12136065711"
                   className="rounded-md text-foreground transition-colors hover:text-primary-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  +1 (305) 555-0142
+                  +1 (213) 606-5711
                 </a>
               </li>
               <li className="flex items-center gap-4">
                 <span className="flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-primary-deep">
                   <MapPin className="h-4 w-4" />
                 </span>
-                <span className="text-foreground">Miami · Austin · Remote worldwide</span>
+                <span className="text-foreground">Florida, USA · Working with clients everywhere</span>
               </li>
             </ul>
           </div>
