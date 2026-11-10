@@ -1,15 +1,29 @@
 import { useEffect } from "react";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 import { Outlet, useLocation } from "react-router";
 import { Navbar } from "@/sections/Navbar";
 import { Footer } from "@/sections/Footer";
 import { NebulaBackground } from "@/components/NebulaBackground";
 
-/** Reset scroll to top on every page change. */
+/** Smooth wheel/anchor scrolling, resetting on navigation without stale momentum. */
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { key, hash } = useLocation();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-  }, [pathname]);
+    const lenis = new Lenis({
+      autoRaf: true,
+      lerp: 0.09,
+      smoothWheel: true,
+      syncTouch: false,
+      anchors: { offset: -80 },
+      stopInertiaOnNavigate: true,
+      allowNestedScroll: true,
+    });
+    const target = hash ? document.getElementById(hash.slice(1)) : null;
+    lenis.scrollTo(target || 0, { immediate: true, offset: target ? -80 : 0 });
+    return () => lenis.destroy();
+  }, [key, hash]);
   return null;
 }
 
