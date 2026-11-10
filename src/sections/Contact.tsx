@@ -53,7 +53,7 @@ export function Contact() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 15% 90%, hsl(151 45% 40% / 0.12), transparent 60%)",
+            "radial-gradient(ellipse 60% 50% at 15% 90%, hsl(var(--primary) / 0.12), transparent 60%)",
         }}
       />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
