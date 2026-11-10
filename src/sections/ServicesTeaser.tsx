@@ -1,5 +1,6 @@
 import { Link } from "react-router";
-import { ArrowRight, Check, Orbit } from "lucide-react";
+import type { ReactNode } from "react";
+import { ArrowRight, Check, Orbit, CalendarDays, KeyRound, Bell, Package, Sparkles, LayoutGrid, MessageSquare, ArrowUpRight } from "lucide-react";
 import { services } from "@/data/services";
 import { useReveal } from "@/hooks/useReveal";
 
@@ -36,7 +37,6 @@ export function ServicesTeaser() {
 
 function ServicePanel({ item, index }: { item: (typeof services)[number]; index: number }) {
   const ref = useReveal<HTMLElement>();
-  const Icon = item.icon;
   return (
     <article ref={ref} className="services-stage reveal" aria-labelledby={`service-heading-${item.slug}`}>
       <div className="services-panel">
@@ -53,15 +53,67 @@ function ServicePanel({ item, index }: { item: (typeof services)[number]; index:
         </div>
         <div className="services-universe" aria-hidden="true">
           <div className="services-aura" /><div className="services-grid" />
-          <div className="services-orbit services-orbit-one"><span /></div>
-          <div className="services-orbit services-orbit-two"><span /></div>
-          <div className="services-core"><Icon strokeWidth={1} /></div>
-          <div className="services-float services-float-top"><span className="services-status" /><span>{labels[index]}<small>Designed for connection</small></span></div>
-          <div className="services-float services-float-bottom"><div className="services-mini-bars"><i /><i /><i /><i /><i /></div><span>Your next possibility<small>From idea to experience</small></span></div>
-          <span className="services-coordinate font-mono">TORALL / DIGITAL SYSTEMS / 0{index + 1}</span>
+          <ServiceVisual index={index} />
         </div>
       </div>
       <div className="services-caption"><span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-primary" /> {labels[index]}</span><span>0{index + 1} / 0{services.length}</span></div>
     </article>
+  );
+}
+
+function BrowserBar({ label }: { label: string }) {
+  return <div className="mock-browser-bar"><span /><span /><span /><small>{label}</small></div>;
+}
+
+function Phone({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <div className={`mock-phone ${className}`}><div className="mock-phone-camera" /><div className="mock-phone-screen">{children}</div><div className="mock-phone-home" /></div>;
+}
+
+/** Original interface concepts, with a real Lumera screenshot in the community scene. */
+function ServiceVisual({ index }: { index: number }) {
+  return (
+    <div className={`product-scene product-scene-${index}`}>
+      {index === 0 && <>
+        <div className="mock-laptop">
+          <div className="mock-laptop-screen"><BrowserBar label="LUMERA / AURELIA RESIDENCES" /><img src="/templates/lumera-desktop.jpg" alt="" width="1425" height="990" loading="lazy" decoding="async" /><div className="mock-community-caption"><small>CONSIDERED LIVING</small><strong>Life, beautifully<br />connected.</strong><span>Explore your community <ArrowUpRight /></span></div></div>
+          <div className="mock-laptop-base" />
+        </div>
+        <Phone className="mock-community-phone">
+          <div className="mock-phone-brand">LUMERA<span>RESIDENT PORTAL</span></div>
+          <p className="mock-eyebrow">YOUR COMMUNITY, CONNECTED</p><h4>Welcome<br />home.</h4>
+          <div className="mock-amenities"><span><CalendarDays />Amenities</span><span><KeyRound />Requests</span><span><Package />Packages</span><span><Bell />Updates</span></div>
+          <div className="mock-notice"><span className="mock-dot" /> Everything in one place.</div>
+        </Phone>
+        <div className="mock-scene-label">LUMERA WEBSITE + PORTAL CONCEPT</div>
+      </>}
+
+      {index === 1 && <>
+        <div className="mock-website mock-browser">
+          <BrowserBar label="FORMA / DESIGN STUDIO" />
+          <div className="mock-studio-nav">FORMA<span>Spaces &nbsp; Studio &nbsp; Contact</span></div>
+          <div className="mock-studio-hero"><small>THOUGHTFULLY DESIGNED.</small><h4>Space for<br /><em>what&apos;s next.</em></h4><div className="mock-studio-art"><i /><i /><i /></div><span className="mock-studio-button">Discover our work <ArrowUpRight /></span></div>
+          <div className="mock-studio-footer">IDENTITY. EXPERIENCE. IMPACT.<span>01 — 03</span></div>
+        </div>
+        <div className="mock-browser mock-site-detail"><BrowserBar label="BUILT FOR EVERY SCREEN" /><div className="mock-detail-body"><span>DESIGNED TO CONNECT</span><h4>Your business.<br />A lasting impression.</h4><div className="mock-detail-lines"><i /><i /><i /></div><ArrowUpRight /></div></div>
+        <div className="mock-scene-label">RESPONSIVE WEBSITE CONCEPT</div>
+      </>}
+
+      {index === 2 && <>
+        <Phone className="mock-app-phone mock-app-phone-back"><div className="mock-app-top">WORKSPACE <LayoutGrid /></div><h4>Make room<br />for progress.</h4><div className="mock-app-summary"><small>THIS WEEK</small><strong>Looking ahead</strong><div className="mock-chart">{[35, 60, 45, 85, 65, 100, 75].map((height, i) => <i key={i} style={{ height: `${height}%` }} />)}</div></div><div className="mock-app-bottom"><LayoutGrid /><CalendarDays /><Bell /></div></Phone>
+        <Phone className="mock-app-phone mock-app-phone-front"><div className="mock-app-top">MY DAY <CalendarDays /></div><h4>A little more<br />in flow.</h4><div className="mock-week">{["M", "T", "W", "T", "F"].map((day, i) => <span key={i} className={i === 2 ? "selected" : ""}>{day}<b>{12 + i}</b></span>)}</div><p className="mock-eyebrow">TODAY&apos;S PLAN</p>{["Team catch-up", "Project review", "Time to create"].map((task, i) => <div className="mock-task" key={task}><span>{9 + i * 2}:00</span><strong>{task}</strong><i /></div>)}<div className="mock-app-bottom"><LayoutGrid /><CalendarDays /><Bell /></div></Phone>
+        <div className="mock-scene-label">CUSTOM MOBILE APP CONCEPT</div>
+      </>}
+
+      {index === 3 && <>
+        <div className="mock-dashboard mock-browser"><BrowserBar label="YOUR OPERATIONS / ONE WORKSPACE" /><div className="mock-dashboard-body"><div className="mock-sidebar"><Orbit /><LayoutGrid /><CalendarDays /><Package /><MessageSquare /></div><div className="mock-dashboard-main"><div className="mock-dashboard-heading"><span><small>YOUR WORKSPACE</small><h4>Overview</h4></span><span className="mock-avatar">TV</span></div><div className="mock-stat-grid">{["Projects", "Operations", "Team"].map((label, i) => <div key={label}><small>{label}</small><strong>{[24, 86, 12][i]}</strong><span>Demo workspace</span></div>)}</div><div className="mock-dashboard-chart"><span>Activity overview</span><div className="mock-chart">{[30, 45, 40, 65, 50, 75, 62, 85, 72, 95, 82, 100].map((height, i) => <i key={i} style={{ height: `${height}%` }} />)}</div></div><div className="mock-table">{["Design system", "Website launch", "Inventory sync"].map((name, i) => <div key={name}><span className="mock-dot" /><span>{name}</span><small>{["In progress", "In review", "Scheduled"][i]}</small></div>)}</div></div></div></div>
+        <div className="mock-scene-label">ILLUSTRATIVE MANAGEMENT DASHBOARD</div>
+      </>}
+
+      {index === 4 && <>
+        <div className="mock-digital mock-browser"><BrowserBar label="FROM POSSIBILITY TO PRODUCT" /><div className="mock-digital-body"><span className="mock-eyebrow">BUILD SOMETHING NEW</span><h4>What if<br /><em>became what&apos;s next?</em></h4><div className="mock-workflow">{["Idea", "Design", "Build"].map((label, i) => <span key={label}><small>0{i + 1}</small>{label}<Check /></span>)}</div><div className="mock-code"><span>your_vision</span><b>→</b><span>something_real</span></div></div></div>
+        <div className="mock-ai-card"><span className="mock-ai-heading"><Sparkles /> YOUR DIGITAL ASSISTANT</span><p>How can we help?</p><div>Bring my next idea to life.<ArrowUpRight /></div></div>
+        <div className="mock-scene-label">PRODUCT + AI INTERFACE CONCEPT</div>
+      </>}
+    </div>
   );
 }
