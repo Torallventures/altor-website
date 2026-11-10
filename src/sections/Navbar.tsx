@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { Menu, X, Hexagon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 import { navigationLinks as links } from "@/lib/navigation";
 
@@ -39,11 +39,13 @@ export function Navbar() {
           aria-label="Torall Ventures — home"
           onClick={() => setOpen(false)}
         >
-          <Hexagon className="h-6 w-6 text-primary-deep" strokeWidth={2.2} />
-          <span className="font-display text-lg font-bold tracking-wide">
-            TORALL
-            <span className="text-primary-deep">.</span>
-          </span>
+          <img
+            src="/torall-ventures-logo.svg"
+            alt="Torall Ventures"
+            width={224}
+            height={64}
+            className="h-12 w-auto sm:h-14"
+          />
         </Link>
 
         <div className="hidden items-center gap-5 lg:flex xl:gap-8">
