@@ -4,7 +4,7 @@ import * as THREE from "three";
 /**
  * Torall hero scene: a starfield shell around a particle "data core"
  * sampled from a parametric torus-knot geometry, orbited by a faint
- * wireframe icosahedron — rendered in court green on the dark hero band.
+ * wireframe icosahedron — rendered in green and gray violet on the dark hero band.
  * Purely decorative — the DOM glow underneath ensures the hero is
  * never a black canvas.
  */
@@ -14,6 +14,9 @@ export function HeroCanvas() {
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
+    const palette = getComputedStyle(mount);
+    const green = palette.getPropertyValue("--brand-green").trim();
+    const violet = palette.getPropertyValue("--brand-violet").trim();
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -56,7 +59,7 @@ export function HeroCanvas() {
     const starGeo = new THREE.BufferGeometry();
     starGeo.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
     const starMat = new THREE.PointsMaterial({
-      color: new THREE.Color("hsl(150, 25%, 85%)"),
+      color: new THREE.Color("#E9EEE4"),
       size: 0.28,
       sizeAttenuation: true,
       transparent: true,
@@ -68,7 +71,7 @@ export function HeroCanvas() {
     group.add(stars);
 
     // Particle core: positions sampled from a parametric torus knot.
-    // Lighter court green, additive-blended so it glows on the dark band.
+    // Brand green, additive-blended so it glows on the dark band.
     const knot = new THREE.TorusKnotGeometry(10, 3.2, 320, 48);
     const base = knot.getAttribute("position");
     const count = base.count;
@@ -81,7 +84,7 @@ export function HeroCanvas() {
     const pointsGeo = new THREE.BufferGeometry();
     pointsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     const pointsMat = new THREE.PointsMaterial({
-      color: new THREE.Color("hsl(151, 38%, 74%)"),
+      color: new THREE.Color(green),
       size: 0.11,
       sizeAttenuation: true,
       transparent: true,
@@ -96,7 +99,7 @@ export function HeroCanvas() {
     const shell = new THREE.LineSegments(
       new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(6.5, 1)),
       new THREE.LineBasicMaterial({
-        color: new THREE.Color("hsl(151, 30%, 62%)"),
+        color: new THREE.Color(violet),
         transparent: true,
         opacity: 0.2,
       })
