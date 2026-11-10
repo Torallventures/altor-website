@@ -7,7 +7,6 @@ import { navigationLinks as links } from "@/lib/navigation";
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     let raf = 0;
@@ -15,8 +14,6 @@ export function Navbar() {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         setScrolled(window.scrollY > 24);
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        setProgress(max > 0 ? Math.min(window.scrollY / max, 1) : 0);
       });
     };
     onScroll();
@@ -83,13 +80,6 @@ export function Navbar() {
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </nav>
-
-      {/* Scroll progress — thin court-green bar under the navbar */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-primary/80"
-        style={{ transform: `scaleX(${progress})` }}
-      />
 
       {open && (
         <div id="mobile-navigation" className="border-t border-border bg-background/95 backdrop-blur-md lg:hidden">
