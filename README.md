@@ -30,50 +30,47 @@ Static site — deploy `dist/` to any static host. On Vercel: import the
 repo, framework preset **Vite**, build command `npm run build`, output
 directory `dist`.
 
-## Templates and Lumera
+## Portfolio and Lumera
 
-The `/templates` route is part of this existing Torall website. Its dedicated
-`templates/index.html` build entry also produces `dist/templates/index.html`,
-so direct visits and refreshes work on a static host without a deployment rewrite.
-The gallery uses the existing shared layout, navigation, footer, palette, and fonts.
-It preserves the latest Home, Services, service detail, About, and Contact pages.
-The root asset base keeps JavaScript and CSS URLs valid when nested routes are
-opened directly or refreshed; the existing SPA rewrite from main is preserved.
+Portfolio replaces the former top-level Services/Templates navigation. It features
+Lumera and incorporates the existing service overviews and feature lists. All five
+`/services/:slug` detail pages remain intact. Old `/services` and `/templates` links
+resolve to `/portfolio`.
 
-Explore Template opens the complete, independent Lumera application at the URL in
-`src/lib/templates.ts`. Lumera is maintained in the private repository
-`Torallventures/lumera-template`; its Back to Templates link returns to
-`https://torallventures.com/templates`. This repository contains only a preview
-screenshot, not a copy of Lumera or its portal.
+Lumera runs independently in `Torallventures/lumera-template`. The existing Torall
+Vercel project proxies `/lumeratm` and `/lumeratm/:path*` to the matching paths on
+`https://lumera-template.vercel.app`, before its unchanged SPA fallback. These are
+rewrites, not redirects or iframes. No additional project, paid product, middleware,
+or credentials are required.
 
-Lumera's authorized development/testing deployment is live at
-`https://lumera-template.vercel.app` under `torall-ventures/lumera-template`.
-Its GitHub connection and desktop/mobile workflows have been verified. The
-Hobby plan and billing are unchanged. Altor's Templates page is still a draft
-pull request: the public Back to Templates destination becomes available only
-after the owner approves merging and publishing this feature.
+Lumera's Next.js basePath is `/lumeratm`; its scripts, styles, video, posters and
+community images use that namespace. Existing internal navigation is hash-based:
+`/lumeratm#/portal/overview` and `/lumeratm#/community/forms`. Direct visits and
+refreshes preserve the path and hash. The standalone deployment's root redirects
+within its own domain to `/lumeratm`. Its Back to Portfolio link returns to
+`https://torallventures.com/portfolio`.
 
-### Collaboration
+Demo activity is browser-local and origin-specific: records saved on the standalone
+Lumera domain do not automatically appear on the Torall domain. Roles demonstrate
+permissions; they are not production authentication. No API, database or messaging
+service is connected by this integration.
 
-- Fetch `origin` before starting work and branch from its latest `main`.
-- Push work to a feature branch and open a pull request targeting `main`.
-- Review newer changes from the other developer before merging; never force-push
-  or overwrite their work.
-- Merging or pushing to `main` triggers the existing production deployment
-  workflow. Both require the owner's explicit approval. The workflow and existing
-  Vercel project configuration are unchanged by this feature.
-- Lumera has its own repository and Vercel project. Continue making its changes
-  independently; do not import it into this application's build.
+### Collaboration and deployment
 
-### Feature checks
+- Fetch the current `main` before starting; keep changes on a feature branch and
+  review through a pull request. Never force-push over another developer's work.
+- The existing GitHub Actions workflow deploys `main` to the existing Torall project.
+  It remains unchanged. Confirm the destination and user authorization before release.
+- Deploy compatible Lumera changes before publishing Torall routing changes. Verify
+  standalone and proxied assets, including partial/range requests for video.
+- Keep the two repositories and deployments independent. Do not add root-level
+  `/_next` or `/media` proxies that could collide with future Torall assets.
+- Billing, domains, credentials, and unrelated project settings are outside this change.
 
-```bash
-npm run build
-npx eslint src/App.tsx src/pages/Templates.tsx src/sections/Navbar.tsx src/sections/Footer.tsx src/lib/navigation.ts src/lib/templates.ts vite.config.ts
-```
+### Verification
 
-Check desktop and mobile navigation, direct loading and refresh of `/templates/`
-and nested service pages, the live Explore Template destination, and the existing
-Home, Services, About, and Contact routes. The full lint run
-currently has 10 pre-existing errors in UI components and `src/sections/About.tsx`;
-these are outside the Templates change.
+Run `npm run build` and ESLint for changed files. Check desktop/mobile Portfolio,
+legacy route aliases, all service detail pages, the full Lumera experience, its
+return link, and direct/refresh loading of hash routes. The existing full-lint
+baseline contains 10 unrelated UI/About errors; the existing bundle-size warning
+also remains.

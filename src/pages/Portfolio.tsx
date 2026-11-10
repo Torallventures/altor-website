@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { ArrowRight, ArrowUpRight, Building2, Check, FileCheck2, Globe2, LayoutDashboard, Palette, Users } from "lucide-react";
 import { Link } from "react-router";
 import { Reveal } from "@/components/Reveal";
-import { lumeraTemplateUrl } from "@/lib/templates";
+import { lumeraTemplateUrl } from "@/lib/portfolio";
+import { ServiceOfferings } from "@/pages/ServicesPage";
 
 const capabilities = [
   { icon: Globe2, title: "A remarkable first impression.", description: "A cinematic residential website with a video homepage, considered typography, and a complete amenities experience.", number: "01" },
@@ -9,12 +11,12 @@ const capabilities = [
   { icon: LayoutDashboard, title: "A community, in one place.", description: "Step into the resident portal, switch between seven roles, and see how residents and management stay connected.", number: "03" },
 ];
 
-export default function Templates() {
+export default function Portfolio() {
   useEffect(() => {
-    const previousTitle = document.title === "Templates — Torall Ventures"
+    const previousTitle = document.title === "Portfolio — Torall Ventures"
       ? "Torall Ventures — Engineering Intelligent Systems"
       : document.title;
-    document.title = "Templates — Torall Ventures";
+    document.title = "Portfolio — Torall Ventures";
     return () => { document.title = previousTitle; };
   }, []);
 
@@ -24,14 +26,14 @@ export default function Templates() {
           <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-40 h-[580px] w-[580px] rounded-full bg-primary/10 blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <p className="mb-7 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.24em] text-primary-deep">
-              <span className="h-px w-10 bg-primary-deep" /> The template collection
+              <span className="h-px w-10 bg-primary-deep" /> Selected work / Portfolio
             </p>
             <div className="grid items-end gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-24">
               <h1 className="max-w-3xl font-display text-5xl font-medium leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">
-                A head start.<br /><span className="text-primary-deep">A world of possibility.</span>
+                Ideas, brought<br /><span className="text-primary-deep">to life.</span>
               </h1>
               <p className="max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Explore thoughtfully built digital experiences. Find your starting point, step inside, and imagine what comes next for your community.
+                Explore the experiences we build. Step inside Lumera, our first interactive condominium template, and discover what thoughtful design can do for your community.
               </p>
             </div>
           </div>
@@ -72,7 +74,7 @@ export default function Templates() {
                   ))}
                 </ul>
                 <a href={lumeraTemplateUrl} className="group mt-auto inline-flex min-h-12 items-center justify-between gap-4 rounded-md bg-primary px-5 py-3 font-display text-base font-semibold text-primary-foreground transition-colors hover:bg-primary-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-card">
-                  Explore Template <ArrowUpRight className="h-5 w-5 transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" aria-hidden="true" />
+                  Explore Lumera <ArrowUpRight className="h-5 w-5 transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" aria-hidden="true" />
                 </a>
                 <p className="mt-3 text-center text-xs text-muted-foreground">Open the complete Lumera experience</p>
               </div>
@@ -104,6 +106,13 @@ export default function Templates() {
             ))}
           </div>
 
+          <section aria-labelledby="capabilities-heading" className="pb-16">
+            <p className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-primary-deep">The expertise behind the experience</p>
+            <h2 id="capabilities-heading" className="font-display text-3xl font-medium tracking-tight sm:text-4xl">One team for every digital idea.</h2>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">From residential community platforms to business websites, apps, and fully custom systems — every project is designed and built by the same team, start to finish.</p>
+            <ServiceOfferings />
+          </section>
+
           <Reveal>
             <div className="flex flex-col justify-between gap-7 rounded-xl border border-primary/20 bg-primary/5 p-7 sm:p-10 md:flex-row md:items-center">
               <div><p className="mb-3 font-mono text-[10px] uppercase tracking-[0.22em] text-primary">Your vision, our craft</p><h2 className="font-display text-2xl sm:text-3xl">A starting point. Uniquely yours.</h2><p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">Shape the branding, features, and resident experience around your community.</p></div>
@@ -114,4 +123,3 @@ export default function Templates() {
     </>
   );
 }
-import { useEffect } from "react";

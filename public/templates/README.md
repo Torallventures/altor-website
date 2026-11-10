@@ -10,5 +10,5 @@ with Pool**, by **vision capture**, Pexels ID 36371120, used under the Pexels Li
 - License: https://www.pexels.com/license/
 - Full preparation and provenance: `MEDIA-LICENSE.md` in `Torallventures/lumera-template`.
 
-The screenshot illustrates the gallery card; Explore Template opens the complete
+The screenshot illustrates the gallery card; Explore Lumera opens the complete
 independent application. No endorsement by the creator or depicted property is implied.
