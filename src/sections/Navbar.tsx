@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Hexagon } from "lucide-react";
-
-const links = [
-  { label: "Services", href: "#services" },
-  { label: "Solutions", href: "#solutions" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
-];
+import { Link, useLocation } from "react-router";
+import { navigationLinks as links } from "@/lib/navigation";
 
 export function Navbar() {
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -40,8 +36,8 @@ export function Navbar() {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a
-          href="#top"
+        <Link
+          to="/#top"
           className="flex items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Torall Ventures — home"
         >
@@ -50,32 +46,34 @@ export function Navbar() {
             TORALL
             <span className="text-primary-deep">.</span>
           </span>
-        </a>
+        </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-5 lg:flex xl:gap-8">
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
-              href={l.href}
-              className="rounded-md font-mono text-[13px] uppercase tracking-widest text-muted-foreground transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              to={l.href}
+              aria-current={pathname.replace(/\/$/, "") === l.href ? "page" : undefined}
+              className="rounded-md font-mono text-[13px] uppercase tracking-widest text-muted-foreground transition-colors duration-200 hover:text-foreground aria-[current=page]:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
+          <Link
+            to="/#contact"
             className="rounded-md bg-primary px-4 py-2 font-display text-sm font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
           >
             Start a project
-          </a>
+          </Link>
         </div>
 
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
+          aria-controls="mobile-navigation"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="flex h-11 w-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -89,25 +87,26 @@ export function Navbar() {
       />
 
       {open && (
-        <div className="border-t border-border bg-background/95 backdrop-blur-md md:hidden">
+        <div id="mobile-navigation" className="border-t border-border bg-background/95 backdrop-blur-md lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
             {links.map((l) => (
-              <a
+              <Link
                 key={l.href}
-                href={l.href}
+                to={l.href}
+                aria-current={pathname.replace(/\/$/, "") === l.href ? "page" : undefined}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-3 font-mono text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="rounded-md px-3 py-3 font-mono text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground aria-[current=page]:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#contact"
+            <Link
+              to="/#contact"
               onClick={() => setOpen(false)}
               className="mt-2 rounded-md bg-primary px-4 py-3 text-center font-display text-sm font-semibold text-primary-foreground transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98]"
             >
               Start a project
-            </a>
+            </Link>
           </div>
         </div>
       )}
