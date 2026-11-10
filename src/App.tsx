@@ -1,34 +1,24 @@
-import { useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router'
+import { Routes, Route, Navigate } from 'react-router'
+import { Layout } from './components/Layout'
 import Home from './pages/Home'
+import ServicesPage from './pages/ServicesPage'
+import ServiceDetailPage from './pages/ServiceDetailPage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
 import Templates from './pages/Templates'
-
-function RouteEffects() {
-  const { pathname, hash } = useLocation()
-
-  useEffect(() => {
-    document.title = pathname.replace(/\/$/, '') === '/templates'
-      ? 'Templates — Torall Ventures'
-      : 'Torall Ventures — Engineering Intelligent Systems'
-    const frame = requestAnimationFrame(() => {
-      const section = hash ? document.getElementById(hash.slice(1)) : null
-      if (section) section.scrollIntoView({ behavior: 'instant' })
-      else window.scrollTo({ top: 0, behavior: 'instant' })
-    })
-    return () => cancelAnimationFrame(frame)
-  }, [pathname, hash])
-
-  return null
-}
 
 export default function App() {
   return (
-    <>
-      <RouteEffects />
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/templates" element={<Templates />} />
-      </Routes>
-    </>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
   )
 }

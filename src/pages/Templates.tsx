@@ -1,7 +1,5 @@
 import { ArrowRight, ArrowUpRight, Building2, Check, FileCheck2, Globe2, LayoutDashboard, Palette, Users } from "lucide-react";
 import { Link } from "react-router";
-import { Navbar } from "@/sections/Navbar";
-import { Footer } from "@/sections/Footer";
 import { Reveal } from "@/components/Reveal";
 import { lumeraTemplateUrl } from "@/lib/templates";
 
@@ -12,10 +10,16 @@ const capabilities = [
 ];
 
 export default function Templates() {
+  useEffect(() => {
+    const previousTitle = document.title === "Templates — Torall Ventures"
+      ? "Torall Ventures — Engineering Intelligent Systems"
+      : document.title;
+    document.title = "Templates — Torall Ventures";
+    return () => { document.title = previousTitle; };
+  }, []);
+
   return (
-    <div className="min-h-[100dvh]">
-      <Navbar />
-      <main id="top">
+    <>
         <section className="hero-scope relative overflow-hidden border-b border-border bg-background pb-16 pt-32 sm:pb-24 sm:pt-40">
           <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-40 h-[580px] w-[580px] rounded-full bg-primary/10 blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -103,12 +107,11 @@ export default function Templates() {
           <Reveal>
             <div className="flex flex-col justify-between gap-7 rounded-xl border border-primary/20 bg-primary/5 p-7 sm:p-10 md:flex-row md:items-center">
               <div><p className="mb-3 font-mono text-[10px] uppercase tracking-[0.22em] text-primary">Your vision, our craft</p><h2 className="font-display text-2xl sm:text-3xl">A starting point. Uniquely yours.</h2><p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">Shape the branding, features, and resident experience around your community.</p></div>
-              <Link to="/#contact" className="inline-flex min-h-12 shrink-0 items-center gap-4 self-start rounded-md border border-primary/40 px-5 py-3 font-display text-sm font-semibold text-primary transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:self-auto">Let's build together <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+              <Link to="/contact" className="inline-flex min-h-12 shrink-0 items-center gap-4 self-start rounded-md border border-primary/40 px-5 py-3 font-display text-sm font-semibold text-primary transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:self-auto">Let's build together <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>
           </Reveal>
         </section>
-      </main>
-      <Footer />
-    </div>
+    </>
   );
 }
+import { useEffect } from "react";

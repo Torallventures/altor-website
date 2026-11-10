@@ -35,7 +35,10 @@ directory `dist`.
 The `/templates` route is part of this existing Torall website. Its dedicated
 `templates/index.html` build entry also produces `dist/templates/index.html`,
 so direct visits and refreshes work on a static host without a deployment rewrite.
-The gallery uses the existing shared navigation, footer, palette, and fonts.
+The gallery uses the existing shared layout, navigation, footer, palette, and fonts.
+It preserves the latest Home, Services, service detail, About, and Contact pages.
+The root asset base keeps JavaScript and CSS URLs valid when nested routes are
+opened directly or refreshed; the existing SPA rewrite from main is preserved.
 
 Explore Template opens the complete, independent Lumera application at the URL in
 `src/lib/templates.ts`. Lumera is maintained in the private repository
@@ -43,11 +46,12 @@ Explore Template opens the complete, independent Lumera application at the URL i
 `https://torallventures.com/templates`. This repository contains only a preview
 screenshot, not a copy of Lumera or its portal.
 
-Before merging this feature, obtain approval for Lumera's first deployment,
-confirm its GitHub connection, and test `https://lumera-template.vercel.app`.
-The assigned domain is not a working deployment until that step is completed.
-Public commercial use also requires checking Vercel's current hosting terms.
-Do not change the existing plan or billing automatically.
+Lumera's authorized development/testing deployment is live at
+`https://lumera-template.vercel.app` under `torall-ventures/lumera-template`.
+Its GitHub connection and desktop/mobile workflows have been verified. The
+Hobby plan and billing are unchanged. Altor's Templates page is still a draft
+pull request: the public Back to Templates destination becomes available only
+after the owner approves merging and publishing this feature.
 
 ### Collaboration
 
@@ -68,7 +72,8 @@ npm run build
 npx eslint src/App.tsx src/pages/Templates.tsx src/sections/Navbar.tsx src/sections/Footer.tsx src/lib/navigation.ts src/lib/templates.ts vite.config.ts
 ```
 
-Check desktop and mobile navigation, direct loading and refresh of `/templates/`,
-the Explore Template URL, and links back to homepage sections. The full lint run
+Check desktop and mobile navigation, direct loading and refresh of `/templates/`
+and nested service pages, the live Explore Template destination, and the existing
+Home, Services, About, and Contact routes. The full lint run
 currently has 10 pre-existing errors in UI components and `src/sections/About.tsx`;
 these are outside the Templates change.
