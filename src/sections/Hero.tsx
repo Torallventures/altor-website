@@ -41,7 +41,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 70% 40%, hsl(151 45% 40% / 0.22), transparent 60%), radial-gradient(ellipse 50% 40% at 20% 80%, hsl(200 40% 35% / 0.25), transparent 60%)",
+            "radial-gradient(ellipse 60% 50% at 70% 40%, hsl(var(--primary) / 0.18), transparent 60%), radial-gradient(ellipse 50% 40% at 20% 80%, hsl(var(--violet) / 0.32), transparent 60%)",
         }}
       />
       <HeroCanvas />
