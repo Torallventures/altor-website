@@ -1,10 +1,10 @@
 import {
-  Cloud,
-  BrainCircuit,
-  ShieldCheck,
-  Database,
-  Code2,
-  Cpu,
+  Building2,
+  Globe,
+  AppWindow,
+  LayoutDashboard,
+  Sparkles,
+  Check,
   type LucideIcon,
 } from "lucide-react";
 import { useReveal } from "@/hooks/useReveal";
@@ -13,44 +13,45 @@ type Service = {
   icon: LucideIcon;
   title: string;
   description: string;
+  points?: string[];
 };
 
 const services: Service[] = [
   {
-    icon: Cloud,
-    title: "Cloud Infrastructure",
+    icon: Building2,
+    title: "Residential Community Websites",
     description:
-      "Architecture, migration, and operation of resilient multi-cloud environments — built for uptime, tuned for cost.",
+      "Modern websites for residential buildings and communities — everything your residents need, in one place.",
+    points: [
+      "Amenities showcase & booking",
+      "Online product ordering for residents",
+      "AI chatbot assistance",
+      "Resident e-portals",
+    ],
   },
   {
-    icon: BrainCircuit,
-    title: "AI & Machine Learning",
+    icon: Globe,
+    title: "Business Websites",
     description:
-      "From predictive models to production-grade LLM systems, we turn your data into decisions that ship.",
+      "Professional websites for any business, in any industry — designed to look sharp, load fast, and win customers.",
   },
   {
-    icon: ShieldCheck,
-    title: "Cybersecurity",
+    icon: AppWindow,
+    title: "Business Apps",
     description:
-      "Zero-trust architecture, penetration testing, and 24/7 threat monitoring that keeps regulators and attackers at bay.",
+      "Custom applications for any business — web or mobile, built around the way your team actually works.",
   },
   {
-    icon: Database,
-    title: "Data Engineering",
+    icon: LayoutDashboard,
+    title: "Custom Management Systems",
     description:
-      "Pipelines, warehouses, and real-time analytics platforms that make every team in your company data-driven.",
+      "Tailor-made systems to manage your business — operations, inventory, clients, or anything else you need to run.",
   },
   {
-    icon: Code2,
-    title: "Custom Software",
+    icon: Sparkles,
+    title: "Anything Digital",
     description:
-      "Web platforms, APIs, and enterprise applications — designed with your users, engineered for a decade of change.",
-  },
-  {
-    icon: Cpu,
-    title: "IoT & Embedded",
-    description:
-      "Connected devices and edge computing, from prototype firmware to fleets of thousands in the field.",
+      "Whatever digital idea you have in your mind — we make it happen. If it can be built, we can build it.",
   },
 ];
 
@@ -69,6 +70,22 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
         {service.description}
       </p>
+      {service.points && (
+        <ul className="mt-4 space-y-2">
+          {service.points.map((point) => (
+            <li
+              key={point}
+              className="flex items-start gap-2 text-[14px] text-muted-foreground"
+            >
+              <Check
+                className="mt-0.5 h-4 w-4 shrink-0 text-primary-deep"
+                strokeWidth={2.2}
+              />
+              {point}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
