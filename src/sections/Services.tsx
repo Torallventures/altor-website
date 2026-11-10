@@ -100,11 +100,11 @@ export function Services() {
             What we do
           </p>
           <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-            Full-stack capability, one accountable team.
+            If it&apos;s digital, we build it.
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-            Six practices, one engineering culture. Every engagement is led by
-            senior architects who write code — not slideware.
+            From residential community platforms to custom business systems —
+            one team that takes your idea from first sketch to launch.
           </p>
         </div>
 
