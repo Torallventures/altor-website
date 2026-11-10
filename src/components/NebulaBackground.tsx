@@ -11,6 +11,8 @@ const FRAG = /* glsl */ `
   precision highp float;
   uniform float uTime;
   uniform vec2 uRes;
+  uniform vec3 uGreen;
+  uniform vec3 uViolet;
 
   float hash(vec2 p) {
     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -50,13 +52,12 @@ const FRAG = /* glsl */ `
     );
     float f = fbm(uv * 2.2 + 2.5 * q + vec2(t * 0.5, -t * 0.3));
 
-    // Deep space ramp: near-black pockets, dim court-green/grey glow
+    // Deep space ramp: violet clouds with green light in the densest wisps.
     float smoke = smoothstep(0.35, 0.95, f);
-    vec3 deep = vec3(0.012, 0.020, 0.028);
-    vec3 glow = vec3(0.145, 0.220, 0.190);
+    vec3 deep = vec3(0.018, 0.014, 0.024);
+    vec3 glow = uViolet * 0.85;
     vec3 col = mix(deep, glow, smoke);
-    // faint cool blue in the thickest smoke
-    col += vec3(0.02, 0.04, 0.06) * smoothstep(0.75, 1.0, f);
+    col += uGreen * 0.2 * smoothstep(0.65, 1.0, f);
 
     // Vignette keeps the edges calm
     float vig = 1.0 - smoothstep(0.4, 1.3, length(uv));
@@ -88,6 +89,9 @@ export function NebulaBackground() {
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
+    const palette = getComputedStyle(mount);
+    const green = palette.getPropertyValue("--brand-green").trim();
+    const violet = palette.getPropertyValue("--brand-violet").trim();
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -115,6 +119,8 @@ export function NebulaBackground() {
     const uniforms = {
       uTime: { value: 0 },
       uRes: { value: new THREE.Vector2(mount.clientWidth, mount.clientHeight) },
+      uGreen: { value: new THREE.Color(green) },
+      uViolet: { value: new THREE.Color(violet) },
     };
     const nebula = new THREE.Mesh(
       new THREE.PlaneGeometry(280, 170),
@@ -143,7 +149,7 @@ export function NebulaBackground() {
       const geo = new THREE.BufferGeometry();
       geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
       const mat = new THREE.PointsMaterial({
-        color: new THREE.Color("hsl(150, 12%, 88%)"),
+        color: new THREE.Color("#E9EEE4"),
         size,
         sizeAttenuation: true,
         transparent: true,
@@ -164,7 +170,7 @@ export function NebulaBackground() {
     const meteorGeo = new THREE.PlaneGeometry(8, 0.09);
     for (let i = 0; i < 3; i++) {
       const mat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color("hsl(150, 40%, 85%)"),
+        color: new THREE.Color(green),
         transparent: true,
         opacity: 0,
         blending: THREE.AdditiveBlending,
