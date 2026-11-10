@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Menu, X, Hexagon } from "lucide-react";
 
-const links = [
-  { label: "Home", to: "/" },
-  { label: "Services", to: "/services" },
-  { label: "About", to: "/about" },
-  { label: "Contact", to: "/contact" },
-];
+import { navigationLinks as links } from "@/lib/navigation";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -54,7 +49,7 @@ export function Navbar() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-5 lg:flex xl:gap-8">
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -81,8 +76,9 @@ export function Navbar() {
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
+          aria-controls="mobile-navigation"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="flex h-11 w-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -96,7 +92,7 @@ export function Navbar() {
       />
 
       {open && (
-        <div className="border-t border-border bg-background/95 backdrop-blur-md md:hidden">
+        <div id="mobile-navigation" className="border-t border-border bg-background/95 backdrop-blur-md lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
             {links.map((l) => (
               <NavLink

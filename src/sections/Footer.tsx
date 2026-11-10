@@ -2,12 +2,7 @@ import { Link } from "react-router";
 import { Hexagon } from "lucide-react";
 import { services } from "@/data/services";
 
-const nav = [
-  { label: "Home", to: "/" },
-  { label: "Services", to: "/services" },
-  { label: "About", to: "/about" },
-  { label: "Contact", to: "/contact" },
-];
+import { navigationLinks as nav } from "@/lib/navigation";
 
 export function Footer() {
   return (
@@ -49,9 +44,9 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Services" className="md:justify-self-end">
+          <nav aria-label="Capabilities" className="md:justify-self-end">
             <p className="font-mono text-[12px] uppercase tracking-[0.2em] text-muted-foreground">
-              Services
+              What we build
             </p>
             <ul className="mt-4 space-y-2.5">
               {services.map((s) => (

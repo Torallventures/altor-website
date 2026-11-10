@@ -10,7 +10,7 @@ export default function ServiceDetailPage() {
   const headRef = useReveal<HTMLDivElement>();
   const bodyRef = useReveal<HTMLDivElement>(80);
 
-  if (!service) return <Navigate to="/services" replace />;
+  if (!service) return <Navigate to="/portfolio" replace />;
 
   const Icon = service.icon;
   const idx = services.indexOf(service);
@@ -22,11 +22,11 @@ export default function ServiceDetailPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div ref={headRef} className="reveal-left max-w-3xl">
             <Link
-              to="/services"
+              to="/portfolio"
               className="inline-flex items-center gap-1.5 rounded-md font-mono text-[13px] uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ArrowLeft className="h-4 w-4" />
-              All services
+              Back to Portfolio
             </Link>
             <div className="mt-8 flex items-center gap-4">
               <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-secondary text-primary-deep">

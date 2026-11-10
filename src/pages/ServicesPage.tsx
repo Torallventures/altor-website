@@ -69,6 +69,12 @@ function ServiceBlock({
   );
 }
 
+export function ServiceOfferings() {
+  return <div className="mt-10">{services.map((service, index) => (
+    <ServiceBlock key={service.slug} index={index} {...service} />
+  ))}</div>;
+}
+
 export default function ServicesPage() {
   const headRef = useReveal<HTMLDivElement>();
   return (

@@ -19,10 +19,10 @@ export function ServicesTeaser() {
             </h2>
           </div>
           <Link
-            to="/services"
+            to="/portfolio"
             className="group inline-flex items-center gap-1.5 rounded-md font-display text-sm font-semibold text-primary-deep transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            Explore all services
+            Explore our portfolio
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
