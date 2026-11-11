@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { ArrowRight, Check, Orbit, CalendarDays, KeyRound, Bell, Package, Sparkles, LayoutGrid, MessageSquare, ArrowUpRight } from "lucide-react";
 import { services } from "@/data/services";
@@ -11,6 +11,7 @@ const labels = ["Communities", "Websites", "Apps", "Management", "Anything digit
 /** All five capabilities share one compact, keyboard-accessible showcase. */
 export function ServicesTeaser() {
   const headRef = useReveal<HTMLDivElement>();
+  const [activeService, setActiveService] = useState(services[0].slug);
 
   return (
     <section id="services-teaser" className="services-showcase services-widget relative" aria-labelledby="services-heading">
@@ -27,10 +28,10 @@ export function ServicesTeaser() {
             Explore our portfolio <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
-        <Tabs.Root defaultValue={services[0].slug} className="services-widget-frame">
+        <Tabs.Root value={activeService} onValueChange={setActiveService} className="services-widget-frame">
           <Tabs.List className="services-widget-tabs" aria-label="Our services">
             {services.map((item, index) => (
-              <Tabs.Trigger key={item.slug} value={item.slug} className="services-widget-tab" aria-label={item.title}>
+              <Tabs.Trigger key={item.slug} value={item.slug} onClick={() => setActiveService(item.slug)} className="services-widget-tab" aria-label={item.title}>
                 <item.icon aria-hidden="true" />
                 <span>{labels[index]}</span>
               </Tabs.Trigger>
