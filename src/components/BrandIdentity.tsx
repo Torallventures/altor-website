@@ -44,3 +44,11 @@ export function CompactMonogram(props: BrandProps) { return <OpenContour {...pro
 export function AnimatedBrandIntro(props: BrandProps) { return <BrandLockup {...props} animated />; }
 export function StaticBrandLockup(props: BrandProps) { return <BrandLockup {...props} />; }
 export function MobileBrandLockup(props: BrandProps) { return <BrandLockup {...props} className={`brand-mobile ${props.className || ""}`} />; }
+
+/** Header typography follows the navigation; the approved symbol stays intact. */
+export function HeaderBrandLockup() {
+  return <span className="navigation-brand brand-introduction" aria-hidden="true">
+    <OpenContour decorative />
+    <span className="navigation-wordmark">{Array.from("TORALL VENTURES").map((letter, index) => <span key={index} className="brand-letter navigation-letter" style={{ "--letter": index } as CSSProperties}>{letter}</span>)}</span>
+  </span>;
+}
