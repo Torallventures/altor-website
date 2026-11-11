@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { Link } from "react-router";
 import { Reveal } from "@/components/Reveal";
 import { lumeraTemplateUrl } from "@/lib/portfolio";
