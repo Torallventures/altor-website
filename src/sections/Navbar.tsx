@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
 
 import { navigationLinks as links } from "@/lib/navigation";
-import { AnimatedBrandIntro } from "@/components/BrandIdentity";
+import { HeaderBrandLockup } from "@/components/BrandIdentity";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ export function Navbar() {
           aria-label="Torall Ventures — home"
           onClick={() => setOpen(false)}
         >
-          <AnimatedBrandIntro decorative />
+          <HeaderBrandLockup />
         </Link>
 
         <div className="hidden flex-1 items-center gap-5 lg:flex xl:gap-8">
