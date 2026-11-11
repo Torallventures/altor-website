@@ -1,25 +1,23 @@
 import { Link } from "react-router";
-import { ArrowRight, ChevronDown } from "lucide-react";
-import { HeroShowreel } from "@/components/HeroShowreel";
+import { ArrowRight, ArrowDown } from "lucide-react";
 
 export function Hero() {
   return (
     <section id="top" className="hero-scope relative flex min-h-[100dvh] items-center overflow-hidden bg-background">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 55% 65% at 95% 45%, hsl(var(--violet) / .26), transparent 70%), radial-gradient(ellipse 35% 50% at 65% 60%, hsl(var(--primary) / .07), transparent 75%)" }} />
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-4 pb-24 pt-32 sm:px-6 lg:grid-cols-[.95fr_1.05fr] lg:gap-10 lg:px-8 lg:pt-28 xl:gap-16">
-        <div className="min-w-0">
-          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary-deep">Torall Ventures</p>
-          <h1 className="mt-6 font-display text-5xl font-bold leading-[1.08] tracking-tight sm:text-6xl lg:text-[clamp(2.8rem,4.4vw,3.8rem)]">Intelligent systems,<br />engineered <span className="text-primary-deep">to scale.</span></h1>
-          <p className="mt-7 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">Websites for businesses and residential communities, custom apps, and management systems built exactly for your needs — whatever digital idea you have in mind, we make it happen.</p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link to="/contact" className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-primary px-6 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">Start a project<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" /></Link>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 65% 70% at 95% 35%, hsl(var(--violet) / .22), transparent 70%), radial-gradient(ellipse 45% 50% at 75% 80%, hsl(var(--primary) / .07), transparent 75%)" }} />
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-28 pt-36 sm:px-6 lg:px-8">
+        <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary-deep">Torall Ventures / Digital by design</p>
+        <h1 className="mt-8 max-w-6xl font-display text-[clamp(2.7rem,7.1vw,6.3rem)] font-semibold leading-[1.04] tracking-[-0.045em]">Intelligent systems.<br /><span className="text-primary-deep">Engineered to scale.</span></h1>
+        <div className="mt-10 grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-end md:gap-16">
+          <p className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">We turn ambitious ideas into websites, apps, and custom systems. Built around your business. Designed for the people who use them.</p>
+          <div className="flex flex-wrap gap-3 md:justify-end">
+            <Link to="/contact" className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-md bg-primary px-6 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Start a project<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" /></Link>
             <Link to="/portfolio" className="inline-flex min-h-12 items-center justify-center rounded-md border border-border bg-card/40 px-6 py-3.5 font-display text-sm font-semibold transition-colors hover:border-primary/50 hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Explore Portfolio</Link>
           </div>
-          <div className="mt-9 flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground"><span className="h-px w-7 bg-primary/60" /> Designed with purpose. Built around you.</div>
         </div>
-        <HeroShowreel />
+        <div className="mt-14 flex flex-wrap gap-x-7 gap-y-3 border-t border-border pt-6 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground sm:mt-20"><span>Residential communities</span><span>Business websites</span><span>Apps</span><span>Management systems</span><span>Anything digital</span></div>
       </div>
-      <a href="#services-teaser" aria-label="Scroll to services" className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 rounded-full p-2 text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><ChevronDown className="h-5 w-5" aria-hidden="true" /></a>
+      <a href="#showreel" aria-label="Scroll to the Torall showreel" className="absolute bottom-6 left-4 z-10 inline-flex items-center gap-3 rounded-full py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-primary sm:left-6 lg:left-[max(2rem,calc((100vw-1216px)/2))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">See what we can build<ArrowDown className="h-4 w-4" aria-hidden="true" /></a>
     </section>
   );
 }
