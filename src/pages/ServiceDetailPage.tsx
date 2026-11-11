@@ -20,6 +20,7 @@ export default function ServiceDetailPage() {
     <>
       <section className="relative pb-8 pt-32 sm:pt-40">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
           <div ref={headRef} className="reveal-left max-w-3xl">
             <Link
               to="/portfolio"
@@ -42,6 +43,9 @@ export default function ServiceDetailPage() {
             <p className="mt-5 text-xl leading-relaxed text-muted-foreground">
               {service.tagline}
             </p>
+            <Link to={`/contact?service=${service.slug}`} className="mt-7 inline-flex min-h-12 items-center gap-4 rounded-md bg-primary px-5 py-3 font-semibold text-primary-foreground focus-visible:ring-2 focus-visible:ring-ring">Let’s talk about your project <ArrowRight className="h-4 w-4" aria-hidden="true"/></Link>
+          </div>
+          <div className="overflow-hidden rounded-lg border border-primary/20 bg-card"><img src={service.image} alt="" width="1000" height="563" fetchPriority="high" className="aspect-[1.2] w-full object-cover"/><div className="flex items-center justify-between px-5 py-4 font-mono text-[10px] uppercase tracking-[.15em] text-muted-foreground"><span>Designed around your business</span><span className="text-primary">0{idx+1} / 05</span></div></div>
           </div>
         </div>
       </section>
@@ -77,7 +81,7 @@ export default function ServiceDetailPage() {
 
             <div className="lg:col-span-5">
               <h2 className="font-display text-2xl font-bold tracking-tight">
-                What&apos;s included
+                What we can build
               </h2>
               <ul className="mt-6 space-y-3">
                 {service.features.map((f) => (
@@ -105,7 +109,7 @@ export default function ServiceDetailPage() {
               <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
             <Link
-              to="/contact"
+              to={`/contact?service=${service.slug}`}
               className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
             >
               Start a project

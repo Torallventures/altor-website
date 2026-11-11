@@ -74,3 +74,23 @@ legacy route aliases, all service detail pages, the full Lumera experience, its
 return link, and direct/refresh loading of hash routes. The existing full-lint
 baseline contains 10 unrelated UI/About errors; the existing bundle-size warning
 also remains.
+
+## Visitor experience and inquiries
+
+The homepage connects the cinematic hero and services film to the capabilities gallery,
+featured Lumera experience, project process, common questions, and contact action.
+The site uses the established dark/green identity. Interior pages use a quiet CSS
+background; the Three.js particle renderer is loaded only on the homepage.
+
+Contact prepares a project email for the visitor to review and send in their own email
+app. It does not submit a server-side form or claim delivery. A copy-brief option works
+with webmail; if clipboard access is unavailable, a selectable brief is displayed.
+Service-detail links carry the selected service into the inquiry form. No email API,
+new credentials, tracking service, database, or paid service has been added.
+
+Shared page metadata supplies route titles, descriptions, canonical URLs, and noindex
+for the missing-page view. Public robots.txt and sitemap.xml list the main Torall pages.
+Navigation includes a skip link, route focus, and Escape-to-close mobile menu behavior.
+
+The restoration commit reverses the three 2026-11-11 redesign commits while retaining
+PRs #35–38 (particle hero, service/gallery work, and supplied film). History is preserved.

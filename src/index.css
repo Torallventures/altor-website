@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Quiet page atmosphere; the GPU scene is reserved for the homepage hero. */
+.site-atmosphere { position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse at 90% 10%,#a4c68a09,transparent 60%),radial-gradient(ellipse at 0 85%,#77718012,transparent 65%); }
+.skip-to-content { position:fixed; left:1rem; top:1rem; z-index:100; transform:translateY(-150%); border-radius:.35rem; padding:.85rem 1.1rem; background:#a4c68a; color:#121610; font-weight:700; }
+.skip-to-content:focus { transform:none; outline:2px solid #fff; outline-offset:3px; }
+
 @layer base {
   :root {
     /* Deep-space palette. Hex tokens also drive the WebGL scenes.
