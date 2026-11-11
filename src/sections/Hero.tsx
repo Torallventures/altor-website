@@ -1,10 +1,12 @@
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
+import { ServiceParticles } from "@/components/ServiceParticles";
 
 export function Hero() {
   return (
     <section id="top" className="hero-scope relative flex min-h-[100dvh] items-center overflow-hidden bg-background">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 65% 70% at 95% 35%, hsl(var(--violet) / .22), transparent 70%), radial-gradient(ellipse 45% 50% at 75% 80%, hsl(var(--primary) / .07), transparent 75%)" }} />
+      <ServiceParticles />
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-16 pt-36 sm:px-6 sm:pb-20 lg:px-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary-deep">Torall Ventures / Digital by design</p>
         <h1 className="mt-8 max-w-6xl font-display text-[clamp(2.7rem,7.1vw,6.3rem)] font-semibold leading-[1.04] tracking-[-0.045em]">Intelligent systems.<br /><span className="text-primary-deep">Engineered to scale.</span></h1>
