@@ -1,0 +1,41 @@
+/* Hero-only composition. Existing navigation, typography and all other sections retain their tokens. */
+.cinematic-hero { background: #020304; isolation: isolate; }
+.cinematic-hero .hero-layout { display: grid; grid-template-columns: minmax(0,.93fr) minmax(0,1.17fr); gap: clamp(1rem,3vw,3rem); align-items: center; min-height: 100dvh; padding-bottom: 7rem; }
+.cinematic-hero .hero-copy { min-width: 0; }
+.cinematic-hero .hero-copy h1 { font-size: clamp(2.8rem,4.8vw,4rem); line-height: 1.03; letter-spacing: .005em; }
+.cinematic-hero .hero-copy h1 > span { display: block; }
+.cinematic-hero .hero-description { max-width: 27rem; font-size: 17px; line-height: 1.6; letter-spacing: .01em; }
+.particle-composition { height: clamp(400px,65vh,690px); min-width: 0; pointer-events: none; }
+.cinematic-particles, .cinematic-canvas, .particle-readability { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.cinematic-particles { z-index: 0; }
+.cinematic-canvas { display: block; opacity: 0; }
+.cinematic-particles[data-ready="true"] .cinematic-canvas { opacity: 1; }
+.particle-fallback { position: absolute; width: 60%; height: 76%; right: 0; top: 12%; }
+.particle-fallback img { width: 100%; height: 100%; object-fit: contain; }
+.cinematic-particles[data-ready="true"] .particle-fallback { visibility: hidden; }
+.particle-readability { z-index: 1; background: linear-gradient(90deg,#02030470, #02030432 35%,transparent 60%),linear-gradient(0deg,#020304,transparent 12%); }
+.particle-caption { position: absolute; z-index: 20; bottom: 2.4rem; right: max(2rem,calc((100vw - 1216px)/2)); display: flex; align-items: center; gap: 1.5rem; }
+.particle-caption-copy { display: flex; gap: 1.1rem; align-items: center; font-size: 11px; color: #a9adb3; letter-spacing: .045em; }
+.particle-index { font-size: 9px; letter-spacing: .15em; color: #72777f; }
+.particle-playback { display: grid; place-items: center; border: 1px solid #ffffff29; border-radius: 50%; width: 40px; height: 40px; background: #050609a6; color: #cbd1d8; transition: border-color .2s; }
+.particle-playback svg { width: 12px; height: 12px; }
+.particle-playback:hover { border-color: #ffffff80; }
+.particle-playback:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 4px; }
+@media (min-width: 1600px) { .cinematic-hero .hero-layout { max-width: 1450px; grid-template-columns: 1fr 1.4fr; } }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .cinematic-hero .hero-copy h1 { font-size: clamp(2.4rem,5vw,3.25rem); }
+  .cinematic-hero .hero-description { font-size: 16px; }
+}
+@media (max-width: 767px) {
+  .cinematic-hero .hero-layout { grid-template-columns: minmax(0,1fr); gap: 0; align-content: center; padding-top: 7.5rem; padding-bottom: 5rem; }
+  .cinematic-hero .hero-copy h1 { font-size: clamp(2.5rem,10vw,3.75rem); }
+  .cinematic-hero .hero-description { font-size: 16px; max-width: 30rem; }
+  .cinematic-hero .hero-copy a { padding-inline: 1rem; }
+  .particle-composition { height: clamp(285px,85vw,420px); margin-top: 1rem; }
+  .particle-caption { left: 1rem; right: 1rem; bottom: 1.7rem; justify-content: space-between; gap: .75rem; }
+  .particle-caption-copy { gap: 1rem; font-size: 10px; }
+  .particle-readability { background: linear-gradient(180deg,#02030450,transparent 50%,transparent 90%,#020304); }
+  .particle-fallback { inset: auto 0 4rem; height: 340px; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .particle-playback { display: none; } }
+.cinematic-particles[data-playback="reduced-motion"] ~ .particle-caption .particle-playback { display: none; }
