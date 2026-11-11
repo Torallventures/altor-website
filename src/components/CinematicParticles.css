@@ -13,14 +13,8 @@
 .particle-fallback { position: absolute; width: 60%; height: 76%; right: 0; top: 12%; }
 .particle-fallback img { width: 100%; height: 100%; object-fit: contain; }
 .cinematic-particles[data-ready="true"] .particle-fallback { visibility: hidden; }
-.particle-readability { z-index: 1; background: linear-gradient(90deg,#02030470, #02030432 35%,transparent 60%),linear-gradient(0deg,#020304,transparent 12%); }
-.particle-caption { position: absolute; z-index: 20; bottom: 2.4rem; right: max(2rem,calc((100vw - 1216px)/2)); display: flex; align-items: center; gap: 1.5rem; }
-.particle-caption-copy { display: flex; gap: 1.1rem; align-items: center; font-size: 11px; color: #a9adb3; letter-spacing: .045em; }
-.particle-index { font-size: 9px; letter-spacing: .15em; color: #72777f; }
-.particle-playback { display: grid; place-items: center; border: 1px solid #ffffff29; border-radius: 50%; width: 40px; height: 40px; background: #050609a6; color: #cbd1d8; transition: border-color .2s; }
-.particle-playback svg { width: 12px; height: 12px; }
-.particle-playback:hover { border-color: #ffffff80; }
-.particle-playback:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 4px; }
+.particle-readability { z-index: 1; background: linear-gradient(90deg,#02030418, #0203040a 35%,transparent 60%),linear-gradient(0deg,#020304,transparent 9%); }
+.cinematic-hero .hero-copy { text-shadow: 0 2px 18px #020304; }
 @media (min-width: 1600px) { .cinematic-hero .hero-layout { max-width: 1450px; grid-template-columns: 1fr 1.4fr; } }
 @media (min-width: 768px) and (max-width: 1023px) {
   .cinematic-hero .hero-copy h1 { font-size: clamp(2.4rem,5vw,3.25rem); }
@@ -32,10 +26,6 @@
   .cinematic-hero .hero-description { font-size: 16px; max-width: 30rem; }
   .cinematic-hero .hero-copy a { padding-inline: 1rem; }
   .particle-composition { height: clamp(285px,85vw,420px); margin-top: 1rem; }
-  .particle-caption { left: 1rem; right: 1rem; bottom: 1.7rem; justify-content: space-between; gap: .75rem; }
-  .particle-caption-copy { gap: 1rem; font-size: 10px; }
   .particle-readability { background: linear-gradient(180deg,#02030450,transparent 50%,transparent 90%,#020304); }
   .particle-fallback { inset: auto 0 4rem; height: 340px; width: 100%; }
 }
-@media (prefers-reduced-motion: reduce) { .particle-playback { display: none; } }
-.cinematic-particles[data-playback="reduced-motion"] ~ .particle-caption .particle-playback { display: none; }

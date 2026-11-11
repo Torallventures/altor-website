@@ -1,7 +1,7 @@
 import coastlines from './land.json' with { type: 'json' };
 
 type Vec3 = [number, number, number];
-type Particle = [number, number, number, number];
+type Particle = [number, number, number, number, number?, number?];
 type Surface = { weight: number; sample: (u: number, v: number, w: number) => Particle };
 type Profile = [number, number, number, number?, number?];
 const TAU = Math.PI * 2;
@@ -35,7 +35,7 @@ function loft(profiles: Profile[], weight: number, light = .7): Surface {
   } };
 }
 
-/** Elliptical swept surface with a rounded tip, used for articulated fingers. */
+/** Elliptical swept surface for tailored sleeves. */
 function tube(points: Vec3[], radius: number, weight: number, light = .85, depth = 1, taper = .6, roundedTip = true): Surface {
   return { weight, sample(u, v) {
     const p = spline(points, u), a = spline(points, Math.max(0, u - .004)), b = spline(points, Math.min(1, u + .004));
@@ -47,8 +47,19 @@ function tube(points: Vec3[], radius: number, weight: number, light = .85, depth
   } };
 }
 
-function line(points: Vec3[], weight: number, width = .009, light = 1): Surface {
-  return { weight, sample(u, v, w) { const p = spline(points, u); return [p[0] + (v - .5) * width, p[1] + (w - .5) * width, p[2], light]; } };
+function line(points: Vec3[], weight: number, width = .009, light = 1, feature = 0): Surface {
+  return { weight, sample(u, v, w) { const p = spline(points, u); return [p[0] + (v - .5) * width, p[1] + (w - .5) * width, p[2], light, feature, u]; } };
+}
+
+function polyline(points:Vec3[],weight:number,light:number):Surface {
+  return {weight,sample(u,v,w) {
+    const along=u*(points.length-1),i=Math.min(points.length-2,Math.floor(along)),t=along-i;
+    return [mix(points[i][0],points[i+1][0],t)+(v-.5)*.004,mix(points[i][1],points[i+1][1],t)+(w-.5)*.004,mix(points[i][2],points[i+1][2],t),light];
+  }};
+}
+
+function tagged(surface: Surface, feature: number, phase = 0): Surface {
+  return { weight:surface.weight, sample(u,v,w) { const p=surface.sample(u,v,w); return [p[0],p[1],p[2],p[3],feature,phase]; } };
 }
 
 function patch(a: Vec3, b: Vec3, c: Vec3, weight: number, light = .75): Surface {
@@ -58,19 +69,28 @@ function patch(a: Vec3, b: Vec3, c: Vec3, weight: number, light = .75): Surface 
 function transform(surface: Surface, x: number, y: number, z: number, scale: number, turn = 0): Surface {
   return { weight: surface.weight, sample(u, v, w) {
     const p = surface.sample(u, v, w), co = Math.cos(turn), si = Math.sin(turn);
-    return [x + scale * (p[0] * co + p[2] * si), y + scale * p[1], z + scale * (p[2] * co - p[0] * si), p[3]];
+    return [x + scale * (p[0] * co + p[2] * si), y + scale * p[1], z + scale * (p[2] * co - p[0] * si), p[3],p[4],p[5]];
   } };
 }
 
 function chart(): Surface[] {
-  const trend: Vec3[] = [[-3.35,-1.65,0],[-2.85,-1.43,.03],[-2.4,-.85,.07],[-1.94,-1.1,.12],[-1.38,-.4,.17],[-.85,-.65,.22],[-.28,.22,.28],[.28,.04,.32],[.85,.69,.38],[1.4,.49,.42],[1.95,1.18,.49],[2.48,1.04,.54],[3.15,2.03,.61]];
-  const surfaces: Surface[] = [line(trend, 27, .045, 1.05)];
-  // The fine vertical volume under the trend makes this a spatial data sculpture.
-  surfaces.push({ weight: 24, sample(u, v, w) { const p = spline(trend, u); return [p[0], mix(-1.85, p[1], v), -.08 - w * .32, .08 + .18 * v]; } });
-  for (let y = -1.85; y <= 1.8; y += .72) surfaces.push(line([[-3.45,y,-.35],[3.3,y,-.35]], 1.7, .009, .23));
-  for (let x = -3.4; x < 3.4; x += .67) surfaces.push(line([[x,-1.85,-.35],[x,1.85,-.35]], .65, .008, .12));
-  trend.filter((_, i) => i % 2 === 0).forEach((p, i) => surfaces.push(ellipsoid(p, [.048,.048,.048], i === 6 ? 2 : 1.15, 1.65)));
-  surfaces.push(line([[2.75,1.85,.61],[3.15,2.03,.61],[3.13,1.58,.61]], 1.6, .025, 1.15));
+  // Uneven plateaus, pullbacks and acceleration: a plotted series, never an arrow.
+  const values = [-1.45,-1.39,-1.48,-1.17,-1.06,-1.13,-.88,-.57,-.64,-.34,-.41,-.19,.17,.09,.48,.74,.62,.93,1.29,1.18,1.57,1.92];
+  const trend: Vec3[] = values.map((y,i) => [-3.15+i*6.3/(values.length-1),y,.23+i*.013]);
+  const surfaces: Surface[] = [line(trend, 24, .019, .9, 1)];
+  surfaces.push({ weight: 18, sample(u,v,w) { const p=spline(trend,u); return [p[0],mix(-1.9,p[1],v),-.12-w*.32,.045+.19*v*v,0,u]; } });
+  for(let y=-1.9;y<=2.11;y+=.8) surfaces.push(line([[-3.45,y,-.32],[3.45,y,-.32]],3,.004,.3));
+  for(let x=-3.45;x<=3.46;x+=1.15) surfaces.push(line([[x,-1.9,-.32],[x,2.1,-.32]],1.8,.004,.2));
+  surfaces.push(polyline([[-3.45,2.1,-.3],[-3.45,-1.9,-.3],[3.45,-1.9,-.3]],4,.6));
+  for(let y=-1.9;y<=2.11;y+=.8) surfaces.push(line([[-3.58,y,-.3],[-3.45,y,-.3]],.25,.005,.7));
+  for(let x=-3.45;x<=3.46;x+=1.15) surfaces.push(line([[x,-1.9,-.3],[x,-2.02,-.3]],.2,.005,.55));
+  [3,7,12,15,18,21].forEach((i,k) => {
+    const p=trend[i];
+    surfaces.push(tagged(ellipsoid(p,[.043,.043,.035],1.1,1.45),2,k*.17));
+    const ring: Vec3[]=Array.from({length:49},(_,j) => [p[0]+Math.cos(j/48*TAU)*.105,p[1]+Math.sin(j/48*TAU)*.105,p[2]]);
+    surfaces.push(tagged(line(ring,.9,.005,.6),2,k*.17));
+    surfaces.push(line([[p[0],-1.9,-.28],[p[0],p[1],-.28]],.7,.004,.19));
+  });
   return surfaces;
 }
 
@@ -97,18 +117,22 @@ function globe(): Surface[] {
     const lat = Math.asin(1 - 2 * (i + .5) / 42000) / rad, lon = ((i * 137.507764) % 360) - 180;
     if (bounds.some(b => lon >= b.minX && lon <= b.maxX && lat >= b.minY && lat <= b.maxY && inRing(lon, lat, b.ring))) land.push(sphere(lon, lat));
   }
-  const surfaces: Surface[] = [{ weight: 65, sample(u, v, w) { const p = land[Math.floor(u * land.length)]; return [p[0] + (v - .5) * .012, p[1] + (w - .5) * .012, p[2], .8]; } }, ellipsoid([0,0,0], [2.17,2.17,2.17], 8, .17)];
+  const surfaces: Surface[] = [{ weight: 55, sample(u, v, w) { const p = land[Math.floor(u * land.length)]; return [p[0] + (v - .5) * .012, p[1] + (w - .5) * .012, p[2], .95,0,u]; } },
+    { weight:17,sample(u,v) { const p=sphere(v*360-180,Math.asin(u*2-1)/rad,2.16); return [...p,.24,0,v]; } }];
   coastlines.forEach(ring => {
     if (ring.length < 25) return;
     surfaces.push(line(ring.map(p => sphere(p[0], p[1], 2.195)), ring.length * .0025, .006, .95));
   });
-  const cities = [[-74,40.7],[-.12,51.5],[55.3,25.2],[103.8,1.35],[139.7,35.7],[-46.6,-23.5],[151.2,-33.8]];
-  cities.forEach(([lon,lat]) => surfaces.push(ellipsoid(sphere(lon,lat,2.22), [.035,.035,.035], .65, 1.5)));
-  [[0,1],[1,2],[2,3],[3,4],[0,5],[3,6],[1,5]].forEach(([a,b]) => {
+  // A faint graticule makes the whole globe read as an inhabited digital system.
+  for(let latitude=-60;latitude<=60;latitude+=30) surfaces.push(line(Array.from({length:97},(_,i) => sphere(i/96*360-180,latitude,2.19)),1.6,.004,.27));
+  for(let longitude=-180;longitude<180;longitude+=30) surfaces.push(line(Array.from({length:65},(_,i) => sphere(longitude,-87+i/64*174,2.19)),.85,.004,.22));
+  const cities = [[-74,40.7],[-.12,51.5],[55.3,25.2],[103.8,1.35],[139.7,35.7],[-46.6,-23.5],[151.2,-33.8],[18.4,-33.9],[2.35,48.8],[72.9,19.1],[-118.2,34.1],[-80.2,25.8]];
+  cities.forEach(([lon,lat],i) => surfaces.push(tagged(ellipsoid(sphere(lon,lat,2.22), [.045,.045,.045], .75, 1.5),2,i*.13)));
+  [[0,1],[1,2],[2,3],[3,4],[0,5],[3,6],[1,5],[1,7],[7,9],[2,9],[9,3],[1,8],[0,10],[0,11],[11,5]].forEach(([a,b]) => {
     const start = sphere(...cities[a] as [number,number], 1), end = sphere(...cities[b] as [number,number], 1);
     const points: Vec3[] = [];
     for(let i = 0; i <= 24; i++) { const t = i / 24; const p = start.map((v,k) => mix(v,end[k],t)); const length = Math.hypot(...p); const r = 2.21 + Math.sin(Math.PI*t) * .4; points.push(p.map(v => v / length * r) as Vec3); }
-    surfaces.push(line(points, 1.3, .008, 1.35));
+    surfaces.push(line(points, 1.8, .006, .7,1));
   });
   return surfaces;
 }
@@ -146,47 +170,40 @@ function network(): Surface[] {
   people.forEach(p => executive(p.f).forEach(s => surfaces.push(transform(s, p.x, p.y, p.z, p.s, p.turn))));
   [[-2.45,0],[0,2.45],[-2.45,2.45]].forEach(([a,b], i) => {
     const points: Vec3[] = [[a,-1.34,.0],[(a+b)/2,-1.75-i*.17,.55],[b,-1.34,0]];
-    surfaces.push(line(points, 3, .009, 1.35));
-    surfaces.push(ellipsoid([a,-1.34,0],[.045,.045,.045], .5, 1.3));
+    surfaces.push(line(points, 3, .009, .9,1));
+    surfaces.push(tagged(ellipsoid([a,-1.34,0],[.045,.045,.045], .5, 1.3),2,i*.25));
   });
   return surfaces;
 }
 
-/** Two asymmetric palms with four curled fingers each and opposing thumbs.
- * Cuffs and forearms form a single lateral gesture; hands are surface samples,
- * not an icon, image mask, or random cluster. Camera faces the interlocking grip.
- */
-function handshake(): Surface[] {
-  const surfaces: Surface[] = [];
-  // Sleeves taper into white shirt cuffs and narrower anatomical wrists.
-  for (const side of [-1, 1]) {
-    const sleeve: Surface[] = [
-      tube([[3,-.85,-.1],[2.4,-.43,-.03],[1.65,-.05,.02]], .48, 14, .5, .85, .7, false),
-      tube([[1.72,-.08,.02],[1.44,.065,.04]], .34, 4, .95, .88, .95, false),
-      tube([[1.48,.045,.04],[1.05,.17,.05],[.74,.18,.045]], .25, 5, .7, .9, 1, false),
-      line([[3,-.53,.27],[2.4,-.17,.31],[1.68,.16,.25]], 1.6, .009, .85),
-      ellipsoid([1.59,-.12,.35],[.055,.05,.02], .4, 1.2),
-    ];
-    sleeve.forEach(s => surfaces.push({ weight:s.weight, sample(u,v,w) { const p=s.sample(u,v,w); return [p[0]*side,p[1] + (side === 1 ? .24 : 0),p[2] + (side===1 ? -.15 : .1),p[3]]; } }));
+/** An open volume with bound page stacks and three independently turning leaves. */
+function book(): Surface[] {
+  const surfaces: Surface[]=[];
+  const pagePoint=(u:number,v:number,side:number,layer:number):Vec3 => [u*2.65*side,(v-.5)*3.25,-.08+Math.sin(u*Math.PI)*.22+layer*.045];
+  for(const side of [-1,1]) {
+    surfaces.push({weight:8,sample(u,v) { return [...pagePoint(u,v,side,0),.19,0,u]; }});
+    for(let layer=-5;layer<=0;layer++) {
+      const border=[pagePoint(0,0,side,layer),pagePoint(1,0,side,layer),pagePoint(1,1,side,layer),pagePoint(0,1,side,layer)];
+      surfaces.push(polyline(border,1.3,layer===-5 ? .9 : .37));
+    }
+    for(let row=0;row<10;row++) {
+      const y=.16+row*.069;
+      surfaces.push(line([pagePoint(.17,y,side,1),pagePoint(row%3===2 ? .64 : .87,y,side,1)],.7,.007,row===0 ? .9 : .4));
+    }
   }
-  // Left hand: broad back of hand; fingers curl around the far palm.
-  surfaces.push(ellipsoid([-.43,.18,.12],[.69,.34,.26], 17, .8));
-  // Right palm lies obliquely behind it, exposing fingers below the clasp.
-  surfaces.push(ellipsoid([.38,.3,-.16],[.65,.32,.24], 16, .65));
-  for (let i = 0; i < 4; i++) {
-    const x = -.39 + i * .22;
-    surfaces.push(tube([[x,.17,-.14],[x-.07,-.06,.0],[x-.09,-.32,.24],[x-.02,-.39,.42],[x+.09,-.23,.44]], .105 - i*.009, 3.1, .95, .92, .78));
-    // Opposing fingers wrap the far side, visible at the upper-right knuckles.
-    const y = .42 - i * .145;
-    surfaces.push(tube([[.16,y,-.29],[.47,y,-.34],[.66,y,.02],[.55,y-.04,.22]], .095 - i*.007, 2.6, .72, .9, .75));
-    surfaces.push(line([[x-.06,-.27,.34],[x+.045,-.29,.38]], .22, .007, .68));
+  surfaces.push(line([[0,-1.68,-.22],[0,0,-.23],[0,1.68,-.22]],2,.012,.9));
+  for(let leaf=1;leaf<=3;leaf++) {
+    surfaces.push({weight:7,sample(u,v) { return [...pagePoint(u,v,1,leaf),.22,leaf,u]; }});
+    const border:Vec3[]=[pagePoint(0,0,1,leaf),pagePoint(1,0,1,leaf),pagePoint(1,1,1,leaf),pagePoint(0,1,1,leaf)];
+    const edge=polyline(border,3,.85);
+    surfaces.push({weight:edge.weight,sample(u,v,w) { const p=edge.sample(u,v,w); return [p[0],p[1],p[2],p[3],leaf,p[0]/2.65]; }});
+    for(let row=0;row<9;row++) {
+      const y=.2+row*.07;
+      const rule=line([pagePoint(.16,y,1,leaf),pagePoint(row%3===2 ? .68 : .86,y,1,leaf)],.65,.006,.48);
+      surfaces.push({weight:rule.weight,sample(u,v,w) { const p=rule.sample(u,v,w); return [p[0],p[1],p[2],p[3],leaf,p[0]/2.65]; }});
+    }
   }
-  // Clearly separated thenar / thumb arcs, no extra digits or glowing joints.
-  surfaces.push(tube([[-.9,.31,.17],[-.55,.63,.25],[-.12,.58,.37],[.25,.36,.4]], .145, 5.8, 1, .9, .67));
-  surfaces.push(tube([[.9,.44,-.03],[.55,.7,-.06],[.16,.7,.03],[-.13,.52,.15]], .14, 5.2, .8, .9, .7));
-  // Restrained dorsal tendon ridges make the hand surface read anatomically.
-  for (let i=0; i<3; i++) surfaces.push(line([[-1.02,.12+i*.1,.22],[-.68,.1+i*.1,.35],[-.26,.04+i*.1,.36]], .45, .007, .65));
-  return surfaces.map(s => transform(s,0,0,0,1.18,-.13));
+  return surfaces;
 }
 
 function vortex(): Surface[] {
@@ -201,18 +218,23 @@ function vortex(): Surface[] {
 function sample(surfaces: Surface[], count: number, seed: number) {
   const rng = randomSource(seed), sum = surfaces.reduce((n,s) => n+s.weight,0);
   const weights: number[]=[]; surfaces.reduce((n,s,i) => (weights[i]=n+s.weight),0);
-  const data = new Float32Array(count*4);
+  const data = new Float32Array(count*4), features = new Float32Array(count*2);
   for(let i=0;i<count;i++) {
     const select = rng()*sum; let low=0,high=weights.length-1;
     while(low<high) { const mid=(low+high)>>>1; if(select<weights[mid]) high=mid; else low=mid+1; }
     const p = surfaces[low].sample(rng(),rng(),rng());
-    data.set(p,i*4);
+    data.set(p.slice(0,4) as number[],i*4);
+    features.set([p[4] || 0,p[5] || 0],i*2);
   }
-  return data;
+  return {positions:data,features};
+}
+
+export function createParticleData(count: number) {
+  return [chart(),globe(),network(),book(),vortex()].map((s,i) => sample(s,count,731+i*211));
 }
 
 export function createFormations(count: number) {
-  return [chart(),globe(),network(),handshake(),vortex()].map((s,i) => sample(s,count,731+i*211));
+  return createParticleData(count).map(data => data.positions);
 }
 
 export function createAmbient(count: number) {
