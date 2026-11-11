@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Send, Sparkles, X } from "lucide-react";
+import { ArrowUpRight, Rocket, Send, Sparkles, X } from "lucide-react";
 import { Link } from "react-router";
 import "./ToriAssistant.css";
 
@@ -58,6 +58,10 @@ export function ToriAssistant() {
 
   const openChat = () => { setPhase("ready"); setOpen(true); };
   const closeChat = () => { setOpen(false); avatarRef.current?.focus(); };
+  const launchAgain = () => {
+    setOpen(false);
+    setPhase(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "greeting" : "flying");
+  };
   const ask = (question: string) => {
     const text = question.trim();
     if (!text) return;
@@ -74,16 +78,20 @@ export function ToriAssistant() {
         }}
       >
         <button ref={avatarRef} type="button" className="tori-avatar" onClick={openChat} disabled={phase === "flying"} aria-label="Chat with Tori, your website assistant" aria-expanded={open} aria-controls="tori-chat" style={{ visibility: loaded ? "visible" : "hidden" }}>
+          <span className="tori-jets" aria-hidden="true"><i className="tori-jet tori-jet-left" /><i className="tori-jet tori-jet-right" /></span>
+          <span className="tori-trail" aria-hidden="true">{Array.from({ length: 7 }, (_, index) => <i key={index} style={{ left: `${12 + index * 4}%`, animationDelay: `${index * -0.13}s` }} />)}</span>
+          <span className="tori-woosh" aria-hidden="true">{phase === "flying" ? "Woooosh!" : "Tiny astronaut. Big boost."}</span>
           <img src="/mascots/tori.webp" alt="" width="384" height="417" onLoad={() => setLoaded(true)} draggable={false} />
           {phase !== "flying" && !open && <span className="tori-avatar-label">Ask Tori <Sparkles size={10} aria-hidden="true" /></span>}
         </button>
+        {phase !== "flying" && !open && <button type="button" className="tori-launch" onClick={launchAgain} aria-label="Replay Tori flight" title="One more lap!"><Rocket size={14} aria-hidden="true" /></button>}
       </div>
 
       {phase === "flying" && <button type="button" className="tori-skip" onClick={() => setPhase("greeting")}>Skip flight</button>}
 
       {phase === "greeting" && !open && <div className="tori-greeting">
         <button type="button" className="tori-dismiss" aria-label="Dismiss Tori introduction" onClick={() => setPhase("ready")}><X size={14} aria-hidden="true" /></button>
-        <p className="tori-eyebrow">Your co-pilot has arrived</p>
+        <p className="tori-eyebrow">Landing: mostly nailed it.</p>
         <p className="tori-hello" role="status">Hi, I’m Tori!<br /><span>I’m your website assistant.</span></p>
         <p className="tori-greeting-copy">I’m getting ready for launch. Come say hello!</p>
         <button type="button" className="tori-meet" onClick={openChat}>Meet Tori <ArrowUpRight size={14} aria-hidden="true" /></button>
