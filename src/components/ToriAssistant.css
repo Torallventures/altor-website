@@ -68,3 +68,34 @@
 @media (prefers-reduced-motion: reduce) {
   .tori-flight, .tori-avatar img, .tori-greeting, .tori-chat { animation: none !important; }
 }
+
+/* Tori's jetpack: warm ivory cores, green halos, and little comic sparks. */
+.tori-avatar > img { position: relative; z-index: 2; }
+.tori-avatar-label { z-index: 5; }
+.tori-jets, .tori-trail { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.tori-jet { position: absolute; top: 69%; width: 18%; height: 49%; border-radius: 45% 45% 55% 55%; transform-origin: 50% 0; background: linear-gradient(180deg, #fffde7 0%, #ffeeb8 25%, #ffc76b 50%, #a4c68a 78%, #a4c68a00 100%); clip-path: polygon(22% 0, 78% 0, 100% 28%, 77% 68%, 50% 100%, 22% 70%, 0 30%); filter: drop-shadow(0 0 5px #ffcf8588); opacity: .55; transform: scaleY(.3); animation: tori-pilot-light 1.8s ease-in-out infinite; }
+.tori-jet::after { content: ''; position: absolute; left: 28%; top: 0; width: 44%; height: 65%; border-radius: 50%; background: linear-gradient(#ffffff, #fff9cf 70%, transparent); }
+.tori-jet-left { left: 9%; rotate: 15deg; }
+.tori-jet-right { left: 29%; rotate: 12deg; animation-delay: -.5s; }
+.tori-trail i { position: absolute; top: 97%; width: 5px; height: 5px; opacity: 0; border-radius: 50%; background: #ffd790; }
+.tori-trail i:nth-child(2n) { background: #c3dfa9; width: 4px; height: 4px; }
+.tori-trail i:nth-child(3n) { width: 7px; height: 7px; border-radius: 0; clip-path: polygon(50% 0, 63% 36%, 100% 50%, 63% 63%, 50% 100%, 36% 63%, 0 50%, 36% 36%); }
+.tori-flight .tori-jet, .tori-avatar:is(:hover, :focus-visible) .tori-jet { opacity: 1; animation: tori-thrust .22s ease-in-out infinite alternate; }
+.tori-flight .tori-jet-right, .tori-avatar:is(:hover, :focus-visible) .tori-jet-right { animation-delay: -.11s; }
+.tori-flight .tori-trail i, .tori-avatar:is(:hover, :focus-visible) .tori-trail i { animation-name: tori-spark; animation-duration: .85s; animation-iteration-count: infinite; animation-timing-function: ease-out; }
+.tori-woosh { position: absolute; z-index: 4; top: -18px; right: 40%; width: max-content; max-width: 145px; padding: 7px 10px; border: 1px solid #c2d8ae; border-radius: 12px 12px 3px 12px; background: #eaf1df; color: #25202d; box-shadow: 0 5px 16px #0003; font-size: 10px; font-weight: 700; line-height: 1.3; pointer-events: none; opacity: 0; transform: translateY(4px) rotate(-7deg); transition: opacity .2s, transform .2s; }
+.tori-flight .tori-woosh { animation: tori-woosh-pop 2s ease-in-out infinite; }
+.tori-avatar:is(:hover, :focus-visible) .tori-woosh { opacity: 1; transform: translateY(0) rotate(-7deg); }
+.tori-assistant:not([data-phase="flying"]) .tori-avatar:is(:hover, :focus-visible) > img { animation: tori-boost-hop .85s ease-in-out infinite; }
+.tori-launch { position: absolute; z-index: 5; top: 10px; left: -13px; display: grid; place-items: center; width: 29px; height: 29px; border: 1px solid #a4c68a66; border-radius: 50%; background: #211b29ed; color: #bed9a8; pointer-events: auto; transition: transform .2s, background .2s; }
+.tori-launch:hover { transform: rotate(-18deg) scale(1.08); background: #393043; }
+.tori-assistant[data-visible="false"] .tori-pilot * { animation-play-state: paused !important; }
+@keyframes tori-pilot-light { 50% { opacity: .8; transform: scaleY(.42) scaleX(.9); } }
+@keyframes tori-thrust { from { transform: scaleY(.77) scaleX(.9); } to { transform: scaleY(1.16) scaleX(1.04); } }
+@keyframes tori-spark { 0% { opacity: 0; transform: translate(0, -8px) scale(.8); } 15% { opacity: .9; } 100% { opacity: 0; transform: translate(-20px, 48px) scale(.1); } }
+@keyframes tori-woosh-pop { 0%, 100% { opacity: 0; transform: translateY(5px) rotate(-7deg) scale(.9); } 15%, 65% { opacity: 1; transform: translateY(0) rotate(-7deg) scale(1); } }
+@keyframes tori-boost-hop { 50% { transform: translateY(-9px) rotate(-5deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .tori-jets, .tori-trail, .tori-woosh { display: none; }
+  .tori-launch { transition: none; }
+}
