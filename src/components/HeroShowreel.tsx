@@ -69,7 +69,7 @@ export function HeroShowreel() {
         poster="/media/torall-website-polished-poster.jpg"
         width="1920"
         height="1080"
-        autoPlay muted loop playsInline preload="metadata"
+        muted loop playsInline preload="metadata"
         aria-label="Torall Ventures: residential community websites, business websites, apps, management systems, and custom digital products"
         onPlaying={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
