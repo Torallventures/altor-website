@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Pause, Play } from "lucide-react";
-import { lumeraTemplateUrl } from "@/lib/portfolio";
+import { Link } from "react-router";
 
 export function HeroShowreel() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -49,36 +49,27 @@ export function HeroShowreel() {
   };
 
   return (
-    <figure className="hero-reel relative min-w-0">
-      <div className="mb-4 flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-        <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-primary" /> A Torall experience</span>
-        <span>01 / Lumera</span>
+    <section id="showreel" aria-labelledby="showreel-heading" className="relative scroll-mt-20 border-y border-border bg-[#100e15] py-12 sm:py-16">
+      <div className="mx-auto mb-8 flex max-w-7xl flex-wrap items-end justify-between gap-6 px-4 sm:px-6 lg:px-8">
+        <div><p className="mb-4 font-mono text-[10px] uppercase tracking-[0.22em] text-primary">The Torall showreel / All five services</p><h2 id="showreel-heading" className="font-display text-3xl font-medium tracking-tight sm:text-5xl">Every possibility. <span className="text-primary">In motion.</span></h2></div>
+        {!failed && <button type="button" onClick={togglePlayback} aria-label={playing ? "Pause showcase reel" : "Play showcase reel"} className="inline-flex min-h-11 items-center gap-3 rounded-full border border-border px-5 text-xs text-primary transition-colors hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{playing ? <Pause className="h-3.5 w-3.5" aria-hidden="true" /> : <Play className="h-3.5 w-3.5" aria-hidden="true" />}{playing ? "Pause reel" : "Play reel"}</button>}
       </div>
-      <div className="relative overflow-hidden rounded-[1.25rem] border border-primary/20 bg-[#17131e] shadow-[0_30px_100px_-35px_#000]">
-        <video
-          ref={videoRef}
-          className="block aspect-[64/45] w-full object-cover"
-          src="/media/torall-lumera-reel.mp4"
-          poster="/media/torall-lumera-poster.jpg"
-          width="1280" height="900"
-          muted loop playsInline preload="none"
-          aria-label="Lumera showcase demo: architectural footage, community website forms, and the management portal"
-          onPlaying={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
-          onError={() => { setFailed(true); setPlaying(false); }}
-        />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#100d16]/90 via-transparent to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-7">
-          <div><p className="mb-2 font-mono text-[9px] uppercase tracking-[0.22em] text-primary">Showcase demo / Residential</p><p className="font-display text-3xl font-medium tracking-tight text-white sm:text-4xl">Living, connected.</p></div>
-          {!failed && <button type="button" onClick={togglePlayback} aria-label={playing ? "Pause showcase reel" : "Play showcase reel"} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/30 bg-black/35 text-white backdrop-blur-md transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-            {playing ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="ml-0.5 h-4 w-4" aria-hidden="true" />}
-          </button>}
+      <figure className="mx-auto max-w-[1600px] px-3 sm:px-6">
+        <div className="overflow-hidden rounded-xl border border-primary/15 bg-black sm:rounded-2xl">
+          <video ref={videoRef} className="block aspect-video w-full object-contain" src="/media/torall-services-reel.mp4" poster="/media/torall-services-poster.jpg" width="1600" height="900" muted loop playsInline controls preload="none" aria-label="Torall Ventures showreel: residential community websites, business websites, business apps, custom management systems, and anything digital" onPlaying={() => setPlaying(true)} onPause={() => { setPlaying(false); }} onError={() => { setFailed(true); setPlaying(false); }} />
         </div>
+        <figcaption className="mx-auto mt-5 flex max-w-7xl flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground"><p>Product concepts and Lumera showcase footage. Designed to show what’s possible.</p><a href="#services-teaser" className="inline-flex min-h-11 items-center gap-2 text-primary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">Explore every service<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a></figcaption>
+      </figure>
+      <div className="mx-auto mt-6 grid max-w-7xl gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:px-8">
+        {[
+          ["Residential community websites", "Portals, bookings & resident experiences.", "residential-community-websites"],
+          ["Business websites", "Your brand, beautifully built for the web.", "business-websites"],
+          ["Business apps", "Web and mobile tools for the way you work.", "business-apps"],
+          ["Custom management systems", "Connect operations, clients and teams.", "custom-management-systems"],
+          ["Anything digital", "Bring your next product or AI idea to life.", "anything-digital"],
+        ].map(([title, description, slug], index) => <Link key={slug} to={`/services/${slug}`} className="group border-t border-border py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"><span className="font-mono text-[10px] text-primary">0{index + 1}</span><h3 className="mb-2 mt-3 font-display text-sm font-semibold transition-colors group-hover:text-primary">{title}</h3><p className="text-xs leading-relaxed text-muted-foreground">{description}</p></Link>)}
       </div>
-      <figcaption className="mt-5 flex items-center justify-between gap-5 border-b border-border pb-5">
-        <div><p className="font-display text-sm font-medium">From first impression to everyday experience.</p><p className="mt-1.5 text-xs text-muted-foreground">Website. Applications. Community portal.</p></div>
-        <a href={lumeraTemplateUrl} aria-label="Explore the Lumera showcase demo" className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-primary transition-colors hover:border-primary hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"><ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" /></a>
-      </figcaption>
-    </figure>
+    </section>
   );
 }
+
