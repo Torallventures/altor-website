@@ -1,44 +1,55 @@
 import { Link } from "react-router";
 import type { ReactNode } from "react";
+import * as Tabs from "@radix-ui/react-tabs";
 import { ArrowRight, Check, Orbit, CalendarDays, KeyRound, Bell, Package, Sparkles, LayoutGrid, MessageSquare, ArrowUpRight } from "lucide-react";
 import { services } from "@/data/services";
 import { useReveal } from "@/hooks/useReveal";
+import "./ServicesTeaser.css";
 
 const labels = ["Communities", "Websites", "Apps", "Management", "Anything digital"];
 
-/** All services flow down the page, with a separate reveal for each scene. */
+/** All five capabilities share one compact, keyboard-accessible showcase. */
 export function ServicesTeaser() {
   const headRef = useReveal<HTMLDivElement>();
 
   return (
-    <section id="services-teaser" className="services-showcase relative py-24 sm:py-28" aria-labelledby="services-heading">
+    <section id="services-teaser" className="services-showcase services-widget relative" aria-labelledby="services-heading">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div ref={headRef} className="reveal-left flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
             <p className="font-mono text-[13px] uppercase tracking-[0.25em] text-primary-deep">What we do</p>
             <h2 id="services-heading" className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-              If it&apos;s digital,<br className="hidden sm:block" /> <span className="text-primary">we build it.</span>
+              If it&apos;s digital, <span className="text-primary">we build it.</span>
             </h2>
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground">One team. Every digital possibility. Explore what we can build for you.</p>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground">Five ways to move your business forward. Choose a service to explore.</p>
           </div>
           <Link to="/portfolio" className="group inline-flex items-center gap-2 rounded-md font-display text-sm font-semibold text-primary-deep hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             Explore our portfolio <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
-        <div className="mt-12 space-y-8 sm:space-y-12">
+        <Tabs.Root defaultValue={services[0].slug} className="services-widget-frame">
+          <Tabs.List className="services-widget-tabs" aria-label="Our services">
+            {services.map((item, index) => (
+              <Tabs.Trigger key={item.slug} value={item.slug} className="services-widget-tab" aria-label={item.title}>
+                <item.icon aria-hidden="true" />
+                <span>{labels[index]}</span>
+              </Tabs.Trigger>
+            ))}
+          </Tabs.List>
           {services.map((item, index) => (
-            <ServicePanel key={item.slug} item={item} index={index} />
+            <Tabs.Content key={item.slug} value={item.slug} className="services-widget-content">
+              <ServicePanel item={item} index={index} />
+            </Tabs.Content>
           ))}
-        </div>
+        </Tabs.Root>
       </div>
     </section>
   );
 }
 
 function ServicePanel({ item, index }: { item: (typeof services)[number]; index: number }) {
-  const ref = useReveal<HTMLElement>();
   return (
-    <article ref={ref} className="services-stage reveal" aria-labelledby={`service-heading-${item.slug}`}>
+    <article className="services-stage" aria-labelledby={`service-heading-${item.slug}`}>
       <div className="services-panel">
         <div className="services-copy relative z-10 px-6 py-10 sm:px-10 sm:py-14 lg:py-20">
           <p className="mb-7 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-primary"><Orbit className="h-4 w-4" /> Built around your world</p>
