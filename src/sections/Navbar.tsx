@@ -53,10 +53,10 @@ export function Navbar() {
       }}
       className={`fixed inset-x-0 top-0 z-50 isolate transition-transform [transition-duration:450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${visible ? "translate-y-0" : "-translate-y-full"}`}
     >
-      {/* Let every section remain visible through the navigation; fade contrast below the links. */}
+      {/* Keep shading at the top edge; the lower navigation stays clear over every section. */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-x-0 top-0 -bottom-8 -z-10 bg-gradient-to-b from-black/85 via-black/60 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_60%,transparent)] transition-opacity duration-500 motion-reduce:transition-none ${visible ? "opacity-100" : "opacity-0"}`}
+        className={`pointer-events-none absolute inset-x-0 top-0 h-16 -z-10 [background:linear-gradient(180deg,rgba(0,0,0,0.5)_0%,rgba(0,0,0,0.12)_35%,transparent_100%)] transition-opacity duration-500 motion-reduce:transition-none ${visible ? "opacity-100" : "opacity-0"}`}
       />
       <div
         aria-hidden="true"
