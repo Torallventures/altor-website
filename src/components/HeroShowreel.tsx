@@ -5,7 +5,7 @@ import { Link } from "react-router";
 export function HeroShowreel() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [wantsPlayback, setWantsPlayback] = useState(() =>
-    window.matchMedia("(min-width: 768px) and (prefers-reduced-motion: no-preference)").matches
+    window.matchMedia("(prefers-reduced-motion: no-preference)").matches
   );
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -56,9 +56,9 @@ export function HeroShowreel() {
       </div>
       <figure className="mx-auto max-w-[1600px] px-3 sm:px-6">
         <div className="overflow-hidden rounded-xl border border-primary/15 bg-black sm:rounded-2xl">
-          <video ref={videoRef} className="block aspect-video w-full object-contain" src="/media/torall-services-reel.mp4" poster="/media/torall-services-poster.jpg" width="1600" height="900" muted loop playsInline controls preload="none" aria-label="Torall Ventures showreel: residential community websites, business websites, business apps, custom management systems, and anything digital" onPlaying={() => setPlaying(true)} onPause={() => { setPlaying(false); }} onError={() => { setFailed(true); setPlaying(false); }} />
+          <video ref={videoRef} className="block aspect-video w-full object-contain" src="/media/torall-services-reel-v2.mp4" poster="/media/torall-services-poster-v2.jpg" width="1600" height="900" muted loop playsInline controls preload="none" aria-label="Torall Ventures showreel: residential community websites, business websites, business apps, custom management systems, and anything digital" onPlaying={() => setPlaying(true)} onPause={() => { setPlaying(false); }} onError={() => { setFailed(true); setPlaying(false); }} />
         </div>
-        <figcaption className="mx-auto mt-5 flex max-w-7xl flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground"><p>Product concepts and Lumera showcase footage. Designed to show what’s possible.</p><a href="#services-teaser" className="inline-flex min-h-11 items-center gap-2 text-primary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">Explore every service<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a></figcaption>
+        <figcaption className="mx-auto mt-5 flex max-w-7xl flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground"><p>Concept imagery, product demonstrations and Lumera footage. Designed to show what’s possible.</p><a href="#services-teaser" className="inline-flex min-h-11 items-center gap-2 text-primary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">Explore every service<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a></figcaption>
       </figure>
       <div className="mx-auto mt-6 grid max-w-7xl gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:px-8">
         {[
