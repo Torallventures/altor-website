@@ -1,15 +1,13 @@
 /** All artistic and device-quality controls live here. Times are seconds. */
 export const PARTICLE_CONFIG = {
-  desktop: { particles: 18000, ambient: 1400, pixelRatio: 1.75, fps: 60 },
-  mobile: { particles: 8000, ambient: 550, pixelRatio: 1.35, fps: 40 },
-  lowPower: { particles: 5000, ambient: 300, pixelRatio: 1, fps: 30 },
+  desktop: { particles: 22000, ambient: 4200, pixelRatio: 1.75, fps: 60 },
+  mobile: { particles: 10000, ambient: 1600, pixelRatio: 1.35, fps: 40 },
+  lowPower: { particles: 6000, ambient: 900, pixelRatio: 1, fps: 30 },
   mobileBreakpoint: 768,
   formationDuration: 8,
   transitionDuration: 3.1,
-  chartConstructionDuration: 4.2,
+  constructionDuration: 4.2,
   globeRotationSpeed: 0.045,
-  pageTurnSpeed: 0.9,
-  vortexRotationSpeed: 0.23,
   turbulence: 0.46,
   glowStrength: 0.22,
   particleSize: 1.6,
@@ -18,16 +16,16 @@ export const PARTICLE_CONFIG = {
 } as const;
 
 export const FORMATIONS = [
-  { name: 'Financial growth' },
-  { name: 'Global connectivity' },
-  { name: 'Professional relationships' },
-  { name: 'Knowledge in motion' },
-  { name: 'Continuous innovation' },
+  { name: 'Website Construction' },
+  { name: 'Connected Globe' },
+  { name: 'Business Network' },
+  { name: 'Responsive Transformation' },
+  { name: 'Connected Digital Ecosystem' },
 ] as const;
 
 export const CYCLE_DURATION = FORMATIONS.length * PARTICLE_CONFIG.formationDuration;
 
-/** A wrapped clock keeps the final vortex → chart transition continuous. */
+/** A wrapped clock keeps ecosystem → website construction continuous. */
 export function sequenceAt(seconds: number) {
   const time = ((seconds % CYCLE_DURATION) + CYCLE_DURATION) % CYCLE_DURATION;
   const current = Math.floor(time / PARTICLE_CONFIG.formationDuration);

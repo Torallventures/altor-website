@@ -11,12 +11,11 @@ export function CinematicParticles() {
   useEffect(() => {
     let disposed = false;
     const stage = host.current;
-    const composition = stage?.closest('section')?.querySelector<HTMLElement>('.particle-composition');
-    if(!stage || !composition) return;
+    if(!stage) return;
     if(import.meta.env.DEV && new URLSearchParams(location.search).get('particleMode') === 'fallback') return;
     import('./cinematic/renderer').then(({ mountParticles }) => {
       if(disposed) return;
-      controller.current = mountParticles({ host:stage, composition,
+      controller.current = mountParticles({ host:stage,
         onReady:() => { if(!disposed) setReady(true); }, onFailure:() => { if(!disposed) setReady(false); } });
     }).catch(() => { /* The inline illustration remains visible without WebGL. */ });
     return () => { disposed=true; controller.current?.dispose(); controller.current=null; };
@@ -25,7 +24,7 @@ export function CinematicParticles() {
   return <>
     <div ref={host} className="cinematic-particles" data-ready={ready}>
       <div className="particle-fallback" aria-hidden="true">
-        <img src="/media/torall-particle-fallback.svg" alt="" width="800" height="560" />
+        <img src="/media/torall-particle-fallback.svg" alt="" width="1440" height="900" />
       </div>
     </div>
     <div className="particle-readability" aria-hidden="true"/>
