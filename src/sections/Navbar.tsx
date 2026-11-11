@@ -7,7 +7,6 @@ import { HeaderBrandLockup } from "@/components/BrandIdentity";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [keyboardFocus, setKeyboardFocus] = useState(false);
   const visible = !hidden || open || keyboardFocus;
@@ -22,7 +21,6 @@ export function Navbar() {
       const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
       const y = Math.max(0, Math.min(window.scrollY, maxY));
       const delta = y - previousY;
-      setScrolled(y > 24);
       if (y <= 80) {
         setHidden(false);
         direction = 0;
@@ -53,12 +51,17 @@ export function Navbar() {
       onBlurCapture={(event) => {
         if (!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget)) setKeyboardFocus(false);
       }}
-      className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,border-color] duration-300 ease-out motion-reduce:transition-none ${visible ? "translate-y-0" : "-translate-y-full"} ${
-        scrolled || open
-          ? "border-b border-border bg-background/85 backdrop-blur-md"
-          : "hero-scope border-b border-transparent"
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 isolate transition-transform [transition-duration:450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${visible ? "translate-y-0" : "-translate-y-full"}`}
     >
+      {/* Let every section remain visible through the navigation; fade contrast below the links. */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-x-0 top-0 -bottom-8 -z-10 bg-gradient-to-b from-black/85 via-black/60 to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_60%,transparent)] transition-opacity duration-500 motion-reduce:transition-none ${visible ? "opacity-100" : "opacity-0"}`}
+      />
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 -z-10 bg-background/95 backdrop-blur-md transition-opacity duration-300 motion-reduce:transition-none ${open ? "opacity-100" : "opacity-0"}`}
+      />
       <nav className="mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8 xl:gap-12">
         <Link
           to="/"
