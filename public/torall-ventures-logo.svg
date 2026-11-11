@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="224" height="64" viewBox="280 140 1120 320" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="224" height="64" viewBox="280 110 1120 320" role="img" aria-labelledby="title desc">
   <title id="title">Torall Ventures</title>
-  <desc id="desc">Animated signature in Torall green and gray violet, beside the Torall Ventures wordmark and the tagline Always leave your mark.</desc>
+  <desc id="desc">Animated signature in Torall green and gray violet beside the Torall Ventures wordmark.</desc>
   <style>
     .signature { fill: none; stroke: #A4C68A; stroke-linecap: round; stroke-linejoin: round; }
     .signature path { stroke-dasharray: 1; stroke-dashoffset: 0; animation: draw .8s ease both; }
@@ -18,5 +18,4 @@
   </g>
   <text x="960" y="280" fill="#A4C68A" font-family="Arial, Helvetica, sans-serif" font-size="100" font-weight="600" letter-spacing="8">TORALL</text>
   <text x="963" y="365" fill="#777180" font-family="Arial, Helvetica, sans-serif" font-size="47" font-weight="500" letter-spacing="15">VENTURES</text>
-  <text x="850" y="445" text-anchor="middle" fill="#A4C68A" opacity=".85" font-family="Arial, Helvetica, sans-serif" font-size="52" letter-spacing="1">Always leave your mark.</text>
 </svg>
