@@ -8,81 +8,86 @@ export default function ServiceDetailPage() {
   const { slug } = useParams();
   const service = slug ? getService(slug) : undefined;
   const headRef = useReveal<HTMLDivElement>();
-  const bodyRef = useReveal<HTMLDivElement>(120);
+  const bodyRef = useReveal<HTMLDivElement>(80);
 
   if (!service) return <Navigate to="/portfolio" replace />;
 
+  const Icon = service.icon;
   const idx = services.indexOf(service);
   const next = services[(idx + 1) % services.length];
 
   return (
     <>
-      <section className="pt-40 pb-16 sm:pt-48" aria-labelledby="service-heading">
-        <div className="mx-auto max-w-[1240px] px-5 md:px-8">
-          <div ref={headRef} className="reveal max-w-3xl">
+      <section className="relative pb-8 pt-32 sm:pt-40">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div ref={headRef} className="reveal-left max-w-3xl">
             <Link
               to="/portfolio"
-              className="link-draw inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors duration-[400ms] hover:text-foreground"
+              className="inline-flex items-center gap-1.5 rounded-md font-mono text-[13px] uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              <ArrowLeft className="h-4 w-4" />
               Back to Portfolio
             </Link>
-            <h1
-              id="service-heading"
-              className="mt-10 font-display text-4xl leading-[1.1] tracking-[-0.01em] sm:text-5xl"
-            >
+            <div className="mt-8 flex items-center gap-4">
+              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-secondary text-primary-deep">
+                <Icon className="h-7 w-7" strokeWidth={1.8} />
+              </div>
+              <p className="font-mono text-[13px] uppercase tracking-[0.25em] text-primary-deep">
+                Service {String(idx + 1).padStart(2, "0")}
+              </p>
+            </div>
+            <h1 className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">
               {service.title}
             </h1>
-            <p className="mt-6 max-w-[52ch] text-xl leading-relaxed text-muted-foreground">
+            <p className="mt-5 text-xl leading-relaxed text-muted-foreground">
               {service.tagline}
             </p>
           </div>
         </div>
       </section>
 
-      <section className="pb-8" aria-label="Details">
-        <div className="mx-auto max-w-[1240px] px-5 md:px-8">
+      <section className="relative pb-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
             ref={bodyRef}
-            className="reveal grid gap-14 border-t border-border pt-14 lg:grid-cols-12"
+            className="reveal grid gap-12 border-t border-border pt-12 lg:grid-cols-12"
           >
             <div className="lg:col-span-7">
-              <h2 className="font-display text-2xl">
+              <h2 className="font-display text-2xl font-bold tracking-tight">
                 How we approach it
               </h2>
               {service.story.map((p) => (
                 <p
                   key={p.slice(0, 24)}
-                  className="mt-6 max-w-[56ch] text-lg leading-relaxed text-muted-foreground"
+                  className="mt-5 text-lg leading-relaxed text-muted-foreground"
                 >
                   {p}
                 </p>
               ))}
 
-              <div className="mt-12 border-l-2 border-primary/60 pl-6">
-                <p className="label-caps text-primary">
+              <div className="mt-10 rounded-lg border border-border bg-card p-6">
+                <p className="font-mono text-[12px] uppercase tracking-[0.2em] text-primary-deep">
                   Ideal for
                 </p>
-                <p className="mt-4 max-w-[52ch] leading-relaxed text-foreground/90">
+                <p className="mt-3 leading-relaxed text-foreground/90">
                   {service.idealFor}
                 </p>
               </div>
             </div>
 
             <div className="lg:col-span-5">
-              <h2 className="font-display text-2xl">
+              <h2 className="font-display text-2xl font-bold tracking-tight">
                 What&apos;s included
               </h2>
-              <ul className="mt-8 space-y-4">
+              <ul className="mt-6 space-y-3">
                 {service.features.map((f) => (
                   <li
                     key={f}
-                    className="flex items-start gap-3 border-b border-border pb-4 text-[15px] leading-snug text-foreground/90"
+                    className="flex items-start gap-2.5 rounded-md border border-border bg-card px-4 py-4 text-[15px] leading-snug text-foreground/90"
                   >
                     <Check
-                      className="mt-0.5 h-4 w-4 shrink-0 text-primary"
-                      strokeWidth={1.8}
-                      aria-hidden="true"
+                      className="mt-0.5 h-4 w-4 shrink-0 text-primary-deep"
+                      strokeWidth={2.2}
                     />
                     {f}
                   </li>
@@ -91,16 +96,19 @@ export default function ServiceDetailPage() {
             </div>
           </div>
 
-          <div className="mt-20 flex flex-wrap items-center justify-between gap-6 border-t border-border pt-10">
+          <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-border pt-10">
             <Link
               to={`/services/${next.slug}`}
-              className="group inline-flex items-center gap-2 text-[15px] font-medium text-foreground"
+              className="group inline-flex items-center gap-2 rounded-md font-display text-base font-semibold text-primary-deep transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <span className="link-draw">Next: {next.title}</span>
-              <ArrowRight className="h-4 w-4 text-primary transition-transform duration-[400ms] group-hover:translate-x-1.5" aria-hidden="true" />
+              Next: {next.title}
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
-            <Link to="/contact" className="cta-outline">
-              Begin a Conversation
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
+            >
+              Start a project
             </Link>
           </div>
         </div>
