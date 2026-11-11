@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Toggles `.revealed` as the element enters/leaves the viewport, so
- * scroll animations replay in both directions — up and down, always.
+ * Reveals content once. Returning upward never hides or replays it.
+ * Viewport state remains available to pause decorative animation offscreen.
  * With reduced motion (or no IntersectionObserver) the element is
  * simply shown immediately and stays visible.
  */
@@ -18,13 +18,15 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(delay = 0) {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced || !("IntersectionObserver" in window)) {
       el.classList.add("revealed");
+      el.dataset.inView = "true";
       return;
     }
 
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          entry.target.classList.toggle("revealed", entry.isIntersecting);
+          el.dataset.inView = String(entry.isIntersecting);
+          if (entry.isIntersecting) el.classList.add("revealed");
         }
       },
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
