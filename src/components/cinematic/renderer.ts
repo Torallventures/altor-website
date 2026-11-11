@@ -1,12 +1,13 @@
-import { AdditiveBlending, BufferAttribute, BufferGeometry, PerspectiveCamera, Points, Scene, ShaderMaterial, Vector2, WebGLRenderer } from 'three';
+import { AdditiveBlending, BufferAttribute, BufferGeometry, LineSegments, PerspectiveCamera, Points, Scene, ShaderMaterial, Vector2, Vector4, WebGLRenderer } from 'three';
 import { PARTICLE_CONFIG as config, FORMATIONS, sequenceAt } from './config';
-import { createAmbient, createFormations, randomSource } from './formations';
-import { ambientVertex, particleFragment, particleVertex } from './shaders';
+import { createAmbient, createParticleData, randomSource } from './formations';
+import { ambientVertex, particleFragment, particleVertex, systemFragment, systemVertex } from './shaders';
+import { createSystemField } from './systemField';
 
-export type ParticleController = { setPaused: (paused: boolean) => void; dispose: () => void };
-type Options = { host: HTMLElement; composition: HTMLElement; caption: HTMLElement; index: HTMLElement; onReady: () => void; onFailure: () => void };
+export type ParticleController = { dispose: () => void };
+type Options = { host: HTMLElement; composition: HTMLElement; onReady: () => void; onFailure: () => void };
 
-export function mountParticles({ host, composition, caption, index, onReady, onFailure }: Options): ParticleController {
+export function mountParticles({ host, composition, onReady, onFailure }: Options): ParticleController {
   const mobile = matchMedia(`(max-width: ${config.mobileBreakpoint - 1}px)`);
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const lowPower = navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 4;
@@ -21,17 +22,26 @@ export function mountParticles({ host, composition, caption, index, onReady, onF
   const uniforms = {
     uTime: { value: 0 }, uLocal: { value: 0 }, uCurrent: { value: 0 }, uPrevious: { value: 4 },
     uTransition: { value: config.transitionDuration }, uChartDuration: { value: config.chartConstructionDuration },
-    uGlobeSpeed: { value: config.globeRotationSpeed }, uHandshakeSpeed: { value: config.handshakeRotationSpeed }, uVortexSpeed: { value: config.vortexRotationSpeed },
+    uGlobeSpeed: { value: config.globeRotationSpeed }, uPageSpeed: { value: config.pageTurnSpeed }, uVortexSpeed: { value: config.vortexRotationSpeed },
     uTurbulence: { value: config.turbulence }, uGlow: { value: config.glowStrength }, uSize: { value: config.particleSize },
     uPixelRatio: { value: 1 }, uScale: { value: 1 }, uCenter: { value: new Vector2() },
   };
   const material = new ShaderMaterial({ uniforms, vertexShader: particleVertex, fragmentShader: particleFragment, transparent: true, depthWrite: false, blending: AdditiveBlending });
   const ambientMaterial = new ShaderMaterial({ uniforms: { uTime: uniforms.uTime, uGlow: { value: .1 }, uPixelRatio: uniforms.uPixelRatio, uExtent: { value: new Vector2() } }, vertexShader: ambientVertex, fragmentShader: particleFragment, transparent: true, depthWrite: false, blending: AdditiveBlending });
+  const field=createSystemField();
+  const fieldUniforms={uTime:uniforms.uTime,uExtent:{value:new Vector2()},uCopyBounds:{value:new Vector4()},uPixelRatio:uniforms.uPixelRatio,uGlow:{value:.32}};
+  const fieldMaterial=new ShaderMaterial({uniforms:fieldUniforms,vertexShader:systemVertex,fragmentShader:systemFragment,transparent:true,depthWrite:false,blending:AdditiveBlending});
+  const nodeMaterial=new ShaderMaterial({uniforms:fieldUniforms,vertexShader:systemVertex,fragmentShader:particleFragment,transparent:true,depthWrite:false,blending:AdditiveBlending});
+  const fieldGeometry=new BufferGeometry(),nodeGeometry=new BufferGeometry();
+  fieldGeometry.setAttribute('position',new BufferAttribute(field.lines,3)); fieldGeometry.setAttribute('aRoute',new BufferAttribute(field.routes,2));
+  nodeGeometry.setAttribute('position',new BufferAttribute(field.nodes,3)); nodeGeometry.setAttribute('aRoute',new BufferAttribute(field.nodeRoutes,2));
+  const systemLines=new LineSegments(fieldGeometry,fieldMaterial),systemNodes=new Points(nodeGeometry,nodeMaterial);
+  systemLines.frustumCulled=false; systemNodes.frustumCulled=false;
   const particles = new Points(new BufferGeometry(), material), ambient = new Points(new BufferGeometry(), ambientMaterial);
   particles.frustumCulled = false; ambient.frustumCulled = false;
-  scene.add(particles, ambient);
+  scene.add(systemLines,systemNodes,particles,ambient);
   let frame = 0, last = 0, lastPaint = 0, elapsed = 0, count = 0, lastChapter = -1;
-  let visible = true, paused = false, disposed = false, lost = false, ready = false;
+  let visible = true, disposed = false, lost = false, ready = false;
   let slowFrames = 0, paintedFrames = 0, adapted = false;
   // A dev-only deterministic frame supports visual review without adding controls to the site.
   const reviewTime = import.meta.env.DEV ? Number(new URLSearchParams(location.search).get('particleFrame') ?? NaN) : NaN;
@@ -43,10 +53,11 @@ export function mountParticles({ host, composition, caption, index, onReady, onF
     const q = quality();
     if(count === q.particles) return;
     count = q.particles;
-    const data = createFormations(count), next = new BufferGeometry(), seed = new Float32Array(count * 3), rng = randomSource(911);
+    const data = createParticleData(count), next = new BufferGeometry(), seed = new Float32Array(count * 3), rng = randomSource(911);
     for(let i=0; i<seed.length; i++) seed[i]=rng();
     next.setAttribute('position', new BufferAttribute(new Float32Array(count*3),3));
-    ['aChart','aGlobe','aNetwork','aHandshake','aVortex'].forEach((name,i) => next.setAttribute(name,new BufferAttribute(data[i],4)));
+    ['aChart','aGlobe','aNetwork','aBook','aVortex'].forEach((name,i) => next.setAttribute(name,new BufferAttribute(data[i].positions,4)));
+    ['aChartFeature','aGlobeFeature','aNetworkFeature','aBookFeature'].forEach((name,i) => next.setAttribute(name,new BufferAttribute(data[i].features,2)));
     next.setAttribute('aSeed',new BufferAttribute(seed,3));
     particles.geometry.dispose(); particles.geometry=next;
     const dust = new BufferGeometry(); dust.setAttribute('position', new BufferAttribute(createAmbient(q.ambient),3));
@@ -63,19 +74,17 @@ export function mountParticles({ host, composition, caption, index, onReady, onF
     renderer.render(scene,camera);
     if(lost) return;
     if(lastChapter!==sequence.current) {
-      caption.textContent=FORMATIONS[sequence.current].caption;
-      index.textContent=`0${sequence.current+1} / 05`;
       host.dataset.formation=FORMATIONS[sequence.current].name;
       lastChapter=sequence.current;
     }
-    host.dataset.playback=isReduced() ? 'reduced-motion' : paused ? 'paused' : 'playing';
+    host.dataset.playback=isReduced() ? 'reduced-motion' : 'playing';
     if(!ready) { ready=true; onReady(); }
   }
 
   function stop() { cancelAnimationFrame(frame); frame=0; last=0; lastPaint=0; }
   function tick(now: number) {
     frame=0;
-    if(disposed || lost || !visible || document.hidden || paused || frozen()) { last=0; return; }
+    if(disposed || lost || !visible || document.hidden || frozen()) { last=0; return; }
     if(last) elapsed+=Math.min((now-last)/1000,.1);
     last=now;
     const interval=1000 / (adapted ? 30 : quality().fps);
@@ -96,7 +105,7 @@ export function mountParticles({ host, composition, caption, index, onReady, onF
     stop();
     if(disposed || lost || !visible || document.hidden) { host.dataset.playback='suspended'; return; }
     paint();
-    if(!paused && !frozen()) frame=requestAnimationFrame(tick);
+    if(!frozen()) frame=requestAnimationFrame(tick);
   }
   function resize() {
     if(disposed || lost) return;
@@ -111,6 +120,9 @@ export function mountParticles({ host, composition, caption, index, onReady, onF
     uniforms.uScale.value=Math.min(art.width/8.4,art.height/5.8)*units;
     uniforms.uPixelRatio.value=renderer.getPixelRatio();
     ambientMaterial.uniforms.uExtent.value.set(height*camera.aspect*.6,height*.6);
+    fieldUniforms.uExtent.value.set(height*camera.aspect*.54,height*.54);
+    const copy=host.closest('section')?.querySelector('.hero-copy')?.getBoundingClientRect();
+    if(copy) fieldUniforms.uCopyBounds.value.set((copy.left-bounds.left)/bounds.width,1-(copy.bottom-bounds.top)/bounds.height,(copy.right-bounds.left)/bounds.width,1-(copy.top-bounds.top)/bounds.height);
     geometry(); resume();
   }
   function contextLost(event: Event) { event.preventDefault(); lost=true; stop(); ready=false; onFailure(); }
@@ -127,7 +139,6 @@ export function mountParticles({ host, composition, caption, index, onReady, onF
   resize();
 
   return {
-    setPaused(value) { paused=value; resume(); },
     dispose() {
       disposed=true; stop(); intersection.disconnect(); sizing.disconnect();
       document.removeEventListener('visibilitychange',resume);
@@ -135,6 +146,7 @@ export function mountParticles({ host, composition, caption, index, onReady, onF
       renderer.domElement.removeEventListener('webglcontextlost',contextLost);
       renderer.domElement.removeEventListener('webglcontextrestored',contextRestored);
       particles.geometry.dispose(); ambient.geometry.dispose(); material.dispose(); ambientMaterial.dispose();
+      fieldGeometry.dispose(); nodeGeometry.dispose(); fieldMaterial.dispose(); nodeMaterial.dispose();
       renderer.dispose(); renderer.domElement.remove();
     },
   };

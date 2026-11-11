@@ -1,14 +1,14 @@
 /** All artistic and device-quality controls live here. Times are seconds. */
 export const PARTICLE_CONFIG = {
-  desktop: { particles: 18000, ambient: 1100, pixelRatio: 1.75, fps: 60 },
-  mobile: { particles: 8000, ambient: 450, pixelRatio: 1.35, fps: 40 },
+  desktop: { particles: 18000, ambient: 1400, pixelRatio: 1.75, fps: 60 },
+  mobile: { particles: 8000, ambient: 550, pixelRatio: 1.35, fps: 40 },
   lowPower: { particles: 5000, ambient: 300, pixelRatio: 1, fps: 30 },
   mobileBreakpoint: 768,
   formationDuration: 8,
   transitionDuration: 3.1,
   chartConstructionDuration: 4.2,
   globeRotationSpeed: 0.045,
-  handshakeRotationSpeed: 0.23,
+  pageTurnSpeed: 0.9,
   vortexRotationSpeed: 0.23,
   turbulence: 0.46,
   glowStrength: 0.22,
@@ -18,11 +18,11 @@ export const PARTICLE_CONFIG = {
 } as const;
 
 export const FORMATIONS = [
-  { name: 'Financial growth', caption: 'Ideas with a trajectory.' },
-  { name: 'Global connectivity', caption: 'Connected without boundaries.' },
-  { name: 'Professional relationships', caption: 'People at the center.' },
-  { name: 'Trusted partnerships', caption: 'Progress, built together.' },
-  { name: 'Continuous innovation', caption: 'Always moving forward.' },
+  { name: 'Financial growth' },
+  { name: 'Global connectivity' },
+  { name: 'Professional relationships' },
+  { name: 'Knowledge in motion' },
+  { name: 'Continuous innovation' },
 ] as const;
 
 export const CYCLE_DURATION = FORMATIONS.length * PARTICLE_CONFIG.formationDuration;
