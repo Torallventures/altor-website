@@ -1,4 +1,5 @@
 import coastlines from './land.json' with { type: 'json' };
+import { website, ecosystem } from './interfaces.ts';
 
 type Vec3 = [number, number, number];
 type Particle = [number, number, number, number, number?, number?];
@@ -51,13 +52,6 @@ function line(points: Vec3[], weight: number, width = .009, light = 1, feature =
   return { weight, sample(u, v, w) { const p = spline(points, u); return [p[0] + (v - .5) * width, p[1] + (w - .5) * width, p[2], light, feature, u]; } };
 }
 
-function polyline(points:Vec3[],weight:number,light:number):Surface {
-  return {weight,sample(u,v,w) {
-    const along=u*(points.length-1),i=Math.min(points.length-2,Math.floor(along)),t=along-i;
-    return [mix(points[i][0],points[i+1][0],t)+(v-.5)*.004,mix(points[i][1],points[i+1][1],t)+(w-.5)*.004,mix(points[i][2],points[i+1][2],t),light];
-  }};
-}
-
 function tagged(surface: Surface, feature: number, phase = 0): Surface {
   return { weight:surface.weight, sample(u,v,w) { const p=surface.sample(u,v,w); return [p[0],p[1],p[2],p[3],feature,phase]; } };
 }
@@ -71,27 +65,6 @@ function transform(surface: Surface, x: number, y: number, z: number, scale: num
     const p = surface.sample(u, v, w), co = Math.cos(turn), si = Math.sin(turn);
     return [x + scale * (p[0] * co + p[2] * si), y + scale * p[1], z + scale * (p[2] * co - p[0] * si), p[3],p[4],p[5]];
   } };
-}
-
-function chart(): Surface[] {
-  // Uneven plateaus, pullbacks and acceleration: a plotted series, never an arrow.
-  const values = [-1.45,-1.39,-1.48,-1.17,-1.06,-1.13,-.88,-.57,-.64,-.34,-.41,-.19,.17,.09,.48,.74,.62,.93,1.29,1.18,1.57,1.92];
-  const trend: Vec3[] = values.map((y,i) => [-3.15+i*6.3/(values.length-1),y,.23+i*.013]);
-  const surfaces: Surface[] = [line(trend, 24, .019, .9, 1)];
-  surfaces.push({ weight: 18, sample(u,v,w) { const p=spline(trend,u); return [p[0],mix(-1.9,p[1],v),-.12-w*.32,.045+.19*v*v,0,u]; } });
-  for(let y=-1.9;y<=2.11;y+=.8) surfaces.push(line([[-3.45,y,-.32],[3.45,y,-.32]],3,.004,.3));
-  for(let x=-3.45;x<=3.46;x+=1.15) surfaces.push(line([[x,-1.9,-.32],[x,2.1,-.32]],1.8,.004,.2));
-  surfaces.push(polyline([[-3.45,2.1,-.3],[-3.45,-1.9,-.3],[3.45,-1.9,-.3]],4,.6));
-  for(let y=-1.9;y<=2.11;y+=.8) surfaces.push(line([[-3.58,y,-.3],[-3.45,y,-.3]],.25,.005,.7));
-  for(let x=-3.45;x<=3.46;x+=1.15) surfaces.push(line([[x,-1.9,-.3],[x,-2.02,-.3]],.2,.005,.55));
-  [3,7,12,15,18,21].forEach((i,k) => {
-    const p=trend[i];
-    surfaces.push(tagged(ellipsoid(p,[.043,.043,.035],1.1,1.45),2,k*.17));
-    const ring: Vec3[]=Array.from({length:49},(_,j) => [p[0]+Math.cos(j/48*TAU)*.105,p[1]+Math.sin(j/48*TAU)*.105,p[2]]);
-    surfaces.push(tagged(line(ring,.9,.005,.6),2,k*.17));
-    surfaces.push(line([[p[0],-1.9,-.28],[p[0],p[1],-.28]],.7,.004,.19));
-  });
-  return surfaces;
 }
 
 const rad = Math.PI / 180;
@@ -117,7 +90,7 @@ function globe(): Surface[] {
     const lat = Math.asin(1 - 2 * (i + .5) / 42000) / rad, lon = ((i * 137.507764) % 360) - 180;
     if (bounds.some(b => lon >= b.minX && lon <= b.maxX && lat >= b.minY && lat <= b.maxY && inRing(lon, lat, b.ring))) land.push(sphere(lon, lat));
   }
-  const surfaces: Surface[] = [{ weight: 55, sample(u, v, w) { const p = land[Math.floor(u * land.length)]; return [p[0] + (v - .5) * .012, p[1] + (w - .5) * .012, p[2], .95,0,u]; } },
+  const surfaces: Surface[] = [{ weight: 74, sample(u, v, w) { const p = land[Math.floor(u * land.length)]; return [p[0] + (v - .5) * .012, p[1] + (w - .5) * .012, p[2], 1.1,0,u]; } },
     { weight:17,sample(u,v) { const p=sphere(v*360-180,Math.asin(u*2-1)/rad,2.16); return [...p,.24,0,v]; } }];
   coastlines.forEach(ring => {
     if (ring.length < 25) return;
@@ -166,53 +139,14 @@ function executive(feminine: boolean): Surface[] {
 
 function network(): Surface[] {
   const surfaces: Surface[] = [];
-  const people = [{ x: -2.45, y: -.15, z: -.28, s: .8, turn: .17, f: false }, { x: 0, y: .27, z: .4, s: 1, turn: -.06, f: false }, { x: 2.45, y: -.15, z: -.28, s: .8, turn: -.17, f: true }];
+  const people = [{ x: -3.8, y: -.15, z: -.28, s: 1, turn: .17, f: false }, { x: 0, y: .27, z: .4, s: 1.16, turn: -.06, f: false }, { x: 3.8, y: -.15, z: -.28, s: 1, turn: -.17, f: true }];
   people.forEach(p => executive(p.f).forEach(s => surfaces.push(transform(s, p.x, p.y, p.z, p.s, p.turn))));
-  [[-2.45,0],[0,2.45],[-2.45,2.45]].forEach(([a,b], i) => {
-    const points: Vec3[] = [[a,-1.34,.0],[(a+b)/2,-1.75-i*.17,.55],[b,-1.34,0]];
+  [[-3.8,0],[0,3.8],[-3.8,3.8]].forEach(([a,b], i) => {
+    const points: Vec3[] = [[a,-1.55,.0],[(a+b)/2,-2.25-i*.2,.55],[b,-1.55,0]];
     surfaces.push(line(points, 3, .009, .9,1));
-    surfaces.push(tagged(ellipsoid([a,-1.34,0],[.045,.045,.045], .5, 1.3),2,i*.25));
+    surfaces.push(tagged(ellipsoid([a,-1.55,0],[.045,.045,.045], .5, 1.3),2,i*.25));
   });
   return surfaces;
-}
-
-/** An open volume with bound page stacks and three independently turning leaves. */
-function book(): Surface[] {
-  const surfaces: Surface[]=[];
-  const pagePoint=(u:number,v:number,side:number,layer:number):Vec3 => [u*2.65*side,(v-.5)*3.25,-.08+Math.sin(u*Math.PI)*.22+layer*.045];
-  for(const side of [-1,1]) {
-    surfaces.push({weight:8,sample(u,v) { return [...pagePoint(u,v,side,0),.19,0,u]; }});
-    for(let layer=-5;layer<=0;layer++) {
-      const border=[pagePoint(0,0,side,layer),pagePoint(1,0,side,layer),pagePoint(1,1,side,layer),pagePoint(0,1,side,layer)];
-      surfaces.push(polyline(border,1.3,layer===-5 ? .9 : .37));
-    }
-    for(let row=0;row<10;row++) {
-      const y=.16+row*.069;
-      surfaces.push(line([pagePoint(.17,y,side,1),pagePoint(row%3===2 ? .64 : .87,y,side,1)],.7,.007,row===0 ? .9 : .4));
-    }
-  }
-  surfaces.push(line([[0,-1.68,-.22],[0,0,-.23],[0,1.68,-.22]],2,.012,.9));
-  for(let leaf=1;leaf<=3;leaf++) {
-    surfaces.push({weight:7,sample(u,v) { return [...pagePoint(u,v,1,leaf),.22,leaf,u]; }});
-    const border:Vec3[]=[pagePoint(0,0,1,leaf),pagePoint(1,0,1,leaf),pagePoint(1,1,1,leaf),pagePoint(0,1,1,leaf)];
-    const edge=polyline(border,3,.85);
-    surfaces.push({weight:edge.weight,sample(u,v,w) { const p=edge.sample(u,v,w); return [p[0],p[1],p[2],p[3],leaf,p[0]/2.65]; }});
-    for(let row=0;row<9;row++) {
-      const y=.2+row*.07;
-      const rule=line([pagePoint(.16,y,1,leaf),pagePoint(row%3===2 ? .68 : .86,y,1,leaf)],.65,.006,.48);
-      surfaces.push({weight:rule.weight,sample(u,v,w) { const p=rule.sample(u,v,w); return [p[0],p[1],p[2],p[3],leaf,p[0]/2.65]; }});
-    }
-  }
-  return surfaces;
-}
-
-function vortex(): Surface[] {
-  return [{ weight: 1, sample(u,v,w) {
-    const depth = u, strand = Math.floor(v * 5), ribbon = (v * 5) % 1;
-    const theta = TAU * (strand / 5 + depth * 1.3) + (ribbon - .5) * .15;
-    const radius = .24 + Math.pow(depth,.76)*3.25 + (w-.5)*.1;
-    return [Math.cos(theta)*radius, Math.sin(theta)*radius*.82, -4.8+depth*5.6, .3+.6*Math.sin(ribbon*Math.PI)];
-  } }];
 }
 
 function sample(surfaces: Surface[], count: number, seed: number) {
@@ -230,15 +164,18 @@ function sample(surfaces: Surface[], count: number, seed: number) {
 }
 
 export function createParticleData(count: number) {
-  return [chart(),globe(),network(),book(),vortex()].map((s,i) => sample(s,count,731+i*211));
+  const shapes=[website(),globe(),network(),website('tablet'),website('mobile'),ecosystem()];
+  return shapes.map((s,i) => sample(s,count,i===3 || i===4 ? 731 : 731+i*211));
 }
 
 export function createFormations(count: number) {
-  return createParticleData(count).map(data => data.positions);
+  const data=createParticleData(count);
+  return [0,1,2,4,5].map(i=>data[i].positions);
 }
 
 export function createAmbient(count: number) {
   const rng=randomSource(415), data=new Float32Array(count*3);
-  for(let i=0;i<count;i++) { data[i*3]=(rng()-.5)*2; data[i*3+1]=(rng()-.5)*2; data[i*3+2]=rng(); }
+  const columns=Math.ceil(Math.sqrt(count*1.6)),rows=Math.ceil(count/columns);
+  for(let i=0;i<count;i++) { data[i*3]=((i%columns+rng())/columns-.5)*2; data[i*3+1]=((Math.floor(i/columns)+rng())/rows-.5)*2; data[i*3+2]=rng(); }
   return data;
 }

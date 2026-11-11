@@ -18,7 +18,7 @@ export function Hero() {
             </div>
           </div>
         </div>
-        <div className="particle-composition" aria-hidden="true" />
+        <div className="hero-layout-spacer" aria-hidden="true" />
       </div>
     </section>
   );

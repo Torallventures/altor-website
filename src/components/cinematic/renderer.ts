@@ -3,11 +3,12 @@ import { PARTICLE_CONFIG as config, FORMATIONS, sequenceAt } from './config';
 import { createAmbient, createParticleData, randomSource } from './formations';
 import { ambientVertex, particleFragment, particleVertex, systemFragment, systemVertex } from './shaders';
 import { createSystemField } from './systemField';
+import { canvasComposition } from './layout';
 
 export type ParticleController = { dispose: () => void };
-type Options = { host: HTMLElement; composition: HTMLElement; onReady: () => void; onFailure: () => void };
+type Options = { host: HTMLElement; onReady: () => void; onFailure: () => void };
 
-export function mountParticles({ host, composition, onReady, onFailure }: Options): ParticleController {
+export function mountParticles({ host, onReady, onFailure }: Options): ParticleController {
   const mobile = matchMedia(`(max-width: ${config.mobileBreakpoint - 1}px)`);
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const lowPower = navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 4;
@@ -21,15 +22,15 @@ export function mountParticles({ host, composition, onReady, onFailure }: Option
   camera.position.z = config.cameraDistance;
   const uniforms = {
     uTime: { value: 0 }, uLocal: { value: 0 }, uCurrent: { value: 0 }, uPrevious: { value: 4 },
-    uTransition: { value: config.transitionDuration }, uChartDuration: { value: config.chartConstructionDuration },
-    uGlobeSpeed: { value: config.globeRotationSpeed }, uPageSpeed: { value: config.pageTurnSpeed }, uVortexSpeed: { value: config.vortexRotationSpeed },
+    uTransition: { value: config.transitionDuration }, uConstruction: { value: config.constructionDuration },
+    uGlobeSpeed: { value: config.globeRotationSpeed },
     uTurbulence: { value: config.turbulence }, uGlow: { value: config.glowStrength }, uSize: { value: config.particleSize },
-    uPixelRatio: { value: 1 }, uScale: { value: 1 }, uCenter: { value: new Vector2() },
+    uPixelRatio: { value: 1 }, uScale: { value: 1 }, uCenter: { value: new Vector2() }, uCopyBounds:{ value:new Vector4() },
   };
   const material = new ShaderMaterial({ uniforms, vertexShader: particleVertex, fragmentShader: particleFragment, transparent: true, depthWrite: false, blending: AdditiveBlending });
   const ambientMaterial = new ShaderMaterial({ uniforms: { uTime: uniforms.uTime, uGlow: { value: .1 }, uPixelRatio: uniforms.uPixelRatio, uExtent: { value: new Vector2() } }, vertexShader: ambientVertex, fragmentShader: particleFragment, transparent: true, depthWrite: false, blending: AdditiveBlending });
   const field=createSystemField();
-  const fieldUniforms={uTime:uniforms.uTime,uExtent:{value:new Vector2()},uCopyBounds:{value:new Vector4()},uPixelRatio:uniforms.uPixelRatio,uGlow:{value:.32}};
+  const fieldUniforms={uTime:uniforms.uTime,uExtent:{value:new Vector2()},uCopyBounds:uniforms.uCopyBounds,uPixelRatio:uniforms.uPixelRatio,uGlow:{value:.32}};
   const fieldMaterial=new ShaderMaterial({uniforms:fieldUniforms,vertexShader:systemVertex,fragmentShader:systemFragment,transparent:true,depthWrite:false,blending:AdditiveBlending});
   const nodeMaterial=new ShaderMaterial({uniforms:fieldUniforms,vertexShader:systemVertex,fragmentShader:particleFragment,transparent:true,depthWrite:false,blending:AdditiveBlending});
   const fieldGeometry=new BufferGeometry(),nodeGeometry=new BufferGeometry();
@@ -56,8 +57,8 @@ export function mountParticles({ host, composition, onReady, onFailure }: Option
     const data = createParticleData(count), next = new BufferGeometry(), seed = new Float32Array(count * 3), rng = randomSource(911);
     for(let i=0; i<seed.length; i++) seed[i]=rng();
     next.setAttribute('position', new BufferAttribute(new Float32Array(count*3),3));
-    ['aChart','aGlobe','aNetwork','aBook','aVortex'].forEach((name,i) => next.setAttribute(name,new BufferAttribute(data[i].positions,4)));
-    ['aChartFeature','aGlobeFeature','aNetworkFeature','aBookFeature'].forEach((name,i) => next.setAttribute(name,new BufferAttribute(data[i].features,2)));
+    ['aWebsite','aGlobe','aNetwork','aTablet','aMobile','aEcosystem'].forEach((name,i) => next.setAttribute(name,new BufferAttribute(data[i].positions,4)));
+    [0,1,2,5].forEach((target,i) => next.setAttribute(['aWebsiteFeature','aGlobeFeature','aNetworkFeature','aEcosystemFeature'][i],new BufferAttribute(data[target].features,2)));
     next.setAttribute('aSeed',new BufferAttribute(seed,3));
     particles.geometry.dispose(); particles.geometry=next;
     const dust = new BufferGeometry(); dust.setAttribute('position', new BufferAttribute(createAmbient(q.ambient),3));
@@ -109,17 +110,17 @@ export function mountParticles({ host, composition, onReady, onFailure }: Option
   }
   function resize() {
     if(disposed || lost) return;
-    const bounds=host.getBoundingClientRect(), art=composition.getBoundingClientRect();
+    const bounds=host.getBoundingClientRect();
     if(!bounds.width || !bounds.height) return;
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1,adapted ? 1 : quality().pixelRatio));
     renderer.setSize(bounds.width,bounds.height,false);
     camera.aspect=bounds.width/bounds.height; camera.updateProjectionMatrix();
     const height=2*Math.tan(config.fieldOfView*Math.PI/360)*config.cameraDistance;
-    const units=height/bounds.height;
-    uniforms.uCenter.value.set((art.left-bounds.left+art.width/2-bounds.width/2)*units, (bounds.height/2-(art.top-bounds.top+art.height/2))*units);
-    uniforms.uScale.value=Math.min(art.width/8.4,art.height/5.8)*units;
+    const placement=canvasComposition(bounds.width,bounds.height,height);
+    uniforms.uCenter.value.set(placement.x,placement.y);
+    uniforms.uScale.value=placement.scale;
     uniforms.uPixelRatio.value=renderer.getPixelRatio();
-    ambientMaterial.uniforms.uExtent.value.set(height*camera.aspect*.6,height*.6);
+    ambientMaterial.uniforms.uExtent.value.set(height*camera.aspect*.5,height*.5);
     fieldUniforms.uExtent.value.set(height*camera.aspect*.54,height*.54);
     const copy=host.closest('section')?.querySelector('.hero-copy')?.getBoundingClientRect();
     if(copy) fieldUniforms.uCopyBounds.value.set((copy.left-bounds.left)/bounds.width,1-(copy.bottom-bounds.top)/bounds.height,(copy.right-bounds.left)/bounds.width,1-(copy.top-bounds.top)/bounds.height);
@@ -129,7 +130,7 @@ export function mountParticles({ host, composition, onReady, onFailure }: Option
   function contextRestored() { lost=false; resize(); }
   const intersection=new IntersectionObserver(([entry]) => { visible=entry.isIntersecting; resume(); }, {threshold: .01});
   const sizing=new ResizeObserver(resize);
-  intersection.observe(host); sizing.observe(host); sizing.observe(composition);
+  intersection.observe(host); sizing.observe(host);
   document.addEventListener('visibilitychange',resume);
   reduced.addEventListener('change',resume); mobile.addEventListener('change',resize);
   renderer.domElement.addEventListener('webglcontextlost',contextLost);

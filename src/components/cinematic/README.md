@@ -1,26 +1,40 @@
 # Torall cinematic hero
 
-One persistent Three.js point cloud morphs through five sampled 3D surfaces on a 40-second loop. Each particle has five fixed targets and one stable seed. The vertex shader handles movement, staggered chart construction, rotation, turbulence and light pulses. No per-frame React state or CPU position-buffer uploads are used.
+One persistent GPU point cloud morphs through five formations in a 40-second loop:
+Website Construction → Connected Globe → Business Network → Responsive Transformation → Connected Digital Ecosystem.
 
-## Art direction and controls
+## Whole-hero composition
 
-`config.ts` controls density, device tiers, formation/transition timing, rotation, page-turn speed, particle size and glow. `formations.ts` authors the plotted growth chart, geographic network globe, three executive busts, an open book with three turning leaves, and five-stream vortex. Feature buffers identify signal paths and nodes for restrained green pulses. Shape construction is deterministic; no model, video, texture, external font or runtime API is needed by the effect.
+The canvas is absolutely positioned at `inset: 0` inside the hero and is independent of the content grid. `layout.ts` positions the formation from only the canvas dimensions. The former right-column composition reference is gone. The layout spacer preserves the existing text and CTA placement but never controls the renderer.
 
-The chart arrives left to right. Each eight-second chapter starts by moving the previous shape's particles to the next surface, then holds the new shape. The final vortex disperses and becomes the next chart's source; the animation clock never resets particle positions. Ambient particles span the full hero during every chapter.
+Ambient points use a stratified distribution over the entire canvas, with perspective compensation so the field reaches all four edges. Continuous signal paths and illuminated nodes also span the hero. A restrained CSS gradient and a shader luminance mask protect the actual copy bounds without removing particles behind the headline, paragraph or buttons. The copy remains above the decorative canvas.
 
-Desktop uses 18,000 formation particles + 1,400 ambient points. Mobile uses 8,000 + 550 with reduced pixel ratio/frame rate; low-core devices use 5,000 + 300. `systemField.ts` adds continuous signal paths across the entire hero, with illumination attenuated behind the copy's actual bounds. Slow render submission also reduces pixel ratio/draw count. These are device heuristics, not a guarantee of any particular frame rate. Four draw calls, no bloom framebuffer or trails accumulation buffers. Resizing regenerates geometry only across quality tiers.
+## Formation design
 
-The hero reserves composition space before the GPU code loads. Its text and links render immediately. The renderer is dynamically imported; a static point-globe stays visible if import/WebGL initialization fails or the context is lost. Reduced-motion visitors see a static rendered globe. Visibility and intersection observers stop unnecessary rendering while hidden or offscreen; returning resumes the same clock. There are no manual playback controls or visible animation captions. All observers, listeners, geometries and materials are disposed on navigation.
+`interfaces.ts` authors browser chrome, navigation, architectural image panels, text, buttons and content cards as 3D particle surfaces. Section-based arrival delays build the website in sequence, with completion pulses. Desktop, tablet and mobile layouts have identical surface order, sampling weights and random seeds: each particle retains its section identity while the website physically reflows.
 
-## Development and verification
+`formations.ts` retains and refines the geographic globe and tailored professional busts. The globe has Natural Earth continents, coastlines, a faint graticule, geographical nodes and raised connection arcs. The ecosystem includes a website, two dashboards and a mobile application at different depths, connected by illuminated paths with traveling pulses.
+
+Six position buffers support the five chapters (responsive transformation uses both tablet and phone targets). Stable seeds and shader interpolation preserve particle identity through every chapter and the loop boundary. There are no chart, book or vortex targets, manual controls, counters or visible captions. White/silver particles carry subtle light activity; the existing green branding stays intact.
+
+## Performance and accessibility
+
+`config.ts` controls density, timing, size, glow and device quality. Desktop uses 22,000 formation points plus 4,200 ambient points; mobile uses 10,000 plus 1,600; low-core devices use 6,000 plus 900. Four draw calls, no bloom/trails buffers, no per-frame React state or CPU position uploads. Device tiers cap pixel ratio and frame rate. Slow render submission reduces pixel ratio and point count; these are heuristics, not guaranteed frame rates.
+
+The renderer loads dynamically without blocking copy or links. A full-canvas static SVG stays visible if WebGL fails. Reduced-motion visitors see a static globe and ambient field. Visibility/intersection observers suspend rendering while hidden or offscreen. Cleanup disposes listeners, observers, geometries and materials when leaving the homepage.
+
+## Local verification
 
 - `npm run build`
 - `npx eslint src/components/CinematicParticles.tsx src/components/cinematic/*.ts src/sections/Hero.tsx`
 - `node --test --test-isolation=none tests/particles.test.mjs` (Node 24+)
-- `node scripts/particle-fallback.mjs` regenerates the static SVG after globe changes.
-- In Vite development only, `/?particleFrame=5` / `13` / `21` / `29` / `37` freezes the five completed formations. Intermediate seconds inspect actual shader morphing. Production ignores this parameter.
-- Development-only `?particleMotion=reduce` exercises the same static rendering branch as the OS reduced-motion preference; `?particleMode=fallback` skips WebGL to review the static SVG. Neither override is available in production.
+- `node scripts/particle-fallback.mjs` regenerates the full-canvas static SVG.
+- Development-only `/?particleFrame=5`, `13`, `21`, `27.4`, `29.2`, `31.5`, `37` freezes the website, globe, network, responsive desktop/tablet/phone, and ecosystem. Intermediate times inspect actual shader morphing.
+- `?particleMotion=reduce` exercises the OS reduced-motion rendering branch; `?particleMode=fallback` skips WebGL for static fallback review. Production ignores these review parameters.
+- Inspect desktop, tablet and mobile, including particles behind the copy. A full-sized canvas alone is not proof of visible full-width coverage.
 
-Natural Earth 1:110m land coastlines (`land.json`) are public-domain data from https://www.naturalearthdata.com/about/terms-of-use/ and https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_110m_land.geojson . Only exterior coordinate rings are retained. Geometry other than coastlines is authored for this project.
+Tests cover chapter order and loop boundaries, finite 3D geometry, deterministic quality tiers, stable responsive particle identities, ambient coverage in all twelve canvas regions, and canvas-centered formation sizing.
 
-Changes are confined to the hero. The existing product illustration component is retained in source. Portfolio, the `/lumeratm` reverse proxy, services, navigation, contact routes and Vercel configuration are unchanged.
+Natural Earth 1:110m land coastlines (`land.json`) are public-domain data from https://www.naturalearthdata.com/about/terms-of-use/ and https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_110m_land.geojson . Only exterior coordinate rings are retained. Other geometry is authored for this project.
+
+Changes are confined to the homepage hero and its tests/documentation/fallback. Navigation, other sections and pages, routing and Vercel configuration are unchanged.
