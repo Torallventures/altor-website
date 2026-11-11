@@ -2,6 +2,9 @@
 .brand-lockup { width: 224px; height: 64px; overflow: visible; }
 .brand-contour-outer, .brand-contour-inner { stroke-dasharray: 1; stroke-dashoffset: 0; }
 .brand-header-link { display: inline-flex; align-items: center; min-height: 44px; }
+.brand-header-link .brand-lockup { width: 168px; height: 48px; }
+header > nav[class] { column-gap: 24px; }
+@media (min-width: 1280px) { header > nav[class] { column-gap: 32px; } }
 .brand-intro .brand-introduction .brand-contour-outer { animation: brand-draw 1.15s cubic-bezier(.32,.02,.18,1) both; }
 .brand-intro .brand-introduction .brand-contour-inner { animation: brand-draw .52s .68s cubic-bezier(.3,.05,.15,1) both; }
 .brand-intro .brand-introduction .brand-primary-word .brand-letter { animation: brand-type-in .58s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(1.02s + var(--letter) * .055s); }
@@ -14,7 +17,7 @@
 @keyframes brand-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes brand-type-in { from { clip-path: inset(-8px 100% -8px 0); transform: translateY(4px); opacity: .5; } to { clip-path: inset(-8px -8px -8px -8px); transform: translateY(0); opacity: 1; } }
 @keyframes brand-content-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-@media (max-width: 639px) { .brand-header-link .brand-lockup, .brand-mobile { width: 196px; height: 56px; } }
+@media (max-width: 639px) { .brand-header-link .brand-lockup, .brand-mobile { width: 154px; height: 44px; } }
 @media (prefers-reduced-motion: reduce) {
   .brand-intro .brand-introduction * { animation: none !important; }
   .brand-intro .brand-introduction .brand-letter, .brand-intro #top .hero-copy > p, .brand-intro #top .hero-copy > h1, .brand-intro #top .hero-description, .brand-intro #top .hero-copy > div > div, .brand-intro #top .product-ecosystem { animation: none !important; opacity: 1; transform: none; clip-path: none; }
