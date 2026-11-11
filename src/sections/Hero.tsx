@@ -1,35 +1,8 @@
-import { useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { HeroCanvas } from "@/components/HeroCanvas";
 
 export function Hero() {
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  // Scroll-out choreography: content drifts up and fades as you leave the hero
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const el = contentRef.current;
-    if (!el) return;
-
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const y = window.scrollY;
-        const h = window.innerHeight;
-        const p = Math.min(Math.max(y / (h * 0.75), 0), 1);
-        el.style.opacity = String(1 - p * 0.9);
-        el.style.transform = `translateY(${y * 0.22}px)`;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
   return (
     <section
       id="top"
@@ -53,7 +26,6 @@ export function Hero() {
       />
 
       <div
-        ref={contentRef}
         className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-24 pt-32 sm:px-6 lg:px-8"
       >
         <div className="max-w-3xl">

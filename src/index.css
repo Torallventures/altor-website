@@ -77,8 +77,8 @@
 .services-aura { position: absolute; inset: 0; background: radial-gradient(ellipse at 53% 50%, hsl(var(--primary) / .15), transparent 48%), radial-gradient(ellipse at 70% 45%, hsl(var(--violet) / .32), transparent 65%); }
 .services-grid { position: absolute; inset: 0; opacity: .16; background-image: linear-gradient(hsl(var(--violet)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--violet)) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse, black, transparent 68%); transform: rotate(-15deg) scale(1.2); }
 .services-caption { display: flex; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.75rem; border-top: 1px solid hsl(var(--violet) / .25); font-family: "JetBrains Mono", monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: hsl(var(--muted-foreground)); }
-.services-stage:not(.revealed) .services-universe,
-.services-stage:not(.revealed) .services-universe * { animation-play-state: paused; }
+.services-stage[data-in-view="false"] .services-universe,
+.services-stage[data-in-view="false"] .services-universe * { animation-play-state: paused; }
 @keyframes service-copy-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 @keyframes service-scene-in { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes service-card-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -14px; } }
@@ -181,7 +181,9 @@
   .mock-digital { top: 6%; }.mock-digital-body { min-height: 265px; padding: 18px; }.mock-digital-body h4 { font-size: 24px; margin-top: 14px; }.mock-digital-body em { font-size: 21px; }.mock-workflow { margin-top: 20px; }.mock-workflow > span { padding: 9px 6px; }.mock-ai-card { padding: 13px; bottom: 12%; }.mock-ai-card p { font-size: 14px; }.mock-ai-card > div { padding: 8px; margin-top: 10px; }
 }
 
-/* Scroll-reveal: transform/opacity only, interruptible transitions */
+.site-footer { overflow: hidden; border-radius: 2rem 2rem 0 0; background: linear-gradient(140deg, hsl(var(--violet) / .12), transparent 55%), hsl(var(--background) / .97); }
+
+/* Reveal once, retaining content when visitors return upward. */
 .reveal,
 .reveal-left {
   opacity: 0;
