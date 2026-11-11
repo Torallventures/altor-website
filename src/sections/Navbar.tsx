@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
 
 import { navigationLinks as links } from "@/lib/navigation";
+import { AnimatedBrandIntro } from "@/components/BrandIdentity";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -35,17 +36,11 @@ export function Navbar() {
       <nav className="mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8 xl:gap-12">
         <Link
           to="/"
-          className="flex shrink-0 items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="brand-header-link shrink-0 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Torall Ventures — home"
           onClick={() => setOpen(false)}
         >
-          <img
-            src="/torall-ventures-logo.svg"
-            alt="Torall Ventures"
-            width={224}
-            height={64}
-            className="h-12 w-auto sm:h-14"
-          />
+          <AnimatedBrandIntro decorative />
         </Link>
 
         <div className="hidden flex-1 items-center gap-5 lg:flex xl:gap-8">
