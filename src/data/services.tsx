@@ -11,6 +11,7 @@ export type ServiceItem = {
   slug: string;
   icon: LucideIcon;
   title: string;
+  image: string;
   /** One-line pitch used on cards and the overview list */
   tagline: string;
   /** Overview paragraph shown on the services page */
@@ -28,6 +29,7 @@ export const services: ServiceItem[] = [
     slug: "residential-community-websites",
     icon: Building2,
     title: "Residential Community Websites",
+    image: '/media/service-communities.webp',
     tagline:
       "Modern websites for residential buildings — everything your residents need, in one place.",
     overview:
@@ -51,6 +53,7 @@ export const services: ServiceItem[] = [
     slug: "business-websites",
     icon: Globe,
     title: "Business Websites",
+    image: '/media/service-websites.webp',
     tagline:
       "Professional websites for any business, in any industry — sharp, fast, and built to win customers.",
     overview:
@@ -74,6 +77,7 @@ export const services: ServiceItem[] = [
     slug: "business-apps",
     icon: AppWindow,
     title: "Business Apps",
+    image: '/media/service-apps.webp',
     tagline:
       "Custom applications for any business — web or mobile, built around the way your team actually works.",
     overview:
@@ -97,6 +101,7 @@ export const services: ServiceItem[] = [
     slug: "custom-management-systems",
     icon: LayoutDashboard,
     title: "Custom Management Systems",
+    image: '/media/service-management.webp',
     tagline:
       "Tailor-made systems to manage your business — operations, inventory, clients, or anything else you need to run.",
     overview:
@@ -120,6 +125,7 @@ export const services: ServiceItem[] = [
     slug: "anything-digital",
     icon: Sparkles,
     title: "Anything Digital",
+    image: '/media/service-digital.webp',
     tagline:
       "Whatever digital idea you have in mind — we make it happen. If it can be built, we can build it.",
     overview:

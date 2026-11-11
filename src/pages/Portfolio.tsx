@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { ArrowRight, ArrowUpRight, Building2, Check, FileCheck2, Globe2, LayoutDashboard, Palette, Users } from "lucide-react";
 import { Link } from "react-router";
 import { Reveal } from "@/components/Reveal";
@@ -12,14 +11,6 @@ const capabilities = [
 ];
 
 export default function Portfolio() {
-  useEffect(() => {
-    const previousTitle = document.title === "Portfolio — Torall Ventures"
-      ? "Torall Ventures — Engineering Intelligent Systems"
-      : document.title;
-    document.title = "Portfolio — Torall Ventures";
-    return () => { document.title = previousTitle; };
-  }, []);
-
   return (
     <>
         <section className="hero-scope relative overflow-hidden border-b border-border bg-background pb-16 pt-32 sm:pb-24 sm:pt-40">
