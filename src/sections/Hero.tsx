@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 export function Hero() {
   return (
-    <section id="top" className="hero-scope relative overflow-hidden bg-background">
+    <section id="top" className="hero-scope relative flex min-h-[100dvh] items-center overflow-hidden bg-background">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 65% 70% at 95% 35%, hsl(var(--violet) / .22), transparent 70%), radial-gradient(ellipse 45% 50% at 75% 80%, hsl(var(--primary) / .07), transparent 75%)" }} />
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-16 pt-36 sm:px-6 sm:pb-20 lg:px-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary-deep">Torall Ventures / Digital by design</p>
