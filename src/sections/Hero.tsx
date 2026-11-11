@@ -1,6 +1,5 @@
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { ToriAssistant } from "@/components/ToriAssistant";
 
 export function Hero() {
   return (
@@ -17,7 +16,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-      <ToriAssistant />
     </section>
   );
 }
