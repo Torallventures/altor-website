@@ -1,0 +1,88 @@
+/* Hero — one photograph, one headline, one invitation. */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--base);
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+}
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 62%;
+  animation: hero-image-in 1200ms var(--ease-lux) both;
+}
+@keyframes hero-image-in {
+  from { opacity: 0; transform: scale(1.04); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* Soft dark gradient at the bottom edge only, so the copy stays legible. */
+.hero-shade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 62%;
+  background: linear-gradient(
+    to top,
+    rgba(18, 17, 16, 0.92) 0%,
+    rgba(18, 17, 16, 0.55) 45%,
+    rgba(18, 17, 16, 0) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding: 0 20px 96px;
+}
+@media (min-width: 768px) {
+  .hero-content { padding: 0 32px 128px; }
+}
+
+.hero-headline {
+  max-width: 15ch;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  animation: hero-copy-in 900ms var(--ease-lux) both;
+  animation-delay: 150ms;
+}
+.hero-sub {
+  max-width: 46ch;
+  margin-top: 24px;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  animation: hero-copy-in 900ms var(--ease-lux) both;
+  animation-delay: 300ms;
+}
+.hero-cta {
+  margin-left: 0;
+  margin-top: 32px;
+  animation: hero-copy-in 900ms var(--ease-lux) both;
+  animation-delay: 450ms;
+}
+@keyframes hero-copy-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-media img,
+  .hero-headline,
+  .hero-sub,
+  .hero-cta {
+    animation: none;
+  }
+}

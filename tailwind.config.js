@@ -5,9 +5,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["D-DIN", "Arial", "Verdana", "sans-serif"],
-        display: ["D-DIN", "Arial", "Verdana", "sans-serif"],
-        mono: ["D-DIN", "Arial", "Verdana", "sans-serif"],
+        sans: ["Inter", "system-ui", "Helvetica Neue", "Arial", "sans-serif"],
+        display: ["Cormorant Garamond", "Georgia", "Times New Roman", "serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       colors: {
         "primary-deep": "hsl(var(--primary-deep))",

@@ -1,37 +1,44 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router";
-import { Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router";
 
 import { navigationLinks as links } from "@/lib/navigation";
 import { HeaderBrandLockup } from "@/components/BrandIdentity";
+import "./Navbar.css";
+
+const SCROLL_SOLID_Y = 40;
+const HIDE_AFTER_Y = 200;
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [keyboardFocus, setKeyboardFocus] = useState(false);
   const visible = !hidden || open || keyboardFocus;
 
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  /* Close the mobile menu whenever the route changes. */
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  /* Scroll behavior: solidify past 40px, hide past 200px on the way down. */
   useEffect(() => {
     let raf = 0;
     let previousY = window.scrollY;
-    let direction = 0;
-    let distance = 0;
     const update = () => {
       raf = 0;
       const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
       const y = Math.max(0, Math.min(window.scrollY, maxY));
-      const delta = y - previousY;
-      if (y <= 80) {
+      setScrolled(y > SCROLL_SOLID_Y);
+      if (y <= HIDE_AFTER_Y) {
         setHidden(false);
-        direction = 0;
-        distance = 0;
-      } else if (Math.abs(delta) > .1) {
-        const nextDirection = Math.sign(delta);
-        if (nextDirection !== direction) { direction = nextDirection; distance = 0; }
-        distance += Math.abs(delta);
-        // More travel to hide; a small upward gesture immediately restores access.
-        if (direction > 0 && distance >= 24) { setHidden(true); distance = 0; }
-        if (direction < 0 && distance >= 6) { setHidden(false); distance = 0; }
+      } else if (y > previousY + 4) {
+        setHidden(true);
+      } else if (y < previousY - 2) {
+        setHidden(false);
       }
       previousY = y;
     };
@@ -44,95 +51,139 @@ export function Navbar() {
     };
   }, []);
 
+  /* Mobile overlay: scroll lock, focus trap, Escape, focus return. */
+  useEffect(() => {
+    if (!open) return;
+    const overlay = overlayRef.current;
+    document.body.style.overflow = "hidden";
+    const focusables = () =>
+      overlay
+        ? Array.from(
+            overlay.querySelectorAll<HTMLElement>(
+              'a[href], button:not([disabled])'
+            )
+          )
+        : [];
+    const first = focusables()[0];
+    first?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const firstItem = items[0];
+      const lastItem = items[items.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey && active === firstItem) {
+        event.preventDefault();
+        lastItem.focus();
+      } else if (!event.shiftKey && active === lastItem) {
+        event.preventDefault();
+        firstItem.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
   return (
     <header
+      data-scrolled={scrolled}
       data-visible={visible}
       onFocusCapture={(event) => setKeyboardFocus(event.target.matches(":focus-visible"))}
       onBlurCapture={(event) => {
         if (!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget)) setKeyboardFocus(false);
       }}
-      className={`fixed inset-x-0 top-0 z-50 isolate transition-transform [transition-duration:450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${visible ? "translate-y-0" : "-translate-y-full"}`}
+      className="site-header"
     >
-      {/* Keep shading at the top edge; the lower navigation stays clear over every section. */}
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-x-0 top-0 h-16 -z-10 [background:linear-gradient(180deg,rgba(0,0,0,0.5)_0%,rgba(0,0,0,0.12)_35%,transparent_100%)] transition-opacity duration-500 motion-reduce:transition-none ${visible ? "opacity-100" : "opacity-0"}`}
-      />
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 -z-10 bg-background/95 backdrop-blur-md transition-opacity duration-300 motion-reduce:transition-none ${open ? "opacity-100" : "opacity-0"}`}
-      />
-      <nav className="mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8 xl:gap-12">
+      <nav className="site-header-inner" aria-label="Primary">
         <Link
           to="/"
-          className="brand-header-link shrink-0 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="brand-header-link header-stagger shrink-0 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Torall Ventures — home"
-          onClick={() => setOpen(false)}
+          style={{ "--stagger": "0ms" } as React.CSSProperties}
         >
           <HeaderBrandLockup />
         </Link>
 
-        <div className="hidden flex-1 items-center gap-5 lg:flex xl:gap-8">
-          {links.map((l) => (
+        <div className="site-header-links">
+          {links.map((l, i) => (
             <NavLink
               key={l.to}
               to={l.to}
               end={l.to === "/"}
               className={({ isActive }) =>
-                `rounded-md font-sans text-sm font-semibold tracking-[-0.01em] transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                  isActive ? "text-foreground" : "text-muted-foreground"
-                }`
+                `nav-link header-stagger ${isActive ? "nav-link-active" : ""}`
               }
+              style={{ "--stagger": `${(i + 1) * 80}ms` } as React.CSSProperties}
             >
               {l.label}
             </NavLink>
           ))}
           <Link
             to="/contact"
-            className="ml-auto rounded-md bg-primary px-4 py-2 font-display text-sm font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
+            className="cta-outline header-stagger"
+            style={{ "--stagger": `${(links.length + 1) * 80}ms` } as React.CSSProperties}
           >
-            Start a project
+            Begin a Conversation
           </Link>
         </div>
 
         <button
+          ref={menuButtonRef}
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="mobile-navigation"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="ml-auto flex h-11 w-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
+          className={`menu-button header-stagger ${open ? "menu-button-open" : ""}`}
+          style={{ "--stagger": "80ms" } as React.CSSProperties}
         >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          <span aria-hidden="true" className="menu-line menu-line-top" />
+          <span aria-hidden="true" className="menu-line menu-line-bottom" />
         </button>
       </nav>
 
       {open && (
-        <div id="mobile-navigation" className="border-t border-border bg-background/95 backdrop-blur-md lg:hidden">
-          <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
-            {links.map((l) => (
+        <div
+          id="mobile-navigation"
+          ref={overlayRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+          className="mobile-overlay"
+        >
+          <nav aria-label="Mobile" className="mobile-overlay-nav">
+            {links.map((l, i) => (
               <NavLink
                 key={l.to}
                 to={l.to}
                 end={l.to === "/"}
-                onClick={() => setOpen(false)}
                 className={({ isActive }) =>
-                  `rounded-md px-3 py-3 font-sans text-sm font-semibold tracking-[-0.01em] transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                    isActive ? "text-foreground" : "text-muted-foreground"
-                  }`
+                  `mobile-overlay-link ${isActive ? "mobile-overlay-link-active" : ""}`
                 }
+                style={{ "--stagger": `${i * 70}ms` } as React.CSSProperties}
               >
                 {l.label}
               </NavLink>
             ))}
             <Link
               to="/contact"
-              onClick={() => setOpen(false)}
-              className="mt-2 rounded-md bg-primary px-4 py-3 text-center font-display text-sm font-semibold text-primary-foreground transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98]"
+              className="cta-outline mobile-overlay-cta"
+              style={{ "--stagger": `${links.length * 70}ms` } as React.CSSProperties}
             >
-              Start a project
+              Begin a Conversation
             </Link>
-          </div>
+          </nav>
         </div>
       )}
     </header>
