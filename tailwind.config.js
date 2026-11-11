@@ -5,9 +5,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Manrope", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["Space Grotesk", "Manrope", "ui-sans-serif", "sans-serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+        sans: ["Inter", "Helvetica Neue", "Arial", "sans-serif"],
+        display: ["Inter", "Helvetica Neue", "Arial", "sans-serif"],
+        mono: ["Inter", "Helvetica Neue", "Arial", "sans-serif"],
       },
       colors: {
         "primary-deep": "hsl(var(--primary-deep))",

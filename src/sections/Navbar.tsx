@@ -55,7 +55,7 @@ export function Navbar() {
               to={l.to}
               end={l.to === "/"}
               className={({ isActive }) =>
-                `rounded-md font-mono text-[13px] uppercase tracking-widest transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                `rounded-md font-sans text-sm font-semibold tracking-[-0.01em] transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                   isActive ? "text-foreground" : "text-muted-foreground"
                 }`
               }
@@ -93,7 +93,7 @@ export function Navbar() {
                 end={l.to === "/"}
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
-                  `rounded-md px-3 py-3 font-mono text-sm uppercase tracking-widest transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                  `rounded-md px-3 py-3 font-sans text-sm font-semibold tracking-[-0.01em] transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                     isActive ? "text-foreground" : "text-muted-foreground"
                   }`
                 }
