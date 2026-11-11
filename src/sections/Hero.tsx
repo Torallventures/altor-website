@@ -1,11 +1,11 @@
 import { Link } from "react-router";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export function Hero() {
   return (
-    <section id="top" className="hero-scope relative flex min-h-[100dvh] items-center overflow-hidden bg-background">
+    <section id="top" className="hero-scope relative overflow-hidden bg-background">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 65% 70% at 95% 35%, hsl(var(--violet) / .22), transparent 70%), radial-gradient(ellipse 45% 50% at 75% 80%, hsl(var(--primary) / .07), transparent 75%)" }} />
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-28 pt-36 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-16 pt-36 sm:px-6 sm:pb-20 lg:px-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary-deep">Torall Ventures / Digital by design</p>
         <h1 className="mt-8 max-w-6xl font-display text-[clamp(2.7rem,7.1vw,6.3rem)] font-semibold leading-[1.04] tracking-[-0.045em]">Intelligent systems.<br /><span className="text-primary-deep">Engineered to scale.</span></h1>
         <div className="mt-10 grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-end md:gap-16">
@@ -15,9 +15,7 @@ export function Hero() {
             <Link to="/portfolio" className="inline-flex min-h-12 items-center justify-center rounded-md border border-border bg-card/40 px-6 py-3.5 font-display text-sm font-semibold transition-colors hover:border-primary/50 hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Explore Portfolio</Link>
           </div>
         </div>
-        <div className="mt-14 flex flex-wrap gap-x-7 gap-y-3 border-t border-border pt-6 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground sm:mt-20"><span>Residential communities</span><span>Business websites</span><span>Apps</span><span>Management systems</span><span>Anything digital</span></div>
       </div>
-      <a href="#showreel" aria-label="Scroll to the Torall showreel" className="absolute bottom-6 left-4 z-10 inline-flex items-center gap-3 rounded-full py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-primary sm:left-6 lg:left-[max(2rem,calc((100vw-1216px)/2))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">See what we can build<ArrowDown className="h-4 w-4" aria-hidden="true" /></a>
     </section>
   );
 }
