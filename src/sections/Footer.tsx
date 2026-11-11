@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
 import { services } from "@/data/services";
 import { navigationLinks as nav } from "@/lib/navigation";
+import { StaticBrandLockup } from "@/components/BrandIdentity";
 
 const footerLink = "rounded-sm text-sm leading-relaxed text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
@@ -17,7 +18,7 @@ export function Footer() {
         <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-[1.25fr_.55fr_1fr_1fr]">
           <div>
             <Link to="/" aria-label="Torall Ventures — home" className="inline-flex rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-              <img src="/torall-ventures-logo.svg" alt="Torall Ventures" width={224} height={64} className="h-14 w-auto" loading="lazy" />
+              <StaticBrandLockup decorative />
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-7 text-muted-foreground">Websites, apps, and custom systems.<br />Built around your world.</p>
           </div>
