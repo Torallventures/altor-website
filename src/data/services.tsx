@@ -39,10 +39,10 @@ export const services: ServiceItem[] = [
     features: [
       "Amenities showcase & booking",
       "Online product ordering for residents",
-      "Chatbot assistance, around the clock",
+      "AI chatbot assistance, 24/7",
       "Resident e-portals & accounts",
       "Announcements and community updates",
-      "Considered design for every screen",
+      "Mobile-first design for on-the-go residents",
     ],
     idealFor:
       "Condominiums, apartment communities, HOAs, and property management companies that want happier residents and a quieter front desk.",
@@ -121,19 +121,19 @@ export const services: ServiceItem[] = [
     icon: Sparkles,
     title: "Anything Digital",
     tagline:
-      "Whatever digital idea you have in mind — we'll find a way to build it.",
+      "Whatever digital idea you have in mind — we make it happen. If it can be built, we can build it.",
     overview:
-      "Have an idea that doesn't fit in a box? That's our favorite kind. From first prototypes to integrations and products nobody has built before — if it's digital, we'll find a way to make it real.",
+      "Have an idea that doesn't fit in a box? That's our favorite kind. From MVPs and prototypes to AI features, integrations, and products nobody has built before — if it's digital, we'll find a way to make it real.",
     story: [
-      "Some of the best projects start as a sentence: \"wouldn't it be wonderful if…\". We take that sentence seriously. We'll help you shape the idea, prove it with a working version, and grow it into a real product.",
+      "Some of the best projects start as a sentence: \"wouldn't it be great if…\". We take that sentence seriously. We'll help you shape the idea, prove it with a working version, and grow it into a real product.",
       "No idea is too unusual — our job is to figure out how to build it, not to tell you why it can't be done.",
     ],
     features: [
       "Idea-to-launch product development",
-      "Prototypes and working first versions",
-      "Custom features & integrations",
+      "Prototypes and MVPs, fast",
+      "AI-powered features & chatbots",
+      "Integrations between your systems",
       "E-commerce and online ordering",
-      "Connections between the tools you use",
       "Ongoing support after launch",
     ],
     idealFor:
