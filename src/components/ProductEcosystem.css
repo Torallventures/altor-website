@@ -1,0 +1,59 @@
+/* A contained stage keeps product motion separate from the reading column. */
+.hero-layout { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); align-items: center; gap: clamp(2rem,4vw,4.5rem); }
+.hero-copy { min-width: 0; }
+.hero-scope .hero-copy h1 { font-size: clamp(2.8rem,4.8vw,4rem); line-height: 1.03; letter-spacing: .005em; }
+.hero-copy h1 > span { display: block; }
+.hero-copy .hero-description { max-width: 27rem; font-size: 17px; line-height: 1.6; letter-spacing: .01em; }
+.product-ecosystem { min-width: 0; position: relative; isolation: isolate; }
+.ecosystem-art { position: relative; width: 100%; aspect-ratio: 640 / 660; }
+.ecosystem-halo { position: absolute; inset: 8% -5%; border-radius: 50%; background: radial-gradient(ellipse,#a4c68a0d, #7771801c 42%,transparent 70%); }
+.ecosystem-svg { position: relative; width: 100%; height: 100%; overflow: visible; font-family: "D-DIN", Arial, sans-serif; }
+.eco-website { transform-origin: 247px 220px; animation: eco-website-float 16s ease-in-out infinite; }
+.eco-dashboard { transform-origin: 250px 500px; animation: eco-dashboard-float 16s ease-in-out infinite; }
+.eco-phone { transform-origin: 522px 377px; animation: eco-phone-float 16s ease-in-out infinite; }
+.eco-build-nav { animation: eco-assemble-nav 16s ease-in-out infinite; }
+.eco-build-image { animation: eco-assemble-image 16s ease-in-out infinite; }
+.eco-build-content { animation: eco-assemble-content 16s ease-in-out infinite; }
+.eco-dashboard-data { animation: eco-dashboard-data 16s ease-in-out infinite; }
+.eco-chart-line { stroke-dasharray: 100; animation: eco-chart 16s ease-in-out infinite; }
+.eco-signal { stroke-dasharray: 6 94; animation: eco-transmit 4s linear infinite; }
+.eco-signal-two { animation-delay: -2s; }
+.eco-status { animation: eco-status 4s ease-in-out infinite; }
+.eco-app-booking { animation: eco-booking 16s ease-in-out infinite; }
+.eco-app-confirmed { animation: eco-confirmed 16s ease-in-out infinite; }
+.ecosystem-caption { display: flex; align-items: center; justify-content: center; gap: 18px; color: #aaa2b3; font-size: 10px; letter-spacing: .12em; }
+.eco-separator { color: #a4c68a80; padding: 0 12px; }
+.ecosystem-playback { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid #77718050; border-radius: 50%; color: #a4c68a; background: #17131e80; }
+.ecosystem-playback svg { width: 11px; height: 11px; }
+.ecosystem-playback:hover { border-color: #a4c68a; }
+.ecosystem-playback:focus-visible { outline: 2px solid #a4c68a; outline-offset: 4px; }
+.product-ecosystem[data-paused="true"] *, .product-ecosystem[data-visible="false"] * { animation-play-state: paused !important; }
+@keyframes eco-website-float { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-8px) rotate(-2deg); } }
+@keyframes eco-dashboard-float { 0%,100% { transform: translateY(0) rotate(2deg); } 50% { transform: translateY(6px) rotate(1deg); } }
+@keyframes eco-phone-float { 0%,100% { transform: translateY(0) rotate(4deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
+@keyframes eco-assemble-nav { 0%,94%,100% { opacity: .22; } 7%,86% { opacity: 1; } }
+@keyframes eco-assemble-image { 0%,5%,94%,100% { opacity: .12; transform: translateY(7px); } 17%,86% { opacity: 1; transform: translateY(0); } }
+@keyframes eco-assemble-content { 0%,11%,94%,100% { opacity: .12; transform: translateY(9px); } 24%,86% { opacity: 1; transform: translateY(0); } }
+@keyframes eco-dashboard-data { 0%,20%,96%,100% { opacity: .3; } 35%,88% { opacity: 1; } }
+@keyframes eco-chart { 0%,25%,100% { stroke-dashoffset: 100; } 50%,92% { stroke-dashoffset: 0; } }
+@keyframes eco-transmit { to { stroke-dashoffset: -100; } }
+@keyframes eco-status { 50% { opacity: .35; } }
+@keyframes eco-booking { 0%,32%,87%,100% { opacity: 1; } 43%,79% { opacity: 0; } }
+@keyframes eco-confirmed { 0%,32%,87%,100% { opacity: 0; } 43%,79% { opacity: 1; } }
+@media (max-width: 1023px) {
+  .hero-layout { gap: 1.5rem; grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .hero-scope .hero-copy h1 { font-size: clamp(2.4rem,5vw,3.25rem); }
+  .hero-copy .hero-description { font-size: 16px; }
+}
+@media (max-width: 767px) {
+  .hero-layout { grid-template-columns: minmax(0,1fr); gap: 2rem; }
+  .hero-scope .hero-copy h1 { font-size: clamp(2.5rem,10vw,3.75rem); }
+  .product-ecosystem { width: min(100%,520px); margin-inline: auto; }
+  .ecosystem-caption { font-size: 8px; letter-spacing: .1em; gap: 12px; }
+  .eco-separator { padding-inline: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-ecosystem * { animation: none !important; }
+  .eco-app-confirmed { opacity: 0; }
+  .ecosystem-playback { display: none; }
+}
