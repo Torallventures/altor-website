@@ -8,16 +8,37 @@ import { HeaderBrandLockup } from "@/components/BrandIdentity";
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [keyboardFocus, setKeyboardFocus] = useState(false);
+  const visible = !hidden || open || keyboardFocus;
 
   useEffect(() => {
     let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 24);
-      });
+    let previousY = window.scrollY;
+    let direction = 0;
+    let distance = 0;
+    const update = () => {
+      raf = 0;
+      const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const y = Math.max(0, Math.min(window.scrollY, maxY));
+      const delta = y - previousY;
+      setScrolled(y > 24);
+      if (y <= 80) {
+        setHidden(false);
+        direction = 0;
+        distance = 0;
+      } else if (Math.abs(delta) > .1) {
+        const nextDirection = Math.sign(delta);
+        if (nextDirection !== direction) { direction = nextDirection; distance = 0; }
+        distance += Math.abs(delta);
+        // More travel to hide; a small upward gesture immediately restores access.
+        if (direction > 0 && distance >= 24) { setHidden(true); distance = 0; }
+        if (direction < 0 && distance >= 6) { setHidden(false); distance = 0; }
+      }
+      previousY = y;
     };
-    onScroll();
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -27,7 +48,12 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+      data-visible={visible}
+      onFocusCapture={(event) => setKeyboardFocus(event.target.matches(":focus-visible"))}
+      onBlurCapture={(event) => {
+        if (!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget)) setKeyboardFocus(false);
+      }}
+      className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,border-color] duration-300 ease-out motion-reduce:transition-none ${visible ? "translate-y-0" : "-translate-y-full"} ${
         scrolled || open
           ? "border-b border-border bg-background/85 backdrop-blur-md"
           : "hero-scope border-b border-transparent"
