@@ -32,10 +32,10 @@ export function Navbar() {
           : "hero-scope border-b border-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8 xl:gap-12">
         <Link
           to="/"
-          className="flex items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex shrink-0 items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Torall Ventures — home"
           onClick={() => setOpen(false)}
         >
@@ -48,7 +48,7 @@ export function Navbar() {
           />
         </Link>
 
-        <div className="hidden items-center gap-5 lg:flex xl:gap-8">
+        <div className="hidden flex-1 items-center gap-5 lg:flex xl:gap-8">
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -65,7 +65,7 @@ export function Navbar() {
           ))}
           <Link
             to="/contact"
-            className="rounded-md bg-primary px-4 py-2 font-display text-sm font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
+            className="ml-auto rounded-md bg-primary px-4 py-2 font-display text-sm font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
           >
             Start a project
           </Link>
@@ -77,7 +77,7 @@ export function Navbar() {
           aria-expanded={open}
           aria-controls="mobile-navigation"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="flex h-11 w-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
+          className="ml-auto flex h-11 w-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
