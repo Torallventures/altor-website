@@ -1,11 +1,11 @@
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { ProductEcosystem } from "@/components/ProductEcosystem";
+import { CinematicParticles } from "@/components/CinematicParticles";
 
 export function Hero() {
   return (
-    <section id="top" className="hero-scope relative flex min-h-[100dvh] items-center overflow-hidden bg-background">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 65% 70% at 95% 35%, hsl(var(--violet) / .22), transparent 70%), radial-gradient(ellipse 45% 50% at 75% 80%, hsl(var(--primary) / .07), transparent 75%)" }} />
+    <section id="top" className="hero-scope cinematic-hero relative flex min-h-[100dvh] items-center overflow-hidden">
+      <CinematicParticles />
       <div className="hero-layout relative z-10 mx-auto w-full max-w-7xl px-4 pb-12 pt-32 sm:px-6 sm:pb-16 lg:px-8">
         <div className="hero-copy">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary-deep">Torall Ventures / Digital by design</p>
@@ -18,7 +18,7 @@ export function Hero() {
             </div>
           </div>
         </div>
-        <ProductEcosystem />
+        <div className="particle-composition" aria-hidden="true" />
       </div>
     </section>
   );
