@@ -9,37 +9,37 @@
     --brand-green: #A4C68A;
     --brand-violet: #777180;
     --violet: 264 6.22406639% 47.25490196%;
-    --background: 264 22% 6%;
+    --background: 264 12% 15%;
     --foreground: 94 15% 94%;
-    --card: 264 16% 10%;
+    --card: 264 12% 20%;
     --card-foreground: 94 15% 94%;
-    --popover: 264 18% 9%;
+    --popover: 264 12% 19%;
     --popover-foreground: 94 15% 94%;
     --primary: 94 34.48275862% 65.88235294%;
     --primary-foreground: 264 22% 10%;
     --primary-deep: var(--primary);
-    --secondary: 264 12% 17%;
+    --secondary: 264 11% 22%;
     --secondary-foreground: 94 12% 90%;
-    --muted: 264 12% 17%;
-    --muted-foreground: 264 8% 72%;
+    --muted: 264 11% 22%;
+    --muted-foreground: 264 10% 76%;
     --accent: var(--violet);
     --accent-foreground: 94 15% 98%;
     --destructive: 0 70% 60%;
     --destructive-foreground: 0 0% 99%;
-    --border: 264 9% 27%;
-    --input: 264 9% 35%;
+    --border: 264 10% 32%;
+    --input: 264 10% 40%;
     --ring: var(--primary);
     --radius: 0.5rem;
   }
 
-  /* Keep the hero dark, with violet-tinted surfaces and green highlights. */
+  /* Gray-violet hero: soft violet-grey field with green highlights. */
   .hero-scope {
-    --background: 264 20% 8%;
+    --background: 264 12% 16%;
     --foreground: 94 15% 96%;
-    --card: 264 14% 14%;
-    --muted-foreground: 264 8% 75%;
-    --border: 264 9% 30%;
-    --secondary: 264 12% 20%;
+    --card: 264 12% 20%;
+    --muted-foreground: 264 10% 77%;
+    --border: 264 10% 33%;
+    --secondary: 264 11% 23%;
     color: hsl(var(--foreground));
   }
 }

@@ -1,5 +1,5 @@
 /* Hero-only composition. Existing navigation, typography and all other sections retain their tokens. */
-.cinematic-hero { background: #020304; isolation: isolate; }
+.cinematic-hero { background: #28242e; isolation: isolate; }
 .cinematic-hero .hero-layout { display: grid; grid-template-columns: minmax(0,.93fr) minmax(0,1.17fr); gap: clamp(1rem,3vw,3rem); align-items: center; min-height: 100dvh; padding-bottom: 7rem; }
 .cinematic-hero .hero-copy { min-width: 0; }
 .cinematic-hero .hero-copy h1 { font-size: clamp(2.8rem,4.8vw,4rem); line-height: 1.03; letter-spacing: .005em; }

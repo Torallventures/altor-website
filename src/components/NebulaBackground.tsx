@@ -52,9 +52,10 @@ const FRAG = /* glsl */ `
     );
     float f = fbm(uv * 2.2 + 2.5 * q + vec2(t * 0.5, -t * 0.3));
 
-    // Deep space ramp: violet clouds with green light in the densest wisps.
+    // Gray-violet space ramp: violet clouds over a muted grey base,
+    // with green light in the densest wisps.
     float smoke = smoothstep(0.35, 0.95, f);
-    vec3 deep = vec3(0.018, 0.014, 0.024);
+    vec3 deep = vec3(0.146, 0.132, 0.168);
     vec3 glow = uViolet * 0.85;
     vec3 col = mix(deep, glow, smoke);
     col += uGreen * 0.2 * smoothstep(0.65, 1.0, f);
