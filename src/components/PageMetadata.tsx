@@ -5,6 +5,7 @@ import { getService } from '@/data/services';
 const pages:Record<string,[string,string]>={
   '/':['Torall Ventures — Websites, Apps & Custom Systems','Thoughtfully designed websites, applications, and custom systems. Explore Torall Ventures and discover digital experiences built around your business.'],
   '/portfolio':['Portfolio — Torall Ventures','Explore Lumera, Torall’s interactive condominium website and community portal, and the capabilities behind our digital experiences.'],
+  '/portfolio/lumera':['Lumera — Connected Living by Torall Ventures','Explore Lumera’s cinematic condominium website, resident portal, seven roles, forms, workflows, and customizable themes.'],
   '/about':['About Torall Ventures — Design & Development','Meet Torall Ventures. Thoughtful design and useful technology for websites, applications, and custom business systems.'],
   '/contact':['Start a Project — Torall Ventures','Tell Torall Ventures about your website, app, or custom system. Prepare a project inquiry and start the conversation.'],
 };
