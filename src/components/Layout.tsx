@@ -53,7 +53,7 @@ export function Layout() {
     previousPath.current = pathname;
   }, [pathname, hash]);
   return (
-    <div className="studio-site">
+    <div className={`studio-site${pathname === "/" ? " is-home" : ""}`}>
       <a href="#main-content" className="studio-skip">
         Skip to content
       </a>
