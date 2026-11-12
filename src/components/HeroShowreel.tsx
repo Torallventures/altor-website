@@ -89,7 +89,7 @@ export function HeroShowreel() {
       {failed && <div role="status" className="torall-film-fallback">
         <p>The film couldn’t load.</p>
         <a href="/media/torall-website-polished.mp4">Open the video</a>
-        <a href="#services-teaser">Explore our services <ArrowDown aria-hidden="true" /></a>
+        <a href="#services">Explore our services <ArrowDown aria-hidden="true" /></a>
       </div>}
       <p className="sr-only">Our five services: residential community websites with resident portals and amenity booking; business websites; web and mobile apps; custom management systems; and custom digital products and AI integrations. Explore each service in the next section.</p>
     </section>

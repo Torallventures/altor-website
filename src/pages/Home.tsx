@@ -1,15 +1,20 @@
-import { Hero } from "@/sections/Hero";
 import { HeroShowreel } from "@/components/HeroShowreel";
-import { ServicesTeaser } from "@/sections/ServicesTeaser";
-import { ProjectJourney } from "@/sections/ProjectJourney";
+import { AgencyHero, TypeMarquee, SelectedWork, SectorWall, AgencyValues, ServicesAccordion, StudioStatement, LumeraFeature } from '@/components/agency/AgencySections';
+import { AgencyContact } from '@/components/agency/AgencyContact';
 
 export default function Home() {
   return (
     <>
-      <Hero />
+      <AgencyHero />
       <HeroShowreel />
-      <ServicesTeaser />
-      <ProjectJourney />
+      <TypeMarquee />
+      <SelectedWork />
+      <SectorWall />
+      <AgencyValues />
+      <ServicesAccordion />
+      <StudioStatement />
+      <AgencyContact />
+      <LumeraFeature />
     </>
   );
 }
