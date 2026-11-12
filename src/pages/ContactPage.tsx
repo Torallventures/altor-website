@@ -1,10 +1,2 @@
-import { Contact } from "@/sections/Contact";
-
-export default function ContactPage() {
-  return (
-    <>
-      <div className="pt-16" />
-      <Contact />
-    </>
-  );
-}
+import { StudioContact } from '@/components/studio/StudioContact';
+export default function ContactPage() { return <StudioContact/>; }

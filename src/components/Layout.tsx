@@ -1,44 +1,39 @@
-import { useEffect } from "react";
-import Lenis from "lenis";
-import "lenis/dist/lenis.css";
-import { Outlet, useLocation } from "react-router";
-import { Navbar } from "@/sections/Navbar";
-import { Footer } from "@/sections/Footer";
-import { NebulaBackground } from "@/components/NebulaBackground";
+import { useEffect, useRef } from 'react';
+import { Outlet, useLocation } from 'react-router';
+import { StudioNav, StudioFooter } from '@/components/studio/StudioChrome';
+import { services } from '@/data/services';
+import './studio/studio.css';
 
-/** Smooth wheel/anchor scrolling, resetting on navigation without stale momentum. */
-function ScrollToTop() {
-  const { key, hash } = useLocation();
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-    const lenis = new Lenis({
-      autoRaf: true,
-      lerp: 0.09,
-      smoothWheel: true,
-      syncTouch: false,
-      anchors: { offset: -80 },
-      stopInertiaOnNavigate: true,
-      allowNestedScroll: true,
-    });
-    const target = hash ? document.getElementById(hash.slice(1)) : null;
-    lenis.scrollTo(target || 0, { immediate: true, offset: target ? -80 : 0 });
-    return () => lenis.destroy();
-  }, [key, hash]);
-  return null;
-}
+const titles: Record<string, string> = {
+  '/': 'Torall Ventures — Websites, Apps & Custom Systems',
+  '/portfolio': 'Portfolio — Torall Ventures',
+  '/portfolio/lumera': 'Lumera — Torall Ventures',
+  '/services': 'Services — Torall Ventures',
+  '/about': 'About — Torall Ventures',
+  '/contact': 'Start a Project — Torall Ventures',
+};
+const descriptions: Record<string, string> = {
+  '/': 'Torall Ventures designs and builds websites, applications, and custom systems for businesses and residential communities.',
+  '/portfolio': 'Explore Lumera, an interactive residential website and community portal demonstration by Torall Ventures.',
+  '/services': 'Explore residential websites, business websites, applications, custom management systems, and digital products.',
+  '/about': 'Meet Torall Ventures: a Florida-based digital business connecting considered design with useful technology.',
+  '/contact': 'Tell Torall Ventures about your next website, application, or business system.',
+};
 
 export function Layout() {
-  return (
-    <div className="min-h-[100dvh]">
-      <NebulaBackground />
-      <Navbar />
-      <div className="relative z-10">
-        <ScrollToTop />
-        <main>
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
-    </div>
-  );
+  const { pathname, hash } = useLocation();
+  const previousPath = useRef(pathname);
+  useEffect(() => {
+    const service = services.find(item => pathname === `/services/${item.slug}`);
+    document.title = titles[pathname] || (service ? `${service.title} — Torall Ventures` : titles['/']);
+    document.querySelector('meta[name="description"]')?.setAttribute('content', service?.tagline || descriptions[pathname] || descriptions['/portfolio']);
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+    canonical.href = `https://torallventures.com${pathname === '/' ? '' : pathname}`;
+    if (hash) document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView({ behavior: 'instant' });
+    else window.scrollTo({ top: 0, behavior: 'instant' });
+    if (previousPath.current !== pathname) document.getElementById('main-content')?.focus({ preventScroll: true });
+    previousPath.current = pathname;
+  }, [pathname, hash]);
+  return <div className="studio-site"><a href="#main-content" className="studio-skip">Skip to content</a><StudioNav/><main id="main-content" tabIndex={-1}><Outlet/></main><StudioFooter/></div>;
 }
