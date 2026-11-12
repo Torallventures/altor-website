@@ -1,16 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
 
 import { navigationLinks as links } from "@/lib/navigation";
 import { HeaderBrandLockup } from "@/components/BrandIdentity";
 
 export function Navbar() {
-  const menuButton=useRef<HTMLButtonElement>(null);
-  const {pathname}=useLocation();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [keyboardFocus, setKeyboardFocus] = useState(false);
   const visible = !hidden || open || keyboardFocus;
 
@@ -24,7 +21,6 @@ export function Navbar() {
       const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
       const y = Math.max(0, Math.min(window.scrollY, maxY));
       const delta = y - previousY;
-      setScrolled(y>80);
       if (y <= 80) {
         setHidden(false);
         direction = 0;
@@ -51,7 +47,6 @@ export function Navbar() {
   return (
     <header
       data-visible={visible}
-      onKeyDown={event=>{if(event.key==='Escape' && open) {setOpen(false); menuButton.current?.focus();}}}
       onFocusCapture={(event) => setKeyboardFocus(event.target.matches(":focus-visible"))}
       onBlurCapture={(event) => {
         if (!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget)) setKeyboardFocus(false);
@@ -65,7 +60,7 @@ export function Navbar() {
       />
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 -z-10 bg-background/95 backdrop-blur-md transition-opacity duration-300 motion-reduce:transition-none ${open || scrolled ? "opacity-100" : "opacity-0"}`}
+        className={`pointer-events-none absolute inset-0 -z-10 bg-background/95 backdrop-blur-md transition-opacity duration-300 motion-reduce:transition-none ${open ? "opacity-100" : "opacity-0"}`}
       />
       <nav className="mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8 xl:gap-12">
         <Link
@@ -85,7 +80,7 @@ export function Navbar() {
               end={l.to === "/"}
               className={({ isActive }) =>
                 `rounded-md font-sans text-sm font-semibold tracking-[-0.01em] transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                  isActive || (l.to==='/portfolio' && pathname.startsWith('/services/')) ? "text-foreground" : "text-muted-foreground"
+                  isActive ? "text-foreground" : "text-muted-foreground"
                 }`
               }
             >
@@ -101,7 +96,6 @@ export function Navbar() {
         </div>
 
         <button
-          ref={menuButton}
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
@@ -124,7 +118,7 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   `rounded-md px-3 py-3 font-sans text-sm font-semibold tracking-[-0.01em] transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                    isActive || (l.to==='/portfolio' && pathname.startsWith('/services/')) ? "text-foreground" : "text-muted-foreground"
+                    isActive ? "text-foreground" : "text-muted-foreground"
                   }`
                 }
               >

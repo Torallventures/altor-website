@@ -5,8 +5,6 @@ import ServiceDetailPage from './pages/ServiceDetailPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import Portfolio from './pages/Portfolio'
-import LumeraCaseStudy from './pages/LumeraCaseStudy'
-import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
@@ -18,9 +16,8 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/portfolio/lumera" element={<LumeraCaseStudy />} />
         <Route path="/templates" element={<Navigate to="/portfolio" replace />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
   )

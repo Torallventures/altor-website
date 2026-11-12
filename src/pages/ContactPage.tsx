@@ -1,9 +1,10 @@
-import { AgencyContact } from '@/components/agency/AgencyContact';
+import { Contact } from "@/sections/Contact";
 
 export default function ContactPage() {
   return (
     <>
-      <AgencyContact standalone />
+      <div className="pt-16" />
+      <Contact />
     </>
   );
 }

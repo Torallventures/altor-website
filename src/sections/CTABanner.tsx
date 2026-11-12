@@ -16,8 +16,8 @@ export function CTABanner() {
             Have something digital in mind?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            A new idea, a better website, or a system that finally fits.
-            Tell us where you want to go. Let’s define the next step.
+            Tell us about it. We&apos;ll reply within one business day with a
+            clear plan and an honest quote.
           </p>
           <Link
             to="/contact"

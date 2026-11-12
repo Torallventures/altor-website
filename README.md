@@ -1,13 +1,14 @@
 # Torall Ventures — Website
 
-Company website for Torall Ventures. An editorial agency experience with the
-established Torall typography, dark background, and green brand palette.
+Company website for Torall Ventures. Deep-space theme: animated nebula
+shader background, particle hero, scroll-replay animations, court green
+brand palette.
 
 ## Stack
 
 - React 19 + TypeScript + Vite
 - Tailwind CSS + shadcn/ui
-- CSS motion and visibility-aware video; legacy Three.js components remain unused
+- Three.js (hero particle core + full-page animated nebula background)
 - Lucide icons
 
 ## Develop
@@ -31,11 +32,10 @@ directory `dist`.
 
 ## Portfolio and Lumera
 
-Portfolio presents an interactive, filterable collection with Lumera as its first
-experience. `/portfolio/lumera` retains the detailed Torall case study. The homepage
-Services anchor and all five `/services/:slug` detail pages retain the existing
-service overviews, stories, and feature lists. Old `/services` and `/templates`
-links resolve to `/portfolio`.
+Portfolio replaces the former top-level Services/Templates navigation. It features
+Lumera and incorporates the existing service overviews and feature lists. All five
+`/services/:slug` detail pages remain intact. Old `/services` and `/templates` links
+resolve to `/portfolio`.
 
 Lumera runs independently in `Torallventures/lumera-template`. The existing Torall
 Vercel project proxies `/lumeratm` and `/lumeratm/:path*` to the matching paths on
@@ -59,9 +59,8 @@ service is connected by this integration.
 
 - Fetch the current `main` before starting; keep changes on a feature branch and
   review through a pull request. Never force-push over another developer's work.
-- The existing Vercel Git integration deploys `main` to the existing Torall project.
-  Deployment configuration remains unchanged. Confirm destination and authorization
-  before release.
+- The existing GitHub Actions workflow deploys `main` to the existing Torall project.
+  It remains unchanged. Confirm the destination and user authorization before release.
 - Deploy compatible Lumera changes before publishing Torall routing changes. Verify
   standalone and proxied assets, including partial/range requests for video.
 - Keep the two repositories and deployments independent. Do not add root-level
@@ -70,38 +69,8 @@ service is connected by this integration.
 
 ### Verification
 
-Run `npm run build`. Review desktop and mobile navigation, portfolio filters,
-service accordions, service detail pages, contact preparation, and route refreshes.
-Respect reduced-motion preferences. Torall-only presentation changes do not require
-access to the independently managed Lumera application.
-
-## Visitor experience and inquiries
-
-The homepage follows the reference agency format: a spacious introduction and
-floating Torall character within an orbital hero composition, framed services film,
-counter-moving type bands, staggered portfolio with persistent project labels,
-six interactive values, service accordions, moving photo strip, creative-space
-photograph, four-step project process, FAQs, inquiry form, featured Lumera card,
-and a branded landscape footer. Interior pages share the same navigation and
-visual system. Scroll reveals, hover details, and character motion respect reduced
-motion; offscreen videos pause. Photographs are locally hosted and documented in
-`public/media/agency/ATTRIBUTION.txt`. Industry names describe audiences, not clients.
-The finishing pass uses a more compact page rhythm, clearer calls to action,
-portfolio category counts, service-page return links, and a two-column inquiry
-workspace. Photos and brand assets remain original Torall assets or licensed stock;
-no reference agency's assets or claims are reused.
-
-Contact prepares a project email for the visitor to review and send in their own email
-app. It does not submit a server-side form or claim delivery. A copy-brief option works
-with webmail; if clipboard access is unavailable, a selectable brief is displayed.
-Visitors can download a local `.eml` draft, optionally including a supporting file
-up to 8 MB. Files stay in the browser and are never uploaded by this website.
-Service-detail links carry the selected service into the inquiry form. No email API,
-new credentials, tracking service, database, or paid service has been added.
-
-Shared page metadata supplies route titles, descriptions, canonical URLs, and noindex
-for the missing-page view. Public robots.txt and sitemap.xml list the main Torall pages.
-Navigation includes a skip link, route focus, and Escape-to-close mobile menu behavior.
-
-The agency redesign builds on the shared restoration and preserves the existing
-service content, supplied film, portfolio integration, and complete Git history.
+Run `npm run build` and ESLint for changed files. Check desktop/mobile Portfolio,
+legacy route aliases, all service detail pages, the full Lumera experience, its
+return link, and direct/refresh loading of hash routes. The existing full-lint
+baseline contains 10 unrelated UI/About errors; the existing bundle-size warning
+also remains.
