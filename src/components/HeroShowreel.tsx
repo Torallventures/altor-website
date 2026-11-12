@@ -3,8 +3,10 @@ import { ArrowDown } from "lucide-react";
 import "./HeroShowreel.css";
 
 /**
- * Full-page autoplaying film. On its way in, the frame pops up from a
- * smaller rounded card into a full-bleed screen, scrubbed by scroll.
+ * Autoplaying services film floating in its own viewport-sized stage. On
+ * its way in, the frame flies up as a small tilted card, spring-overshoots
+ * with a wobble, and settles as a slightly smaller floating screen —
+ * all scrubbed by scroll in both directions.
  */
 export function HeroShowreel() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -41,7 +43,8 @@ export function HeroShowreel() {
     };
   }, []);
 
-  /* Scroll-scrubbed pop-up: rounded card → full-bleed as it enters. */
+  /* Scroll-scrubbed entrance: the film flies in as a small tilted card,
+     overshoots with a springy wobble, and settles as a floating screen. */
   useEffect(() => {
     const section = sectionRef.current;
     const frame = frameRef.current;
@@ -58,10 +61,14 @@ export function HeroShowreel() {
       const vh = window.innerHeight;
       const top = section.getBoundingClientRect().top;
       const p = Math.min(Math.max((vh - top) / (vh * 0.85), 0), 1);
-      const scale = 0.78 + 0.22 * p;
-      const radius = 26 * (1 - p);
-      frame.style.transform = `scale(${scale})`;
-      frame.style.borderRadius = `${radius}px`;
+      // Back-ease-out: overshoots past 1 then springs back — fun, bouncy.
+      const c1 = 1.9;
+      const f = 1 + (c1 + 1) * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2);
+      const scale = 0.55 + 0.33 * f; // 0.55 → 0.88, wobbling up to ~0.91
+      const rotate = (1 - f) * 10;   // starts tilted 10°, wobbles past 0
+      const ty = (1 - f) * 9;        // slides up from below, tiny overshoot
+      frame.style.transform = `translate3d(0, ${ty.toFixed(2)}vh, 0) rotate(${rotate.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+      frame.style.borderRadius = `${Math.max(12, 26 - 8 * f).toFixed(1)}px`;
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
     update();
