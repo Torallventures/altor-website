@@ -8,3 +8,4 @@ dist/
 
 .vite/
 preview.log
+dist-preview/
