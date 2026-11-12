@@ -79,10 +79,11 @@ export function AgencyContact({ standalone = false }: { standalone?: boolean }) 
     } catch { setDraftState('error'); }
   }
 
-  const title = standalone ? <h1 className="agency-heading">Let’s build<br />something great.</h1> : <h2 className="agency-heading">Get in touch</h2>;
-  return <section id="get-in-touch" className={`agency-contact ${standalone ? 'is-standalone' : ''}`}><div className="agency-container">
-    {title}
-    <p className="agency-contact-intro">A new idea, a better website, or a system that finally fits. <a href="mailto:info@torallventures.com">info@torallventures.com</a></p>
+  const title = standalone ? <h1 className="agency-heading">Your next chapter.<br /><em>Starts here.</em></h1> : <h2 className="agency-heading">Have something<br /><em>in mind?</em></h2>;
+  return <section id="get-in-touch" className={`agency-contact ${standalone ? 'is-standalone' : ''}`}><div className="agency-container agency-contact-layout">
+    <div className="agency-contact-copy"><p className="agency-section-label"><span>↗</span>Let’s make it happen</p>{title}
+    <p className="agency-contact-intro">A new idea, a better website, or a system that finally fits. Tell us where you want to go.</p><a className="agency-contact-email" href="mailto:info@torallventures.com">info@torallventures.com <ArrowUpRight aria-hidden="true"/></a>
+    <div className="agency-contact-next"><p>Good conversations start simply.</p><ol><li><span>01</span>Tell us about your business and your idea.</li><li><span>02</span>We’ll explore what matters and what’s possible.</li><li><span>03</span>Define a clear direction for the next step.</li></ol></div></div><div className="agency-contact-workspace">
     {prepared ? <div ref={resultRef} tabIndex={-1} className="agency-inquiry-ready">
       <Check className="inquiry-check" aria-hidden="true"/><h2>Your next chapter is ready to send.</h2>
       <p>Review your project inquiry in your email app, then send it to Torall. Nothing has been sent yet.</p>
@@ -105,5 +106,5 @@ export function AgencyContact({ standalone = false }: { standalone?: boolean }) 
       <div className="agency-message-field"><label htmlFor="inquiry-message">Tell us what you have in mind <small>(Required)</small></label><textarea id="inquiry-message" name="message" placeholder="Your idea, your priorities, and what success would look like…" rows={4} required minLength={10} maxLength={2000} value={message} onChange={e => { e.target.setCustomValidity(''); setMessage(e.target.value); }}/><p className="agency-form-note">{message.length} of 2,000 characters</p></div>
       <div className="agency-form-submit"><button className="agency-pill" type="submit">Prepare project email <ArrowUpRight aria-hidden="true"/></button><p className="agency-form-note">You review and send from your email app.</p></div>
     </form>}
-  </div></section>;
+  </div></div></section>;
 }

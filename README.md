@@ -78,13 +78,18 @@ access to the independently managed Lumera application.
 ## Visitor experience and inquiries
 
 The homepage follows the reference agency format: a spacious introduction and
-floating Torall character, full-width services film, counter-moving type bands,
-staggered portfolio, industry wordmarks, six interactive values, service accordions,
-moving photo strip, creative-space photograph, inquiry form, featured Lumera card,
-and illustrated landscape footer. Interior pages share the same navigation and
-visual system. Scroll reveals, hover details, and character docking respect reduced
+floating Torall character within an orbital hero composition, framed services film,
+counter-moving type bands, staggered portfolio with persistent project labels,
+six interactive values, service accordions, moving photo strip, creative-space
+photograph, four-step project process, FAQs, inquiry form, featured Lumera card,
+and a branded landscape footer. Interior pages share the same navigation and
+visual system. Scroll reveals, hover details, and character motion respect reduced
 motion; offscreen videos pause. Photographs are locally hosted and documented in
 `public/media/agency/ATTRIBUTION.txt`. Industry names describe audiences, not clients.
+The finishing pass uses a more compact page rhythm, clearer calls to action,
+portfolio category counts, service-page return links, and a two-column inquiry
+workspace. Photos and brand assets remain original Torall assets or licensed stock;
+no reference agency's assets or claims are reused.
 
 Contact prepares a project email for the visitor to review and send in their own email
 app. It does not submit a server-side form or claim delivery. A copy-brief option works
