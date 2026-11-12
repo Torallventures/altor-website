@@ -1,20 +1,7 @@
-/* A full-viewport film canvas. Contain preserves the titles already edited into the film. */
-.torall-film { position: relative; width: 100%; height: 100svh; background: #100e15; overflow: hidden; isolation: isolate; scroll-margin-top: 0; }
+/* A full-page film canvas. Contain preserves the titles already edited into the film. */
+.torall-film { position: relative; width: 100%; height: 100svh; min-height: 480px; background: #100e15; overflow: hidden; isolation: isolate; }
 .torall-film-video { display: block; width: 100%; height: 100%; object-fit: contain; }
-.torall-film:fullscreen { height: 100dvh; background: #100e15; }
-.torall-film-controls { position: absolute; right: 1.25rem; bottom: 1.25rem; display: flex; gap: .5rem; opacity: 0; transition: opacity .25s ease; }
-.torall-film:hover .torall-film-controls, .torall-film:focus-within .torall-film-controls, .torall-film[data-playing="false"] .torall-film-controls { opacity: 1; }
-.torall-film-controls button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-width: 44px; min-height: 44px; padding: .65rem .8rem; color: #fff; background: #100e15c9; border: 1px solid #ffffff50; border-radius: .3rem; font-size: .75rem; transition: background-color .2s; }
-.torall-film-controls button:hover { background: #302b3beb; }
-.torall-film-controls button:focus-visible, .torall-film-fallback a:focus-visible { outline: 2px solid #a4c68a; outline-offset: 3px; }
-.torall-film-controls svg, .torall-film-fallback svg { width: 1rem; height: 1rem; }
-.torall-film-message { position: absolute; right: 1.25rem; bottom: 4.5rem; padding: .6rem; color: #fff; background: #100e15e8; font-size: .8rem; }
 .torall-film-fallback { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1rem; color: #fff; background: #100e15c9; }
 .torall-film-fallback a { display: inline-flex; align-items: center; gap: .5rem; color: #a4c68a; text-decoration: underline; }
-@media (max-width: 767px) {
-  .torall-film { height: auto; aspect-ratio: 16 / 9; }
-  .torall-film:fullscreen { height: 100dvh; aspect-ratio: auto; }
-  .torall-film-controls { right: .65rem; bottom: .65rem; }
-}
-@media (hover: none), (pointer: coarse) { .torall-film-controls { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .torall-film-controls, .torall-film-controls button { transition: none; } }
+.torall-film-fallback svg { width: 1rem; height: 1rem; }
+.torall-film-fallback a:focus-visible { outline: 2px solid #a4c68a; outline-offset: 3px; }
