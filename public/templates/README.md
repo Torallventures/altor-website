@@ -16,7 +16,7 @@ independent application. No endorsement by the creator or depicted property is i
 ## Current public demonstration captures — November 12, 2026
 
 - `lumera-current-desktop.jpg`: actual `/lumeratm` homepage at 1440 × 900.
-- `lumera-forms-mobile.jpg`: actual `/lumeratm/forms` library at 390 × 844.
+- `lumera-forms-mobile.jpg`: actual `/lumeratm#/community/forms` library at 390 × 844.
 
 Captured through the public Torall proxy, without modifying the independent Lumera
 application, accounts, submissions, or data. The desktop video imagery uses the
