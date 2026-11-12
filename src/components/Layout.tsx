@@ -35,5 +35,5 @@ export function Layout() {
     if (previousPath.current !== pathname) document.getElementById('main-content')?.focus({ preventScroll: true });
     previousPath.current = pathname;
   }, [pathname, hash]);
-  return <div className="studio-site"><a href="#main-content" className="studio-skip">Skip to content</a><StudioNav/><main id="main-content" tabIndex={-1}><Outlet/></main><StudioFooter/></div>;
+  return <div className={`studio-site${pathname === '/' ? ' is-home' : ''}`}><a href="#main-content" className="studio-skip">Skip to content</a><StudioNav/><main id="main-content" tabIndex={-1}><Outlet/></main><StudioFooter/></div>;
 }

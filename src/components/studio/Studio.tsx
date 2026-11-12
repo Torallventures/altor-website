@@ -1,6 +1,6 @@
-import { useId, useState, type ReactNode } from 'react';
+import { useId, type ReactNode } from 'react';
 import { Link } from 'react-router';
-import { ArrowDown, ArrowRight, ArrowUpRight, Plus } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Plus } from 'lucide-react';
 import { services } from '@/data/services';
 import { OPEN_CONTOUR_PATHS } from '@/lib/brandGeometry';
 import { lumeraTemplateUrl } from '@/lib/portfolio';
@@ -23,16 +23,6 @@ export function ContourStudy({ compact = false }: { compact?: boolean }) {
       </g>
     </svg>
   </div>;
-}
-
-export function StudioHero() {
-  return <section id="top" className="studio-hero">
-    <ContourStudy/>
-    <div className="studio-wrap studio-hero-content"><p className="studio-hero-kicker">Independent thinking. Useful technology.</p><h1>Digital experiences<br/>for the way<br/>we live & work.</h1>
-      <div className="studio-hero-bottom"><p>We design and build websites, applications, and custom systems that make your business easier to discover, use, and run.</p><div className="studio-actions"><Link to="/portfolio" className="studio-button">Explore our work <ArrowUpRight aria-hidden="true"/></Link><Link to="/contact" className="studio-link">Tell us what you’re building <ArrowRight aria-hidden="true"/></Link></div></div>
-      <div className="studio-hero-foot"><a href="#featured">Discover Torall <ArrowDown aria-hidden="true"/></a><span>Florida based. Built around your world.</span></div>
-    </div>
-  </section>;
 }
 
 export function FeaturedProject({ detailed = false }: { detailed?: boolean }) {
@@ -76,12 +66,6 @@ export function StudioQuestions() {
     ['How are timing and cost decided?', 'The scope, content, integrations, and level of customization determine the plan. We agree on the priorities and deliverables before discussing timing and cost.'],
     ['Can I explore a working example?', 'Lumera is our interactive residential website and portal demonstration. Open it from the portfolio to try public pages, forms, resident experiences, management roles, and visual themes.'],
   ].map(([question, answer]) => <details key={question}><summary>{question}<Plus aria-hidden="true"/></summary><p>{answer}</p></details>)}</div></section>;
-}
-
-/** Retains the existing Torall film without the former scroll-wobble effect. */
-export function StudioFilm() {
-  const [failed, setFailed] = useState(false);
-  return <section id="showreel" className="studio-film studio-wrap"><div className="studio-film-caption"><p className="studio-label">From idea to interface</p><p>Websites, communities, and the systems that connect them.</p></div><div className="studio-film-frame"><video src="/media/torall-website-polished.mp4" poster="/media/torall-website-polished-poster.jpg" width="1920" height="1080" controls muted playsInline preload="none" aria-label="Torall's services: residential websites, business websites, applications, management systems, and custom digital products" onError={() => setFailed(true)}/>{failed && <p className="studio-film-error">The film is unavailable. <Link to="/services">Explore our services</Link></p>}</div></section>;
 }
 
 export function StudioInvitation() {
