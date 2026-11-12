@@ -12,3 +12,13 @@ with Pool**, by **vision capture**, Pexels ID 36371120, used under the Pexels Li
 
 The screenshot illustrates the gallery card; Explore Lumera opens the complete
 independent application. No endorsement by the creator or depicted property is implied.
+
+## Current public demonstration captures — November 12, 2026
+
+- `lumera-current-desktop.jpg`: actual `/lumeratm` homepage at 1440 × 900.
+- `lumera-forms-mobile.jpg`: actual `/lumeratm/forms` library at 390 × 844.
+
+Captured through the public Torall proxy, without modifying the independent Lumera
+application, accounts, submissions, or data. The desktop video imagery uses the
+existing licensed source described above. The mobile image is the application's
+actual interface, not a fabricated mockup.

@@ -1,4 +1,20 @@
-import { FeaturedProject, ServiceIndex, StudioFilm, StudioHero, StudioInvitation, StudioPrinciples, StudioProcess, StudioQuestions } from '@/components/studio/Studio';
+import {
+  FeaturedProject,
+  ServiceIndex,
+  StudioHero,
+  StudioIntroduction,
+  StudioInvitation,
+  StudioProcess,
+} from "@/components/studio/Studio";
 export default function Home() {
-  return <><StudioHero/><FeaturedProject/><ServiceIndex/><StudioFilm/><StudioPrinciples/><StudioProcess/><StudioQuestions/><StudioInvitation/></>;
+  return (
+    <>
+      <StudioHero />
+      <FeaturedProject />
+      <StudioIntroduction />
+      <ServiceIndex />
+      <StudioProcess />
+      <StudioInvitation />
+    </>
+  );
 }
