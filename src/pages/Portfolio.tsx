@@ -1,116 +1,27 @@
-import { useEffect } from "react";
-import { ArrowRight, ArrowUpRight, Building2, Check, FileCheck2, Globe2, LayoutDashboard, Palette, Users } from "lucide-react";
-import { Link } from "react-router";
-import { Reveal } from "@/components/Reveal";
-import { lumeraTemplateUrl } from "@/lib/portfolio";
-const capabilities = [
-  { icon: Globe2, title: "A remarkable first impression.", description: "A cinematic residential website with a video homepage, considered typography, and a complete amenities experience.", number: "01" },
-  { icon: FileCheck2, title: "Every step, beautifully connected.", description: "Explore the forms builder, applications, and review workflows that make everyday administration feel effortless.", number: "02" },
-  { icon: LayoutDashboard, title: "A community, in one place.", description: "Step into the resident portal, switch between seven roles, and see how residents and management stay connected.", number: "03" },
+import { useSearchParams } from 'react-router';
+import { ArrowUpRight, Check } from 'lucide-react';
+import { FeaturedProject, PageIntro, StudioInvitation } from '@/components/studio/Studio';
+import { lumeraTemplateUrl } from '@/lib/portfolio';
+const perspectives = [
+  { id: 'website', label: 'The first impression', title: 'A place worth discovering.', text: 'A cinematic homepage, considered typography, and a clear path through the residence and its amenities. The public website introduces the community before a visitor ever steps inside.', features: ['Cinematic architecture homepage', 'Amenities and residence pages', 'Three customizable visual themes'] },
+  { id: 'residents', label: 'Everyday living', title: 'The community, close at hand.', text: 'Explore the interactive resident portal and see how community information, requests, and everyday services can come together in a familiar experience.', features: ['Interactive resident portal', 'Forms and application workflows', 'AI concierge preview'] },
+  { id: 'management', label: 'Behind the scenes', title: 'A clearer view of the details.', text: 'Switch between seven roles to explore different responsibilities. Follow applications, work with the forms builder, and see how the management experience connects to the public website.', features: ['Seven role demonstrations', 'Forms builder and application review', 'Management dashboards and cost comparison'] },
 ];
-
 export default function Portfolio() {
-  useEffect(() => {
-    const previousTitle = document.title === "Portfolio — Torall Ventures"
-      ? "Torall Ventures — Engineering Intelligent Systems"
-      : document.title;
-    document.title = "Portfolio — Torall Ventures";
-    return () => { document.title = previousTitle; };
-  }, []);
-
-  return (
-    <>
-        <section className="hero-scope relative overflow-hidden border-b border-border bg-background pb-16 pt-32 sm:pb-24 sm:pt-40">
-          <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-40 h-[580px] w-[580px] rounded-full bg-primary/10 blur-[100px]" />
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <p className="mb-7 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.24em] text-primary-deep">
-              <span className="h-px w-10 bg-primary-deep" /> Selected work / Portfolio
-            </p>
-            <div className="grid items-end gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-24">
-              <h1 className="max-w-3xl font-display text-5xl font-medium leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">
-                Ideas, brought<br /><span className="text-primary-deep">to life.</span>
-              </h1>
-              <p className="max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Explore the experiences we build. Step inside Lumera, our first interactive condominium template, and discover what thoughtful design can do for your community.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section aria-labelledby="collection-heading" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
-          <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-            <h2 id="collection-heading" className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Featured experience
-            </h2>
-            <span className="rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-widest text-primary">Residential communities</span>
-          </div>
-
-          <article aria-labelledby="lumera-heading" className="overflow-hidden rounded-2xl border border-primary/20 bg-card">
-            <div className="grid lg:grid-cols-[1.35fr_1fr]">
-              <div className="relative flex min-w-0 items-center overflow-hidden border-b border-border bg-[#d8ddd5] p-5 sm:p-9 lg:border-b-0 lg:border-r">
-                <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.65),transparent_70%)]" />
-                <div className="relative w-full overflow-hidden rounded-lg border border-black/10 bg-white shadow-2xl shadow-black/20 transition-transform duration-500 motion-safe:hover:-translate-y-1">
-                  <div aria-hidden="true" className="flex h-8 items-center gap-1.5 border-b border-black/5 bg-[#f5f4ef] px-3">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#c6ccc5]" /><span className="h-1.5 w-1.5 rounded-full bg-[#c6ccc5]" /><span className="h-1.5 w-1.5 rounded-full bg-[#c6ccc5]" />
-                    <span className="ml-auto font-mono text-[9px] uppercase tracking-widest text-[#667165]">Lumera / Aurelia Residences</span>
-                  </div>
-                  <img src="/templates/lumera-desktop.jpg" alt="Lumera's Aurelia Residences website, featuring its cinematic architecture homepage and resident portal navigation" width="1425" height="990" fetchPriority="high" className="aspect-[1.44] w-full object-cover object-top" />
-                </div>
-              </div>
-
-              <div className="flex flex-col p-7 sm:p-10 lg:p-11">
-                <div className="mb-8 flex items-center justify-between gap-4">
-                  <Building2 className="h-7 w-7 text-primary" strokeWidth={1.3} aria-hidden="true" />
-                  <span className="rounded-full border border-primary/25 bg-primary/5 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-primary">Interactive demo</span>
-                </div>
-                <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Considered living. Connected communities.</p>
-                <h3 id="lumera-heading" className="font-display text-5xl font-medium tracking-tight sm:text-6xl">Lumera<span className="text-primary">.</span></h3>
-                <p className="mt-5 text-base leading-relaxed text-muted-foreground">A refined condominium website and an intuitive community portal, brought together in one complete experience.</p>
-                <ul className="my-7 grid gap-3 text-sm">
-                  {["Cinematic website & resident portal", "Forms builder & application workflows", "Seven roles & customizable themes"].map((feature) => (
-                    <li key={feature} className="flex items-center gap-3"><Check className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />{feature}</li>
-                  ))}
-                </ul>
-                <a href={lumeraTemplateUrl} className="group mt-auto inline-flex min-h-12 items-center justify-between gap-4 rounded-md bg-primary px-5 py-3 font-display text-base font-semibold text-primary-foreground transition-colors hover:bg-primary-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-card">
-                  Explore Lumera <ArrowUpRight className="h-5 w-5 transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" aria-hidden="true" />
-                </a>
-                <p className="mt-3 text-center text-xs text-muted-foreground">Open the complete Lumera experience</p>
-              </div>
-            </div>
-            <div className="grid divide-y divide-border border-t border-border sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-              {[
-                { icon: Users, label: "Seven perspectives", detail: "Resident to administrator" },
-                { icon: Palette, label: "Make it your own", detail: "Three distinct visual themes" },
-                { icon: LayoutDashboard, label: "Explore the details", detail: "Cost comparison & AI preview" },
-              ].map(({ icon: Icon, label, detail }) => (
-                <div key={label} className="flex items-center gap-3 px-6 py-5 sm:justify-center">
-                  <Icon className="h-5 w-5 shrink-0 text-primary" strokeWidth={1.5} aria-hidden="true" />
-                  <div><p className="text-sm font-medium">{label}</p><p className="mt-1 text-xs text-muted-foreground">{detail}</p></div>
-                </div>
-              ))}
-            </div>
-          </article>
-
-          <div className="grid gap-10 py-16 sm:gap-8 sm:py-20 md:grid-cols-3">
-            {capabilities.map(({ icon: Icon, title, description, number }, index) => (
-              <Reveal key={number} delay={index * 70}>
-                <div className="mb-6 flex items-center justify-between border-b border-border pb-4">
-                  <Icon className="h-6 w-6 text-primary" strokeWidth={1.4} aria-hidden="true" />
-                  <span className="font-mono text-xs text-muted-foreground">/{number}</span>
-                </div>
-                <h3 className="mb-3 max-w-xs font-display text-xl leading-snug">{title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal>
-            <div className="flex flex-col justify-between gap-7 rounded-xl border border-primary/20 bg-primary/5 p-7 sm:p-10 md:flex-row md:items-center">
-              <div><p className="mb-3 font-mono text-[10px] uppercase tracking-[0.22em] text-primary">Your vision, our craft</p><h2 className="font-display text-2xl sm:text-3xl">A starting point. Uniquely yours.</h2><p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">Shape the branding, features, and resident experience around your community.</p></div>
-              <Link to="/contact" className="inline-flex min-h-12 shrink-0 items-center gap-4 self-start rounded-md border border-primary/40 px-5 py-3 font-display text-sm font-semibold text-primary transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:self-auto">Let's build together <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
-            </div>
-          </Reveal>
-        </section>
-    </>
-  );
+  const [params, setParams] = useSearchParams();
+  const current = perspectives.find(item => item.id === params.get('view')) || perspectives[0];
+  const select = (id: string) => setParams(previous => { const next = new URLSearchParams(previous); next.set('view', id); return next; }, { replace: true, preventScrollReset: true });
+  return <><PageIntro label="Our portfolio" title={<>Less imagining.<br/>More experiencing.</>}><p>Explore what thoughtful design and connected technology can make possible. Lumera is our interactive residential product demonstration, ready to step inside.</p></PageIntro><FeaturedProject detailed/>
+    <section className="studio-product-story studio-wrap"><div className="studio-section-head"><p className="studio-label">Inside Lumera</p><div><h2>One community.<br/>Every perspective.</h2><p>Follow the experience from a first visit to the public website through resident life and day-to-day administration.</p></div></div>
+    <div className="studio-product-explore"><div className="studio-product-reel"><video src="/media/torall-lumera-reel.mp4" poster="/media/torall-lumera-poster.jpg" width="1920" height="1080" controls muted playsInline preload="none" aria-label="Video introduction to the Lumera residential experience"/><p>Explore the full website to try its interactive features.</p></div><div>
+    <div className="studio-tabs" role="tablist" aria-label="Explore Lumera perspectives" onKeyDown={event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const index = perspectives.indexOf(current);
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? perspectives.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + perspectives.length) % perspectives.length;
+      select(perspectives[next].id);
+      document.getElementById(`tab-${perspectives[next].id}`)?.focus();
+    }}>{perspectives.map(item => <button key={item.id} id={`tab-${item.id}`} type="button" role="tab" aria-selected={current.id === item.id} aria-controls={`panel-${item.id}`} tabIndex={current.id === item.id ? 0 : -1} onClick={() => select(item.id)}>{item.label}</button>)}</div>
+    <div className="studio-tab-panel" key={current.id} id={`panel-${current.id}`} role="tabpanel" aria-labelledby={`tab-${current.id}`} tabIndex={0}><h3>{current.title}</h3><p>{current.text}</p><ul>{current.features.map(feature => <li key={feature}><Check aria-hidden="true"/>{feature}</li>)}</ul><a href={lumeraTemplateUrl} className="studio-link">Open the interactive demo <ArrowUpRight aria-hidden="true"/></a></div></div></div></section>
+    <section className="studio-product-note studio-wrap"><h2>A starting point.<br/>An experience of your own.</h2><p>Lumera shows how a community’s website, portal, and workflows can fit together. Branding, content, and functionality can be shaped around the needs of a different community. Demonstrated transactions and AI messaging are previews.</p></section><StudioInvitation/></>;
 }

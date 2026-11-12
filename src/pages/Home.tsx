@@ -1,11 +1,4 @@
-import { Hero } from "@/sections/Hero";
-import { HeroShowreel } from "@/components/HeroShowreel";
-
+import { FeaturedProject, ServiceIndex, StudioFilm, StudioHero, StudioInvitation, StudioPrinciples, StudioProcess, StudioQuestions } from '@/components/studio/Studio';
 export default function Home() {
-  return (
-    <>
-      <Hero />
-      <HeroShowreel />
-    </>
-  );
+  return <><StudioHero/><FeaturedProject/><ServiceIndex/><StudioFilm/><StudioPrinciples/><StudioProcess/><StudioQuestions/><StudioInvitation/></>;
 }

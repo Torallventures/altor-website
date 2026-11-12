@@ -17,6 +17,7 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/portfolio/lumera" element={<Portfolio />} />
         <Route path="/templates" element={<Navigate to="/portfolio" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
