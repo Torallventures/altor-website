@@ -1,7 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/lumeratm", "destination": "https://lumera-template.vercel.app/lumeratm" },
-    { "source": "/lumeratm/:path*", "destination": "https://lumera-template.vercel.app/lumeratm/:path*" },
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
