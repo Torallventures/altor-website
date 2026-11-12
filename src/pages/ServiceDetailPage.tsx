@@ -11,6 +11,7 @@ export default function ServiceDetailPage() {
   const next = services[(services.indexOf(service) + 1) % services.length];
   return <>
     <article className="agency-detail agency-container">
+      <Link to="/#services" className="agency-back-link">← All capabilities</Link>
       <div className="agency-detail-heading"><h1>{service.title}</h1><p>{service.tagline}</p></div>
       <img className="agency-detail-image" src={service.image} alt={`${service.title} design concept`} width="1000" height="563" fetchPriority="high"/>
       <div className="agency-detail-story"><h2>Built around<br />your business.</h2><div>{service.story.map(paragraph => <RevealBlock key={paragraph}><p>{paragraph}</p></RevealBlock>)}</div></div>

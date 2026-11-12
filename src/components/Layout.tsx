@@ -4,6 +4,7 @@ import "lenis/dist/lenis.css";
 import { Outlet, useLocation } from "react-router";
 import { AgencyNav, AgencyFooter } from '@/components/agency/AgencyChrome';
 import '@/components/agency/agency.css';
+import '@/components/agency/refinements.css';
 import { PageMetadata } from "@/components/PageMetadata";
 
 /** Smooth wheel/anchor scrolling, resetting on navigation without stale momentum. */
@@ -23,12 +24,12 @@ function ScrollToTop() {
       lerp: 0.09,
       smoothWheel: true,
       syncTouch: false,
-      anchors: { offset: -80 },
+      anchors: { offset: 0 },
       stopInertiaOnNavigate: true,
       allowNestedScroll: true,
     });
     const target = hash ? document.getElementById(hash.slice(1)) : null;
-    lenis.scrollTo(target || 0, { immediate: true, offset: target ? -80 : 0 });
+    lenis.scrollTo(target || 0, { immediate: true });
     return () => lenis.destroy();
   }, [key, hash]);
   return null;

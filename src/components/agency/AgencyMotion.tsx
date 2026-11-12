@@ -18,25 +18,9 @@ export function RevealBlock({ children, className = '', delay = 0 }: { children:
   return <div ref={ref} className={`agency-reveal ${className}`} style={{ '--reveal-delay': `${delay}ms` } as CSSProperties}>{children}</div>;
 }
 
-/** The existing Torall character follows the reference's arrival and scroll docking. */
+/** The Torall character stays within its hero composition and never covers navigation. */
 export function FloatingTori() {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const progress = Math.min(1, Math.max(0, scrollY / 650));
-      element.style.setProperty('--dock', String(progress));
-      element.dataset.docked = String(progress > .9);
-    };
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
-    update();
-    addEventListener('scroll', schedule, { passive: true });
-    return () => { removeEventListener('scroll', schedule); cancelAnimationFrame(frame); };
-  }, []);
-  return <div ref={ref} className="agency-mascot" aria-hidden="true"><div className="agency-mascot-arrival"><img src="/mascots/tori.webp" width="385" height="433" alt="" /></div></div>;
+  return <div className="agency-mascot" aria-hidden="true"><div className="agency-mascot-arrival"><img src="/mascots/tori.webp" width="385" height="433" alt="" fetchPriority="high" /></div></div>;
 }
 
 export function QuietVideo({ src, poster, className = '', label }: { src: string; poster: string; className?: string; label: string }) {
@@ -67,13 +51,14 @@ export function MovingPhotoStrip() {
     const track = ref.current;
     if (!track) return;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
-    let frame = 0, previous = 0, visible = false;
+    let frame = 0, previous = 0, visible = false, position = track.scrollLeft;
     const tick = (time: number) => {
       if (visible && !paused.current && !drag.current && !document.hidden && !motion.matches) {
-        track.scrollLeft += Math.min(32, time - (previous || time)) * .026;
+        position += Math.min(32, time - (previous || time)) * .026;
         const loopStart = (track.children[3] as HTMLElement).offsetLeft - (track.children[0] as HTMLElement).offsetLeft;
-        if (loopStart && track.scrollLeft >= loopStart) track.scrollLeft -= loopStart;
-      }
+        if (loopStart && position >= loopStart) position -= loopStart;
+        track.scrollLeft = position;
+      } else position = track.scrollLeft;
       previous = time;
       frame = requestAnimationFrame(tick);
     };
