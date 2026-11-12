@@ -3,8 +3,6 @@ import { ArrowRight, ArrowUpRight, Building2, Check, FileCheck2, Globe2, LayoutD
 import { Link } from "react-router";
 import { Reveal } from "@/components/Reveal";
 import { lumeraTemplateUrl } from "@/lib/portfolio";
-import { ServiceOfferings } from "@/pages/ServicesPage";
-
 const capabilities = [
   { icon: Globe2, title: "A remarkable first impression.", description: "A cinematic residential website with a video homepage, considered typography, and a complete amenities experience.", number: "01" },
   { icon: FileCheck2, title: "Every step, beautifully connected.", description: "Explore the forms builder, applications, and review workflows that make everyday administration feel effortless.", number: "02" },
@@ -105,13 +103,6 @@ export default function Portfolio() {
               </Reveal>
             ))}
           </div>
-
-          <section aria-labelledby="capabilities-heading" className="pb-16">
-            <p className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-primary-deep">The expertise behind the experience</p>
-            <h2 id="capabilities-heading" className="font-display text-3xl font-medium tracking-tight sm:text-4xl">One team for every digital idea.</h2>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">From residential community platforms to business websites, apps, and fully custom systems — every project is designed and built by the same team, start to finish.</p>
-            <ServiceOfferings />
-          </section>
 
           <Reveal>
             <div className="flex flex-col justify-between gap-7 rounded-xl border border-primary/20 bg-primary/5 p-7 sm:p-10 md:flex-row md:items-center">
