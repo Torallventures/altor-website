@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Brasa &amp; Lime · Miami grill (demo site)</title>
+<meta name="robots" content="noindex"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><title>Brasa &amp; Lime · Miami grill (demo site)</title>
 <meta name="description" content="A sample restaurant website with online ordering, reservations and an owner back office, built by Torall Ventures.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -131,7 +131,7 @@ else if(a=='menu'){body=`<div class="pg"><div class="wrap"><h1>Menu</h1><div cla
 else if(a=='reserve'){body=`<div class="pg"><div class="wrap"><h1>Reserve</h1><div class="two" id="rv"></div></div></div>`}
 else if(a=='order'){body=`<div class="pg"><div class="wrap"><h1>Your order</h1><div id="co"></div></div></div>`}
 else if(a=='visit'){const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],hr=['Closed','Closed','5 to 11 PM','5 to 11 PM','5 to 11 PM','Noon to midnight','Noon to midnight'];const t=new Date().getDay();body=`<div class="pg"><div class="wrap"><h1>Visit</h1><div class="two"><div class="map"><svg viewBox="0 0 640 400"><g stroke="#2d2622" stroke-width="14" fill="none"><path d="M-10 120L650 160M-10 290L650 250M180 -10L220 410M450 -10L420 410"/></g><g stroke="#241e1a" stroke-width="6" fill="none"><path d="M-10 210L650 205M320 -10L330 410"/></g><rect x="236" y="130" width="70" height="52" rx="8" fill="#2a2420"/><rect x="350" y="228" width="80" height="48" rx="8" fill="#2a2420"/><g class="pin"><path d="M326 150c-22 0-34 16-34 34 0 24 34 58 34 58s34-34 34-58c0-18-12-34-34-34z" fill="#FF5A1F"/><circle cx="326" cy="184" r="13" fill="#0F0D0C"/></g></svg></div><div class="cd"><h2 style="font-size:46px">Calle Ocho</h2><p class="mut" style="color:var(--mut);margin:8px 0 18px">1420 SW 8th Street, Miami, FL<br>(305) 555-0142</p><div class="hrs">${[1,2,3,4,5,6,0].map(i=>`<div class="${i==t?'t':''}"><span>${days[i]}</span><span>${hr[i]}</span></div>`).join('')}</div><p style="color:var(--mut);margin-top:16px;font-size:13px">This is a demo restaurant. Address, phone and hours are made up.</p></div></div></div></div>`}
-root.innerHTML=navHTML(a)+`<main>${body}</main><footer><div><b>Brasa &amp; Lime</b><br>Sample site built by <a href="/#work" style="text-decoration:underline">Torall Ventures</a></div><div>Demo restaurant. Nothing here is real, and no payment is taken.</div></footer>`;scrollTo(0,0);
+root.innerHTML=navHTML(a)+`<main>${body}</main><footer><div><b>Brasa &amp; Lime</b><br>Sample site built by <a href="/work/" style="text-decoration:underline">Torall Ventures</a></div><div>Demo restaurant. Nothing here is real, and no payment is taken.</div></footer>`;scrollTo(0,0);
 const nav=$('#nav');const sc=()=>nav.classList.toggle('sc',scrollY>30);sc();addEventListener('scroll',sc,{passive:true});
 if(a=='')ember();if(a=='menu')drawMenu('All');if(a=='reserve')drawRes();if(a=='order')drawCo();
 chatInit()}

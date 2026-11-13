@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Sunday Bean Coffee Roasters · demo shop</title>
+<meta name="robots" content="noindex"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><title>Sunday Bean Coffee Roasters · demo shop</title>
 <meta name="description" content="A sample small-business online shop with subscriptions and an owner back office, built by Torall Ventures.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
@@ -111,7 +111,7 @@ else if(a=='shop'){body=`<div class="pg"><div class="wrap"><h1>Shop</h1><div cla
 else if(a=='subscribe'){body=`<div class="pg"><div class="wrap"><h1>Your plan</h1><div class="two" id="sbp"></div></div></div>`}
 else if(a=='checkout'){body=`<div class="pg"><div class="wrap"><h1>Checkout</h1><div id="co"></div></div></div>`}
 else if(a=='about'){body=`<div class="pg"><div class="wrap"><h1>Two roasters, one very loud machine.</h1><div class="abt"><div><p>Sunday Bean started in a garage in Little Havana with a ten-pound roaster and too much coffee. Today we are a team of seven, roasting twice a week.</p><p>We buy directly from farms, pay above fair-trade prices and roast in small batches so every bag is fresh when it ships.</p><p>Visit the tasting room on 7th Ave, open daily 7 AM to 4 PM. This is a demo business and the address is made up.</p></div><div class="facts"><div><b>7 years</b><br>roasting in Miami</div><div><b>12 farms</b><br>we buy from directly</div><div><b>2 days</b><br>from roaster to your door</div></div></div></div></div>`}
-root.innerHTML=navHTML(a)+`<main>${body}</main><footer><div><b>Sunday Bean Coffee Roasters</b><br>Sample site built by <a href="/#work" style="text-decoration:underline">Torall Ventures</a></div><div>Demo business. Nothing here is real, and no payment is taken.</div></footer>`;scrollTo(0,0);
+root.innerHTML=navHTML(a)+`<main>${body}</main><footer><div><b>Sunday Bean Coffee Roasters</b><br>Sample site built by <a href="/work/" style="text-decoration:underline">Torall Ventures</a></div><div>Demo business. Nothing here is real, and no payment is taken.</div></footer>`;scrollTo(0,0);
 if(a=='shop')drawShop('All');if(a=='subscribe')drawSub();if(a=='checkout')drawCo();chatInit()}
 function drawShop(c){$('#pg3').innerHTML=P.filter(p=>c=='All'||(c=='Gear')==!!p.g).map(card).join('')}
 function bump(){const n=$('#cnn');if(!n)return;n.textContent=cn();n.classList.remove('bump');void n.offsetWidth;n.classList.add('bump')}
