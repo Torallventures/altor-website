@@ -78,7 +78,7 @@ h2{font-size:clamp(40px,6vw,92px);line-height:.92;max-width:14ch}
 .sub{max-width:560px;margin-top:22px;color:var(--mut)}
 /* demo */
 #demo{background:var(--ink);padding:calc(66px + 1vw) clamp(10px,1.4vw,22px) clamp(10px,1.4vw,22px);height:100vh;min-height:760px}
-/* hero erases into the live demo on scroll */
+/* hero erases into the showcase on scroll */
 .stack{position:relative}
 #demo{position:relative;z-index:2;border-radius:calc((1 - var(--dp,1))*30px) calc((1 - var(--dp,1))*30px) 0 0;box-shadow:0 -34px 80px rgba(12,13,17,calc(.45*(1 - var(--dp,1))))}
 #demo::before{content:"";position:absolute;top:-2px;left:0;right:0;height:4px;border-radius:4px;background:var(--cb);box-shadow:0 0 26px rgba(43,63,255,.85),0 0 80px rgba(43,63,255,.4);opacity:var(--eo,0);pointer-events:none;z-index:5}
@@ -235,9 +235,8 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 @keyframes lgh{0%{offset-distance:0%;opacity:1}92%{opacity:1}100%{offset-distance:100%;opacity:0}}
 @media(prefers-reduced-motion:reduce){.lg1,.lg2{animation:none}.lgh{display:none!important}}
 .cw{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px;max-width:440px;width:100%}.cw .call{padding:10px 14px 10px 10px;gap:12px}.cw .call .ci{width:38px;height:38px;border-radius:10px;flex:none}.cw .call svg{width:19px;height:19px}.cw .call.sm b,.cw .call.em.sm b{font:700 16px/1.1 var(--b);letter-spacing:0;font-stretch:100%}.cw .full,.cw .c2{grid-column:1/-1}.c2.call:hover{transform:none;background:none;border-color:rgba(255,255,255,.18)}.nums{display:flex;flex-wrap:wrap;gap:2px 20px;align-items:baseline}.nums small{flex-basis:100%;margin-bottom:2px}.nums a{font:800 clamp(19px,2vw,23px)/1.15 var(--d);font-stretch:82%;letter-spacing:-.01em}.nums a:hover{color:#a9b4ff}
-.rl{padding:0;background:#0c0d10;position:relative;z-index:2}.rl video{display:block;width:100%;height:100vh;height:100svh;object-fit:cover;pointer-events:none}
 #demo{--rs:clamp(20px,4.6vw,66px);padding-top:calc(66px + 1vw + var(--rs)*1.5)}.rot{position:absolute;left:calc(clamp(10px,1.4vw,22px) + 6px);right:12px;top:calc(66px + .5vw);height:calc(var(--rs)*1.5);display:flex;align-items:center;overflow:hidden;font:800 var(--rs)/1 var(--d);font-stretch:86%;letter-spacing:-.02em;color:#f4f3ef;white-space:nowrap}.rline{display:flex;gap:.34em;align-items:baseline}.rwrap{display:inline-block;overflow:hidden;height:1.4em;line-height:1.4em;vertical-align:bottom;padding:0 .05em}.rw{display:inline-block;line-height:1.4;font:italic 400 1.1em/1.4 var(--s);color:#a9b4ff;letter-spacing:0}
-.vs{padding:110px 4vw 120px;background:#0e1014;color:#f4f3ef}.vs h2{max-width:16ch;margin-bottom:14px}.vs .sub{color:#b9bcc6;margin-bottom:44px}.vs video{display:block;width:100%;aspect-ratio:16/9;border-radius:22px;background:#000;box-shadow:0 40px 100px rgba(0,0,0,.45);object-fit:cover}
+.vs{position:relative;z-index:2;padding:110px 4vw 120px;background:#0e1014;color:#f4f3ef}.vs h2{max-width:16ch;margin-bottom:14px}.vs .sub{color:#b9bcc6;margin-bottom:44px}.vs video{display:block;width:100%;aspect-ratio:16/9;border-radius:22px;background:#000;box-shadow:0 40px 100px rgba(0,0,0,.45);object-fit:cover}
 </style></head><body>
 <div id="wipe"></div>
 <header id="hd"><div class="bar"><div class="lc"><a class="brand" href="/"><svg viewBox="110 70 710 660" aria-hidden="true"><path class="lg1" pathLength="1" d="M178 132H675Q750 132 750 205L520 590Q487 645 450 595L308 362"/><path class="lg2" pathLength="1" d="M435 160V372"/><circle class="lgh" r="40" style="offset-path:path('M178 132H675Q750 132 750 205L520 590Q487 645 450 595L308 362')"/></svg>TORALL VENTURES</a>
@@ -254,7 +253,7 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 <div class="stack">
 <div id="hero" data-pg="home"><div class="hc"><h1>Making your business everyone’s business.</h1><p>Because doing good work is one thing. Making sure people know about it is another.</p><a class="btn" href="/contact/">Start a project</a><a class="btn o" href="/demo/" data-scroll="#demo">See it in action</a><a class="hn" href="/pricing/">Websites from $1,800. Written quotes, no surprises.</a></div><canvas id="c"></canvas><div id="dots"><span id="cap"></span><i></i><i></i><i></i><i></i><i></i></div><div class="cue">Scroll</div></div>
 
-<section class="rl" data-pg="home" aria-label="Businesses we build for"><video src="/media/reel.mp4" poster="/media/reel.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback tabindex="-1" aria-hidden="true"></video></section>
+<section class="vs" data-pg="home" aria-label="What we build"><h2>Websites, apps and software, in under a minute.</h2><p class="sub">A quick look at what we build for restaurants, shops, builders, condos and more.</p><video id="sv" src="/media/showcase.mp4" poster="/media/showcase.jpg" muted loop playsinline preload="metadata" disablepictureinpicture tabindex="-1" aria-label="Video showing websites, mobile apps and custom software built by Torall Ventures"></video></section>
 <section id="demo" data-pg="home demo" aria-label="Live demo: a condo portal">
 <div class="rot" aria-hidden="true"><div class="rline" id="rl"><span id="rp"></span><span class="rwrap"><span class="rw" id="rw"></span></span></div></div>
 <div class="win"><aside class="sdb"><div class="pb"><i>H</i><div><b>Harbor Point</b><span>Resident portal</span></div></div>
@@ -277,7 +276,6 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 <div class="scn" id="sc4"><div class="hd2"><h4>Order online</h4><span class="chip">Pickup in about 20 min</span></div><div class="kpi"><div><b>42</b>Orders today</div><div><b>$1,214</b>Sales today</div><div><b>18 min</b>Average prep time</div><div><b>4.9</b>Customer rating</div></div><div class="g2"><div class="menu" id="menu"></div><div class="card"><h5>Your order</h5><ul class="cart" id="cart"><li class="e">Your cart is empty</li></ul><div class="tot"><div>Subtotal<b id="c-sub">$0.00</b></div><div>Tax<b id="c-tax">$0.00</b></div><div class="t">Total<b id="c-tot">$0.00</b></div></div><div class="fl" style="margin:12px 0 8px">Pickup time</div><div id="pick"><span class="ch on">As soon as possible</span><span class="ch">6:30 PM</span><span class="ch">7:00 PM</span></div><span class="sb" id="o-place">Place order</span><div class="okp" id="o-ok"><b>Order #1042 confirmed</b><div style="font-size:12px;color:var(--mut)">Ready for pickup in about 20 minutes.</div><div class="trk"><i></i><i></i><i></i></div></div></div></div><div class="card fill fade"><h5>Recent orders</h5><div class="rw">#1041 · Daniel B.<span>$27.82</span><em class="b">Preparing</em></div><div class="rw">#1040 · Priya S.<span>$18.40</span><em class="a">Picked up</em></div><div class="rw">#1039 · Lucas M.<span>$34.10</span><em class="a">Picked up</em></div></div></div>
 </div></div><div class="dcur" id="dcur"></div></div></section></div>
 
-<section class="vs" data-pg="home" aria-label="What we build"><h2>Websites, apps and software, in under a minute.</h2><p class="sub">A quick look at what we build for restaurants, shops, builders, condos and more.</p><video id="sv" src="/media/showcase.mp4" poster="/media/showcase.jpg" muted loop playsinline preload="metadata" disablepictureinpicture tabindex="-1" aria-label="Video showing websites, mobile apps and custom software built by Torall Ventures"></video></section>
 <section class="stx" data-pg="home" aria-label="Torall in numbers"><div class="stg"><div class="rv"><b class="cn" data-to="120" data-suf="+">0+</b><span>Websites delivered</span></div><div class="rv" style="--dl:.1s"><b class="cn" data-to="24" data-suf="/7">0/7</b><span>Support, every day</span></div><div class="rv" style="--dl:.2s"><b class="cn" data-to="100" data-suf="%">0%</b><span>Custom design and client satisfaction</span></div><div class="rv" style="--dl:.3s"><b class="cn" data-to="15" data-suf="+">0+</b><span>Industries served</span></div></div></section>
 <div class="mq" data-pg="home"><div id="mq"></div></div>
 
@@ -548,10 +546,10 @@ function hdr(){const y=scrollY,d=y-lastY;if(hd.classList.contains('mo')){lastY=y
 addEventListener('scroll',()=>{if(!tickH)tickH=requestAnimationFrame(()=>{tickH=0;hdr()})},{passive:true});hdr();
 /* reveal */
 const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.15});
-/* hero erases into the live demo on scroll */
+/* hero erases into the showcase on scroll */
 const heroE=$('#hero'),demoE=$('#demo');let tickE=0;
 function erase(){const hh=heroE.offsetHeight||innerHeight;if(heroE.hidden||demoE.hidden){heroE.style.setProperty('--ep',0);demoE.style.setProperty('--dp',1);demoE.style.setProperty('--eo',0);return}
-const p=Math.max(0,Math.min(1,scrollY/hh));heroE.style.setProperty('--ep',rm?0:Math.min(1,scrollY/(hh*.8)).toFixed(4));demoE.style.setProperty('--dp',p.toFixed(4));demoE.style.setProperty('--eo',rm?0:Math.sin(Math.PI*p).toFixed(4))}
+const p=Math.max(0,Math.min(1,(innerHeight-demoE.getBoundingClientRect().top)/innerHeight));heroE.style.setProperty('--ep',rm?0:Math.min(1,scrollY/(hh*.8)).toFixed(4));demoE.style.setProperty('--dp',p.toFixed(4));demoE.style.setProperty('--eo',rm?0:Math.sin(Math.PI*p).toFixed(4))}
 addEventListener('scroll',()=>{if(!tickE)tickE=requestAnimationFrame(()=>{tickE=0;erase()})},{passive:true});addEventListener('resize',erase);
 /* marquee */
 const NP=[['clear','PORTALS'],['fast','WEBSITES'],['handy','APPS'],['tailored','SOFTWARE'],['easy','BOOKING'],['live','DASHBOARDS']].map(p=>`<span>${p[0]} <b>${p[1]}</b></span>`).join('');$('#mq').innerHTML=NP+NP;
