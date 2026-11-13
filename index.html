@@ -300,9 +300,15 @@ function goP(n){sp=n;pan.forEach((p,k)=>p.classList.toggle('on',k==n));pg.forEac
 $$('#o1 .op').forEach(b=>b.onclick=()=>b.classList.toggle('on'));
 ['#o2','#o3','#o4'].forEach(s=>$$(s+' .op').forEach(b=>b.onclick=()=>{$$(s+' .op').forEach(x=>x.classList.remove('on'));b.classList.add('on')}));
 $$('.go[data-n]').forEach(b=>b.onclick=()=>goP(+b.dataset.n));$$('.bk').forEach(b=>b.onclick=()=>goP(+b.dataset.b));
-$('#send').onclick=()=>{const em=$('#em');if(!em.value.includes('@')){em.style.borderColor='#d4232c';em.placeholder='Add a valid email';em.focus();return}
-const g=s=>$$(s+' .op.on').map(x=>x.textContent).join(', ')||'Not specified';$('#dn').textContent='Thank you'+($('#nm').value?', '+$('#nm').value.split(' ')[0]:'')+'.';
-$('#rec').innerHTML=[['Needs',g('#o1')],['Business',g('#o2')],['Timeline',g('#o3')],['Budget',g('#o4')],['Email',em.value]].map(r=>`<li>${r[0]}<span>${r[1]}</span></li>`).join('');goP(4)};
+$('#send').onclick=async()=>{const em=$('#em'),btn=$('#send');if(!em.value.includes('@')){em.style.borderColor='#d4232c';em.placeholder='Add a valid email';em.focus();return}
+const g=s=>$$(s+' .op.on').map(x=>x.textContent).join(', ')||'Not specified',nm=$('#nm').value.trim(),
+data={name:nm||'Not given',email:em.value,needs:g('#o1'),business:g('#o2'),timeline:g('#o3'),budget:g('#o4'),message:$('#ms').value||'None',_subject:'New Torall project request'+(nm?' from '+nm:'')};
+let err=$('#serr');if(!err){err=document.createElement('p');err.id='serr';err.style.cssText='color:#c4262c;font-weight:600;font-size:14px;margin:10px 0 0';btn.closest('.nx').insertAdjacentElement('afterend',err)}err.textContent='';
+const lbl=btn.textContent;btn.disabled=true;btn.textContent='Sending...';
+try{const r=await fetch('https://formspree.io/f/mwloprbq',{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify(data)});if(!r.ok)throw 0}
+catch(e){btn.disabled=false;btn.textContent=lbl;err.innerHTML='Something went wrong sending that. Please try again, or email <a href="mailto:info@torallventures.com" style="text-decoration:underline">info@torallventures.com</a>.';return}
+btn.disabled=false;btn.textContent=lbl;$('#dn').textContent='Thank you'+(nm?', '+nm.split(' ')[0]:'')+'.';
+$('#rec').innerHTML=[['Needs',data.needs],['Business',data.business],['Timeline',data.timeline],['Budget',data.budget],['Email',em.value]].map(r=>`<li>${r[0]}<span>${r[1]}</span></li>`).join('');goP(4)};
 /* demo */
 const win=$('.win'),dc=$('#dcur');win.appendChild(dc);const SC=$$('.scn'),TB=$$('.tb'),DUR=12500,CAP=['Move-in applications','Building announcements','Service requests','Amenity reservations','Online ordering'];
 /* static demo content */
