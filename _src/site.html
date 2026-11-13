@@ -48,7 +48,7 @@ header.open .feat{opacity:1;transform:none;transition:opacity .6s .3s,transform 
 .feat h4{font-size:30px;line-height:1}.feat p{font-size:14px;opacity:.9;margin:10px 0 16px}.feat a{align-self:flex-start;background:#fff;color:var(--ink);padding:10px 16px;border-radius:8px;font:700 12px var(--b);letter-spacing:.08em;text-transform:uppercase;position:relative;z-index:1}
 /* wipe + words + reveal */
 #wipe{position:fixed;inset:0;background:var(--cb);z-index:80;transform:translateY(100%);pointer-events:none}#wipe.go{animation:wp .9s cubic-bezier(.7,0,.2,1)}
-.w{display:inline-block;overflow:hidden;vertical-align:top;padding:.12em 0;margin:-.12em 0}.w i{display:inline-block;font-style:normal;transform:translateY(110%);animation:wr .9s cubic-bezier(.2,.8,.2,1) forwards;animation-play-state:paused}.in .w i,.w.in i{animation-play-state:running}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding:.26em .1em;margin:-.26em -.1em}.w.ok{overflow:visible}.w i{display:inline-block;font-style:normal;transform:translateY(110%);animation:wr .9s cubic-bezier(.2,.8,.2,1) forwards;animation-play-state:paused}.in .w i,.w.in i{animation-play-state:running}
 .rv{opacity:0;transform:translateY(46px);transition:opacity .9s var(--dl,0s),transform 1s var(--dl,0s) cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
 /* hero */
 #hero{position:sticky;top:0;z-index:1;min-height:100svh;overflow:hidden;background:linear-gradient(var(--gr) 1px,transparent 1px) 0 0/88px 88px,linear-gradient(90deg,var(--gr) 1px,transparent 1px) 0 0/88px 88px}
@@ -498,6 +498,7 @@ if(p=='tips'){tipF(window.__ind||'all');window.__ind=0}dispatchEvent(new Event('
 function tipF(i){$$('.tchip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.i==i));$$('.tcard').forEach(c=>c.hidden=!(i=='all'||c.dataset.i==i))}
 function route(){const h=location.hash.slice(1);if(h&&PGS.includes(h)&&pathP()=='home')history.replaceState(null,'',urlOf(h));let p=pathP();if(!PGS.includes(p))p='home';if(p===curP)return;const first=!curP;curP=p;setMo(false);if(first){showP(p);return}const w=$('#wipe');w.classList.remove('go');w.offsetWidth;w.classList.add('go');setTimeout(()=>showP(p),420)}
 addEventListener('popstate',route);
+document.addEventListener('animationend',e=>{if(e.animationName=='wr'&&e.target.parentElement)e.target.parentElement.classList.add('ok')},true);
 document.addEventListener('click',e=>{const pl=e.target.closest('[data-plan]');if(pl)window.__plan=pl.dataset.plan;const t=e.target.closest('[data-tab]');if(t){e.preventDefault();const n=+t.dataset.tab;if(curP=='home'){smoothTo($('#demo').offsetTop);runDemo(n)}else if(curP=='demo')runDemo(n);else{pend=n;gotoP('demo')}return}
 const ch=e.target.closest('.tchip');if(ch){tipF(ch.dataset.i);return}const di=e.target.closest('[data-ind]');if(di)window.__ind=di.dataset.ind;const s=e.target.closest('[data-scroll]');if(s&&curP=='home'){e.preventDefault();smoothTo($(s.dataset.scroll).offsetTop)}
 const a=e.target.closest('a[href^="/"]');if(a&&!a.target&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&e.button==0){const u=new URL(a.href),q=u.pathname.replace(/index\.html$/,'').replace(/^\/|\/$/g,'')||'home';if(u.origin==location.origin&&PGS.includes(q)){e.preventDefault();if(q==curP){if(q=='home')smoothTo(0)}else gotoP(q)}}});
