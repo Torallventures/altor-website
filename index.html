@@ -564,7 +564,7 @@ const wrap=$('.lq'),fill=$('.lqf'),edge=$('.lqe'),dm=$('#liqd'),off=$('#liqo'),h
 if(!wrap||!fill||!edge)return;
 document.documentElement.classList.add('lq-ready');
 const canDistort=!rm&&dm&&off&&hcEl&&matchMedia('(pointer:fine)').matches&&matchMedia('(min-width:768px)').matches;
-let top=0,range=1,wipeR=1,raf=0,T=0,last=performance.now(),lp=-1,ld=-1,VU=100,ema=16,lowQ=false;
+let top=0,range=1,wipeR=1,raf=0,T=0,last=performance.now(),lp=-1,ld=-1,VU=100,ema=16,lowQ=false,lastY=scrollY,dir=1;
 function measureL(){const r=wrap.getBoundingClientRect();top=r.top+scrollY;range=Math.max(1,wrap.offsetHeight-innerHeight);wipeR=Math.max(1,innerHeight*.5);
 VU=100*innerHeight/Math.max(1,innerWidth);if(lqs)lqs.setAttribute('viewBox','0 0 100 '+VU.toFixed(2))}
 measureL();addEventListener('resize',measureL);addEventListener('load',measureL);
@@ -574,13 +574,13 @@ for(let x=105;x>=-5;x-=2.5){const y=Y+A*Math.sin(x*.11+t*1.15)+A2*Math.sin(x*.23
 return[f+'Z',e]}
 function frame(now){raf=0;if(document.hidden)return;const ms=now-last,dt=Math.min(ms/1000,.05);last=now;T+=dt;
 ema=ema*.95+ms*.05;if(!lowQ&&T>3&&ema>20)lowQ=true;
-const p=Math.max(0,Math.min(1,(scrollY-top)/wipeR));
+const p=Math.max(0,Math.min(1,(scrollY-top)/wipeR)),up=dir<0;
 const[f,e]=wavePath(p,T);
-fill.setAttribute('d',p>=1?'':f);
-edge.setAttribute('d',p>=1||p<=0?'':e);
-edge.style.opacity=Math.sin(Math.PI*p).toFixed(3);
+fill.setAttribute('d',(p>=1||up)?'':f);
+edge.setAttribute('d',(p>=1||p<=0||up)?'':e);
+edge.style.opacity=up?'0':Math.sin(Math.PI*p).toFixed(3);
 lp=p;
-const hd=canDistort&&!heroE.hidden?Math.sin(Math.PI*Math.max(0,Math.min(1,scrollY/(heroHeight*.6)))):0;
+const hd=canDistort&&!heroE.hidden&&!up?Math.sin(Math.PI*Math.max(0,Math.min(1,scrollY/(heroHeight*.6)))):0;
 window.__lqRip=hd;
 if(Math.abs(hd-ld)>.01){ld=hd;if(hd>0.01)hcEl.style.filter='url(#liqf)';else{hcEl.style.filter='';dm.setAttribute('scale',0)}}
 if(ld>0.01){if(lowQ){dm.setAttribute('scale',(ld*26).toFixed(1))}
@@ -590,7 +590,7 @@ off.setAttribute('dy',(26*Math.cos(T*.17)+10*Math.cos(T*.061)).toFixed(2))}}
 if((p>0&&p<1)||(!lowQ&&ld>0.01))raf=requestAnimationFrame(frame)}
 function wake(){if(!raf&&!rm){last=performance.now();raf=requestAnimationFrame(frame)}}
 new IntersectionObserver(es=>{if(es[0].isIntersecting)wake()},{rootMargin:'120% 0px 120% 0px'}).observe(wrap);
-addEventListener('scroll',()=>{if(!rm){const q=(scrollY-top)/range;if(q>-1&&q<2)wake()}},{passive:true});
+addEventListener('scroll',()=>{const y=scrollY,d=y-lastY;if(Math.abs(d)>2)dir=d>0?1:-1;lastY=y;if(!rm){const q=(y-top)/range;if(q>-1&&q<2)wake()}},{passive:true});
 document.addEventListener('visibilitychange',wake);
 })();
 /* marquee */
