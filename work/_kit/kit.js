@@ -1,0 +1,36 @@
+(()=>{const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const money=(n,d=0)=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+function toast(t){let e=$('#kt');if(!e){e=document.createElement('div');e.id='kt';e.className='k-toast';e.setAttribute('role','status');document.body.appendChild(e)}e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2800)}
+/* drawer */
+const drawer={el:null,sc:null,mk(){if(this.el)return;this.sc=document.createElement('div');this.sc.className='k-scrim';this.el=document.createElement('aside');this.el.className='k-drawer';this.el.setAttribute('aria-label','Panel');document.body.append(this.sc,this.el);this.sc.onclick=()=>this.close();this.el.addEventListener('click',e=>{if(e.target.closest('[data-close]'))this.close()});addEventListener('keydown',e=>{if(e.key=='Escape')this.close()})},
+open(h){this.mk();this.el.innerHTML=h;this.el.scrollTop=0;requestAnimationFrame(()=>{this.el.classList.add('on');this.sc.classList.add('on')});return this.el},close(){if(!this.el)return;this.el.classList.remove('on');this.sc.classList.remove('on')}};
+/* confetti */
+let cv,cx,ps=[],raf=0;function confetti(x=innerWidth/2,y=innerHeight/2,n=60,cols=['#FF5A1F','#FFC24B','#2BD5A4','#7B61FF','#fff']){if(rm)return;if(!cv){cv=document.createElement('canvas');cv.className='k-fx';document.body.appendChild(cv);cx=cv.getContext('2d')}cv.width=innerWidth;cv.height=innerHeight;for(let i=0;i<n;i++){const a=Math.random()*7,s=4+Math.random()*9;ps.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-5,r:3+Math.random()*4,c:cols[i%cols.length],l:1,rot:Math.random()*6})}if(!raf)loop()}
+function loop(){cx.clearRect(0,0,cv.width,cv.height);ps=ps.filter(p=>p.l>0);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.28;p.vx*=.99;p.l-=.012;p.rot+=.2;cx.globalAlpha=Math.max(0,p.l);cx.fillStyle=p.c;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillRect(-p.r,-p.r/2,p.r*2,p.r);cx.restore()});raf=ps.length?requestAnimationFrame(loop):0;if(!raf)cx.clearRect(0,0,cv.width,cv.height)}
+/* count up */
+function count(el,to,o={}){const{pre='',suf='',dec=0,dur=1300}=o,t0=performance.now(),f=n=>pre+Number(n).toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;if(rm){el.textContent=f(to);return}(function s(n){const u=Math.min(1,(n-t0)/dur);el.textContent=f(to*(1-Math.pow(1-u,3)));if(u<1)requestAnimationFrame(s)})(t0)}
+/* bar chart */
+function bars(el,data,o={}){const fmt=o.fmt||(v=>v),max=Math.max(...data.map(d=>d.v))*1.05;el.innerHTML=`<div class="k-bars">${data.map((d,i)=>`<div class="k-b${i==o.hi?' hi':''}" style="--h:${d.v/max*100}%" data-t="${d.l}: ${fmt(d.v)}"><i></i><span>${d.l}</span></div>`).join('')}</div>`;setTimeout(()=>$$('.k-b',el).forEach(b=>$('i',b).style.height=b.style.getPropertyValue('--h')),60)}
+/* line chart */
+function line(el,labels,series,o={}){const W=640,H=230,L=44,R=10,T=14,B=26,fmt=o.fmt||(v=>v),all=series.flatMap(s=>s.data),mx=Math.max(...all)*1.08,mn=0,n=labels.length,X=i=>L+i*(W-L-R)/(n-1),Y=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn));
+let g='';for(let k=0;k<=4;k++){const v=mx*k/4,y=Y(v);g+=`<line class="gl" x1="${L}" x2="${W-R}" y1="${y}" y2="${y}"/><text x="${L-8}" y="${y+4}" text-anchor="end">${fmt(Math.round(v/100)*100)}</text>`}
+const step=Math.ceil(n/8);labels.forEach((l,i)=>{if(i%step==0)g+=`<text x="${X(i)}" y="${H-6}" text-anchor="middle">${l}</text>`});
+const uid='g'+Math.random().toString(36).slice(2,7);let defs='',paths='';series.forEach((s,k)=>{const pts=s.data.map((v,i)=>[X(i),Y(v)]),d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+defs+=`<linearGradient id="${uid}${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.color}" stop-opacity=".28"/><stop offset="1" stop-color="${s.color}" stop-opacity="0"/></linearGradient>`;
+paths+=`<path class="ar" d="${d} L${X(n-1)} ${H-B} L${X(0)} ${H-B}Z" fill="url(#${uid}${k})"/><path class="ln" d="${d}" stroke="${s.color}" style="--len:2200"/>`});
+el.innerHTML=`<div class="k-line"><svg viewBox="0 0 ${W} ${H}"><defs>${defs}</defs>${g}${paths}</svg><div class="cur"></div><div class="tp"></div></div>`;
+const box=$('.k-line',el),cur=$('.cur',box),tp=$('.tp',box);box.addEventListener('mousemove',e=>{const r=box.getBoundingClientRect(),px=(e.clientX-r.left)/r.width*W,i=Math.max(0,Math.min(n-1,Math.round((px-L)/((W-L-R)/(n-1)))));const x=X(i)/W*r.width;cur.style.left=x+'px';cur.style.opacity=1;tp.style.left=x+'px';tp.style.opacity=1;tp.textContent=labels[i]+': '+series.map(s=>(series.length>1?s.name+' ':'')+fmt(s.data[i])).join(' · ')});box.addEventListener('mouseleave',()=>{cur.style.opacity=0;tp.style.opacity=0})}
+function hbars(el,rows,fmt=v=>v){const mx=Math.max(...rows.map(r=>r[1]));el.className=(el.className||'')+' k-hb';el.innerHTML=rows.map(r=>`<div><span>${r[0]}</span><i style="--w:${r[1]/mx*100}%"></i><b>${fmt(r[1])}</b></div>`).join('');setTimeout(()=>el.classList.add('go'),60)}
+/* switch */
+function sw(on,attr=''){return `<button class="k-sw" role="switch" aria-checked="${on}" ${attr}></button>`}
+/* chat */
+function chat(o){const fab=document.createElement('button');fab.className='k-fab';fab.innerHTML=`<svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>${o.fab||'Ask us'}`;const box=document.createElement('div');box.className='k-chat';box.setAttribute('role','dialog');box.setAttribute('aria-label',o.title);
+box.innerHTML=`<header><span class="bt">${o.icon||'✨'}</span><div><b>${o.title}</b><small>${o.sub||'AI assistant'}</small></div><button class="k-x" aria-label="Close">×</button></header><div class="k-ms"></div><div class="k-cs"></div><form class="k-cf"><input placeholder="Type your question" autocomplete="off" aria-label="Your question"><button>Send</button></form>`;document.body.append(fab,box);
+const ms=$('.k-ms',box),cs=$('.k-cs',box),inp=$('input',box);const say=(t,w)=>{const d=document.createElement('div');d.className='k-bb '+w;d.textContent=t;ms.appendChild(d);ms.scrollTop=ms.scrollHeight};
+let first=true;const tog=on=>{box.classList.toggle('on',on);if(on&&first){first=false;say(o.intro,'b')}};fab.onclick=()=>tog(!box.classList.contains('on'));$('.k-x',box).onclick=()=>tog(false);
+cs.innerHTML=(o.chips||[]).map(c=>`<button type="button">${c}</button>`).join('');
+function ask(q){q=q.trim();if(!q)return;say(q,'u');const d=document.createElement('div');d.className='k-bb b k-dots';d.innerHTML='<i></i><i></i><i></i>';ms.appendChild(d);ms.scrollTop=ms.scrollHeight;
+const low=q.toLowerCase(),hit=o.faq.find(f=>f.k.some(k=>low.includes(k)));setTimeout(()=>{d.remove();const a=hit?hit.a:(o.miss||'Good question. I do not have a confident answer yet, so I sent it to the team. They will reply by email.');say(a,'b');o.onLog&&o.onLog({q,a,cat:hit?hit.cat:'Other',ok:!!hit,t:new Date()})},900+Math.random()*500)}
+$('form',box).onsubmit=e=>{e.preventDefault();ask(inp.value);inp.value=''};cs.onclick=e=>{const b=e.target.closest('button');if(b)ask(b.textContent)};return{open:()=>tog(true),fab}}
+window.K={$,$$,rm,money,toast,drawer,confetti,count,bars,line,hbars,sw,chat}})();
