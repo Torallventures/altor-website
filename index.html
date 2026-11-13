@@ -701,7 +701,7 @@ function route(){const h=location.hash.slice(1);if(h&&PGS.includes(h)&&pathP()==
 addEventListener('popstate',route);
 document.addEventListener('animationend',e=>{if(e.animationName=='wr'&&e.target.parentElement)e.target.parentElement.classList.add('ok')},true);
 document.addEventListener('click',e=>{const pl=e.target.closest('[data-plan]');if(pl)window.__plan=pl.dataset.plan;const t=e.target.closest('[data-tab]');if(t){e.preventDefault();const n=+t.dataset.tab;if(curP=='home'){smoothTo($('#demo').offsetTop);runDemo(n)}else if(curP=='demo')runDemo(n);else{pend=n;gotoP('demo')}return}
-const ch=e.target.closest('.tchip');if(ch){tipF(ch.dataset.i);return}const di=e.target.closest('[data-ind]');if(di)window.__ind=di.dataset.ind;const s=e.target.closest('[data-scroll]');if(s&&curP=='home'){e.preventDefault();smoothTo($(s.dataset.scroll).offsetTop)}
+const ch=e.target.closest('.tchip');if(ch){tipF(ch.dataset.i);return}const di=e.target.closest('[data-ind]');if(di)window.__ind=di.dataset.ind;const s=e.target.closest('[data-scroll]');if(s&&curP=='home'){e.preventDefault();smoothTo($(s.dataset.scroll).offsetTop);return}
 const a=e.target.closest('a[href^="/"]');if(a&&!a.target&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&e.button==0){const u=new URL(a.href),q=u.pathname.replace(/index\.html$/,'').replace(/^\/|\/$/g,'')||'home';if(u.origin==location.origin&&PGS.includes(q)){e.preventDefault();if(q==curP){if(q=='home')smoothTo(0)}else gotoP(q)}}});
 (()=>{
 const N=7000,W0=800,H0=500,P=Math.PI,cv=$('#c'),ctx=cv.getContext('2d'),hero=$('#hero'),cap=$('#cap'),dots=[...document.querySelectorAll('#dots i')];
