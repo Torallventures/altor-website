@@ -240,7 +240,7 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 .lq-in{position:relative}
 .lq-in .vs{width:100%;flex:none}
 .lqs{display:none}
-.lq-ready .lq{height:150svh}
+.lq-ready .lq{height:225svh}
 .lq-ready .lq-in{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center;background:#0e1014}
 .lq-ready .lqs{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
 .lqf{fill:#0e1014}
@@ -563,8 +563,8 @@ const wrap=$('.lq'),fill=$('.lqf'),edge=$('.lqe'),dm=$('#liqd'),off=$('#liqo'),h
 if(!wrap||!fill||!edge)return;
 document.documentElement.classList.add('lq-ready');
 const canDistort=!rm&&dm&&off&&hcEl&&matchMedia('(pointer:fine)').matches&&matchMedia('(min-width:768px)').matches;
-let top=0,range=1,raf=0,T=0,last=performance.now(),lp=-1,ld=-1,VU=100,ema=16,lowQ=false;
-function measureL(){const r=wrap.getBoundingClientRect();top=r.top+scrollY;range=Math.max(1,wrap.offsetHeight-innerHeight);
+let top=0,range=1,wipeR=1,raf=0,T=0,last=performance.now(),lp=-1,ld=-1,VU=100,ema=16,lowQ=false;
+function measureL(){const r=wrap.getBoundingClientRect();top=r.top+scrollY;range=Math.max(1,wrap.offsetHeight-innerHeight);wipeR=Math.max(1,innerHeight*.5);
 VU=100*innerHeight/Math.max(1,innerWidth);if(lqs)lqs.setAttribute('viewBox','0 0 100 '+VU.toFixed(2))}
 measureL();addEventListener('resize',measureL);addEventListener('load',measureL);
 function wavePath(p,t){const env=Math.sin(Math.PI*p),Y=VU+8-p*(VU+26),A=7*env,A2=3.2*env;
@@ -573,7 +573,7 @@ for(let x=105;x>=-5;x-=2.5){const y=Y+A*Math.sin(x*.11+t*1.15)+A2*Math.sin(x*.23
 return[f+'Z',e]}
 function frame(now){raf=0;if(document.hidden)return;const ms=now-last,dt=Math.min(ms/1000,.05);last=now;T+=dt;
 ema=ema*.95+ms*.05;if(!lowQ&&T>3&&ema>20)lowQ=true;
-const p=Math.max(0,Math.min(1,(scrollY-top)/range));
+const p=Math.max(0,Math.min(1,(scrollY-top)/wipeR));
 const[f,e]=wavePath(p,T);
 fill.setAttribute('d',p>=1?'':f);
 edge.setAttribute('d',p>=1||p<=0?'':e);
