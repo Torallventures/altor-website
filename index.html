@@ -236,6 +236,7 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 @media(prefers-reduced-motion:reduce){.lg1,.lg2{animation:none}.lgh{display:none!important}}
 .cw{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px;max-width:440px;width:100%}.cw .call{padding:10px 14px 10px 10px;gap:12px}.cw .call .ci{width:38px;height:38px;border-radius:10px;flex:none}.cw .call svg{width:19px;height:19px}.cw .call.sm b,.cw .call.em.sm b{font:700 16px/1.1 var(--b);letter-spacing:0;font-stretch:100%}.cw .full,.cw .c2{grid-column:1/-1}.c2.call:hover{transform:none;background:none;border-color:rgba(255,255,255,.18)}.nums{display:flex;flex-wrap:wrap;gap:2px 20px;align-items:baseline}.nums small{flex-basis:100%;margin-bottom:2px}.nums a{font:800 clamp(19px,2vw,23px)/1.15 var(--d);font-stretch:82%;letter-spacing:-.01em}.nums a:hover{color:#a9b4ff}
 .rl{padding:0;background:#0c0d10;position:relative;z-index:2}.rl video{display:block;width:100%;height:100vh;height:100svh;object-fit:cover;pointer-events:none}
+#demo{padding-top:calc(66px + 1vw + 58px)}.rot{position:absolute;left:calc(clamp(10px,1.4vw,22px) + 6px);right:12px;top:calc(66px + .7vw);height:50px;display:flex;align-items:center;overflow:hidden;font:800 clamp(19px,2.5vw,32px)/1 var(--d);font-stretch:86%;letter-spacing:-.02em;color:#f4f3ef;white-space:nowrap}.rline{display:flex;gap:.34em;align-items:baseline}.rwrap{display:inline-block;overflow:hidden;height:1.25em;line-height:1.25em;vertical-align:bottom}.rw{display:inline-block;font:italic 400 1.12em/1.1 var(--s);color:#a9b4ff;letter-spacing:0}
 </style></head><body>
 <div id="wipe"></div>
 <header id="hd"><div class="bar"><div class="lc"><a class="brand" href="/"><svg viewBox="110 70 710 660" aria-hidden="true"><path class="lg1" pathLength="1" d="M178 132H675Q750 132 750 205L520 590Q487 645 450 595L308 362"/><path class="lg2" pathLength="1" d="M435 160V372"/><circle class="lgh" r="40" style="offset-path:path('M178 132H675Q750 132 750 205L520 590Q487 645 450 595L308 362')"/></svg>TORALL VENTURES</a>
@@ -254,6 +255,7 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 
 <section class="rl" data-pg="home" aria-label="Businesses we build for"><video src="/media/reel.mp4" poster="/media/reel.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback tabindex="-1" aria-hidden="true"></video></section>
 <section id="demo" data-pg="home demo" aria-label="Live demo: a condo portal">
+<div class="rot" aria-hidden="true"><div class="rline" id="rl"><span id="rp"></span><span class="rwrap"><span class="rw" id="rw"></span></span></div></div>
 <div class="win"><aside class="sdb"><div class="pb"><i>H</i><div><b>Harbor Point</b><span>Resident portal</span></div></div>
 <button class="tb on"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>Applications</button>
 <button class="tb"><svg viewBox="0 0 24 24"><path d="M6 17h12l-2-3v-4a4 4 0 0 0-8 0v4z"/><path d="M10 20h4"/></svg>Announcements</button>
@@ -569,6 +571,12 @@ const ICO=["<path d=\"M10 43V12l14-6 14 6v31z\"/><path d=\"M5 43h38\"/><path cla
 let ii=-1;const ix=$('#ix');
 ix.innerHTML=IND.map((c,k)=>`<li data-k="${k}"><button class="rw2" aria-expanded="false"><span class="nm">${c[0]}</span><svg class="ico" viewBox="0 0 48 48" aria-hidden="true">${ICO[k]}</svg><span class="chv"></span></button><div class="pnw"><div class="pn"><div class="pi"><div><h3>${c[1]}</h3><p>${c[2]}</p><a class="go2" href="/contact/">Start a project <span>↗</span></a></div><div class="cps">${c[3].map(t=>`<span class="cp">${t}</span>`).join('')}</div></div></div></div></li>`).join('');
 ix.addEventListener('click',e=>{const b=e.target.closest('.rw2');if(!b)return;const l=b.parentElement,o=l.classList.contains('on');$$('#ix li').forEach(x=>{x.classList.remove('on');x.querySelector('.rw2').setAttribute('aria-expanded','false')});if(!o){l.classList.add('on');b.setAttribute('aria-expanded','true')}l.classList.add('pl');clearTimeout(l._t);l._t=setTimeout(()=>l.classList.remove('pl'),2200)});
+(()=>{const G=[['Residents can',['reserve','vote','pay dues','request repairs','leave feedback','view announcements','book amenities','upload documents']],['Customers can',['view products','order online','book a table','track an order','check out in one tap','leave a review']],['Owners can',['approve applications','post announcements','see every request','track revenue','reply in one place']]],rl=$('#rl'),rp=$('#rp'),rw=$('#rw'),rm=matchMedia('(prefers-reduced-motion:reduce)').matches;let g=0,w=0;rp.textContent=G[0][0];rw.textContent=G[0][1][0];
+const an=(e,f,t,d)=>e.animate([f,t],{duration:d,easing:'cubic-bezier(.6,0,.2,1)',fill:'both'}).finished;
+async function step(){if(document.hidden||$('#demo').hidden||rm){if(rm&&!$('#demo').hidden){w=(w+1)%G[g][1].length;if(!w)g=(g+1)%G.length;rp.textContent=G[g][0];rw.textContent=G[g][1][w]}return}
+w++;if(w>=G[g][1].length){await an(rl,{transform:'translateY(0)',opacity:1},{transform:'translateY(-110%)',opacity:0},320);g=(g+1)%G.length;w=0;rp.textContent=G[g][0];rw.textContent=G[g][1][0];await an(rl,{transform:'translateY(110%)',opacity:0},{transform:'translateY(0)',opacity:1},380)}
+else{await an(rw,{transform:'translateY(0)',opacity:1},{transform:'translateY(-100%)',opacity:0},260);rw.textContent=G[g][1][w];await an(rw,{transform:'translateY(100%)',opacity:0},{transform:'translateY(0)',opacity:1},300)}}
+setInterval(step,1900)})();
 /* contact flow */
 const pan=$$('.stp2'),pg=$$('.pgs i');let sp=0;
 function goP(n){sp=n;pan.forEach((p,k)=>p.classList.toggle('on',k==n));pg.forEach((p,k)=>p.classList.toggle('on',k<=Math.min(n,3)))}
