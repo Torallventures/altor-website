@@ -537,7 +537,12 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
 /* Native scrolling keeps wheel and touch input responsive. */
-function smoothTo(y){scrollTo({top:y,behavior:rm?'instant':'smooth'})}
+/* smooth scrolling */
+const maxS=()=>document.documentElement.scrollHeight-innerHeight;let tgt=scrollY,cy=scrollY,raf=0;const smooth=!rm&&!matchMedia('(pointer:coarse)').matches;
+function loop(){cy+=(tgt-cy)*.09;if(Math.abs(tgt-cy)<.5){cy=tgt;raf=0}else raf=requestAnimationFrame(loop);scrollTo({top:cy,behavior:'instant'})}
+function smoothTo(y){if(!smooth){scrollTo({top:y,behavior:rm?'instant':'smooth'});return}tgt=Math.max(0,Math.min(y,maxS()));if(!raf)raf=requestAnimationFrame(loop)}
+addEventListener('wheel',e=>{if(!smooth||e.ctrlKey||e.target.closest('textarea,select,input'))return;e.preventDefault();tgt=Math.max(0,Math.min((raf?tgt:scrollY)+e.deltaY,maxS()));if(!raf){cy=scrollY;raf=requestAnimationFrame(loop)}},{passive:false});
+addEventListener('scroll',()=>{if(!raf)tgt=cy=scrollY});
 /* top bar dropdown */
 const hd=$('#hd');let ht=0;
 hd.addEventListener('mouseenter',()=>{clearTimeout(ht);ht=setTimeout(()=>hd.classList.add('open'),90)});hd.addEventListener('mouseleave',()=>{clearTimeout(ht);ht=setTimeout(()=>hd.classList.remove('open'),160)});
