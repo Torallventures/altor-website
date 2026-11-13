@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_sNVhkuWUqDeYpS4uklvnCaAPmXFQ",
+  "orgId": "team_fTKrK1JydJmv0nwpYBVKdsM7",
+  "projectName": "torall-ventures",
+  "settings": {
+    "createdAt": 1794257652099,
+    "framework": "vite",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "26.x"
+  }
+}
