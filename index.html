@@ -246,22 +246,16 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 .lqs{display:none}
 .lq-ready .lq{height:225svh;--cp:0}
 .lq-ready .lq-in{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center;background:#0e1014}
-.cld{display:none}
-.lq-ready .cld{display:block;position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
-.cld .cs,.cld .cn{position:absolute;left:-8%;width:116%;height:100%;object-fit:cover;will-change:transform,opacity}
-.cld .cs{top:0;opacity:clamp(0,calc((.92 - var(--cp))*2.6),1);transform:scale(calc(1 + var(--cp)*1.1));animation:cdA 46s ease-in-out infinite alternate}
-.cld .cn{bottom:0;object-position:bottom;opacity:clamp(0,calc((.8 - var(--cp))*3),1);transform:translateY(calc(var(--cp)*34%)) scale(calc(1 + var(--cp)*2.4));transform-origin:50% 100%;animation:cdB 30s ease-in-out infinite alternate}
-@keyframes cdA{from{margin-left:-3%}to{margin-left:3%}}
-@keyframes cdB{from{margin-left:4%}to{margin-left:-4%}}
-.cedge{display:none}
-.lq-ready .cedge{display:block;position:absolute;left:0;right:0;top:-24svh;height:24svh;z-index:3;pointer-events:none;background:url(/media/cloud-foreground.webp) center bottom/cover no-repeat;animation:cdC 34s ease-in-out infinite alternate}
-@keyframes cdC{from{background-position:44% bottom}to{background-position:56% bottom}}
-@media(prefers-reduced-motion:reduce){.lq-ready .lq{height:auto}.lq-ready .lq-in{position:relative;height:auto;display:block}.lq-ready .cld,.lq-ready .cedge{display:none}.cld *{animation:none!important}}
+#sky{position:fixed;inset:0;z-index:30;pointer-events:none;display:none;contain:strict}
+#sky i{position:absolute;inset:0;-webkit-mask-image:linear-gradient(to bottom,transparent calc(var(--e,100vh) - var(--f,0vh)),#000 var(--e,100vh));mask-image:linear-gradient(to bottom,transparent calc(var(--e,100vh) - var(--f,0vh)),#000 var(--e,100vh));background:linear-gradient(#4f82bd 0%,#8fb4dc 45%,#d3e2f0 80%,#eef3f8 100%);opacity:0}
+#sky canvas{position:absolute;inset:0;width:100%;height:100%}
+@media(prefers-reduced-motion:reduce){.lq-ready .lq{height:auto}.lq-ready .lq-in{position:relative;height:auto;display:block}#sky{display:none!important}}
 
 /* Portfolio previews: fixed links, moving media, deliberate touch playback. */
 .preview-shell{position:relative}.preview-scene{position:absolute;inset:0;transform:translate3d(var(--px,0px),var(--py,0px),0) scale(1.04);transition:transform .45s cubic-bezier(.2,.7,.2,1);pointer-events:none}.preview-toggle{position:absolute;z-index:3;left:14px;bottom:16px;border:0;border-radius:8px;padding:12px 14px;background:#2B3FFF;color:white;font:700 12px var(--b);cursor:pointer}.preview-toggle:focus-visible{outline:3px solid white;outline-offset:3px}.preview-playing .wo{opacity:1;transform:none}.wp:focus-visible{outline:3px solid #2B3FFF;outline-offset:-4px}.preview-toggle[aria-pressed="true"]{background:#16181d}
 @media(prefers-reduced-motion:reduce){.preview-scene{transform:none;transition:none}.preview-toggle{display:none}}
 </style></head><body>
+<div id="sky" aria-hidden="true"><i></i><canvas></canvas></div>
 <div id="wipe"></div>
 <header id="hd"><div class="bar"><div class="lc"><a class="brand" href="/"><svg viewBox="110 70 710 660" aria-hidden="true"><path class="lg1" pathLength="1" d="M178 132H675Q750 132 750 205L520 590Q487 645 450 595L308 362"/><path class="lg2" pathLength="1" d="M435 160V372"/><circle class="lgh" r="40" style="offset-path:path('M178 132H675Q750 132 750 205L520 590Q487 645 450 595L308 362')"/></svg>TORALL VENTURES</a>
 <nav class="nav"><a href="/services/">Services</a><a href="/industries/">Industries</a><a href="/demo/">Live demo</a><a href="/work/">Our work</a><a href="/pricing/">Pricing</a><a href="/process/">Process</a><a href="/contact/">Contact</a></nav></div><a class="cta" href="/contact/">Start a project</a><button class="bg" id="bg" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button></div>
@@ -277,7 +271,7 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 <div class="stack">
 <div id="hero" data-pg="home"><div class="hc"><h1>Making your business everyone’s business.</h1><p>Because doing good work is one thing. Making sure people know about it is another.</p><a class="btn" href="/contact/">Start a project</a><a class="btn o" href="/demo/" data-scroll="#demo">See it in action</a><a class="hn" href="/pricing/">Websites from $1,800. Written quotes, no surprises.</a></div><canvas id="c"></canvas><div id="dots"><span id="cap"></span><i></i><i></i><i></i><i></i><i></i></div><div class="cue">Scroll</div></div>
 
-<div class="lq" data-pg="home"><div class="lq-in"><section class="vs" data-pg="home" aria-label="What we build"><h2>Websites, apps and software, in under a minute.</h2><p class="sub">A quick look at what we build for restaurants, shops, builders, condos and more.</p><video id="sv" src="/media/showcase.mp4" poster="/media/showcase.jpg" muted loop playsinline preload="metadata" disablepictureinpicture tabindex="-1" aria-label="Video showing websites, mobile apps and custom software built by Torall Ventures"></video></section><div class="cld" aria-hidden="true"><img class="cs" src="/media/cloud-flight.webp" alt="" decoding="async"><img class="cn" src="/media/cloud-foreground.webp" alt="" decoding="async"></div></div><div class="cedge" aria-hidden="true"></div></div>
+<div class="lq" data-pg="home"><div class="lq-in"><section class="vs" data-pg="home" aria-label="What we build"><h2>Websites, apps and software, in under a minute.</h2><p class="sub">A quick look at what we build for restaurants, shops, builders, condos and more.</p><video id="sv" src="/media/showcase.mp4" poster="/media/showcase.jpg" muted loop playsinline preload="metadata" disablepictureinpicture tabindex="-1" aria-label="Video showing websites, mobile apps and custom software built by Torall Ventures"></video></section></div></div>
 <section id="demo" data-pg="home demo" aria-label="Live demo: a condo portal">
 <div class="rot" aria-hidden="true"><div class="rline" id="rl"><span id="rp"></span><span class="rwrap"><span class="rw" id="rw"></span></span></div></div>
 <div class="win"><aside class="sdb"><div class="pb"><i>H</i><div><b>Harbor Point</b><span>Resident portal</span></div></div>
@@ -577,14 +571,60 @@ let tickE=0,syncShowcase=()=>{},heroHeight=1,lastHero=-1;
 function measureHero(){heroHeight=heroE.offsetHeight||innerHeight;lastHero=-1;erase()}
 function erase(){const ep=rm?0:Math.max(0,Math.min(1,scrollY/(heroHeight*.8)));if(ep!==lastHero){heroE.style.setProperty('--ep',ep.toFixed(4));lastHero=ep}}
 addEventListener('scroll',()=>{if(!tickE)tickE=requestAnimationFrame(()=>{tickE=0;erase()})},{passive:true});addEventListener('resize',measureHero);addEventListener('load',measureHero);
-/* clouds: scroll through them into the showcase video */
+/* clouds: a live 3D cloud field you fly through from the hero into the showcase video */
 (()=>{
-const wrap=$('.lq');if(!wrap)return;
+const wrap=$('.lq'),sky=$('#sky');if(!wrap||!sky)return;
 document.documentElement.classList.add('lq-ready');
-let top=0,range=1,wipeR=1,tk=0,lp=-1;
-function measureL(){const r=wrap.getBoundingClientRect();top=r.top+scrollY;wipeR=Math.max(1,innerHeight*.75);upd()}
-function upd(){tk=0;const p=rm?1:Math.max(0,Math.min(1,(scrollY-top)/wipeR));if(Math.abs(p-lp)>.0005){lp=p;wrap.style.setProperty('--cp',p.toFixed(4))}}
-addEventListener('scroll',()=>{if(!tk)tk=requestAnimationFrame(upd)},{passive:true});addEventListener('resize',measureL);addEventListener('load',measureL);measureL();
+if(rm)return;
+const cv=sky.querySelector('canvas'),bg=sky.querySelector('i'),gl=cv.getContext('webgl',{alpha:true,premultipliedAlpha:true,antialias:false,powerPreference:'low-power'});
+if(!gl)return;
+const mob=matchMedia('(pointer:coarse)').matches||innerWidth<768,NQ=mob?150:260,D=3200,XR=2200;
+/* puff textures: 4 noise-shaped puffs in one atlas; r = light, a = density */
+const TS=192,tc=document.createElement('canvas');tc.width=tc.height=TS*2;const tg2=tc.getContext('2d'),im=tg2.createImageData(TS*2,TS*2),dd=im.data;
+const hs=(x,y,s)=>{let n=Math.sin(x*127.1+y*311.7+s*74.7)*43758.5453;return n-Math.floor(n)};
+const vn=(x,y,s)=>{const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf),a=hs(xi,yi,s),b=hs(xi+1,yi,s),c=hs(xi,yi+1,s),d=hs(xi+1,yi+1,s);return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v};
+const fbm=(x,y,s)=>{let f=0,a=.5;for(let o=0;o<4;o++){f+=a*vn(x,y,s+o);x*=2.03;y*=2.03;a*=.5}return f};
+const ss=(a,b,x)=>{x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x)};
+function gen(t){const ox=(t%2)*TS,oy=(t>>1)*TS;for(let y=0;y<TS;y++)for(let x=0;x<TS;x++){const u=x/TS*2-1,v=y/TS*2-1,wx=u+(fbm(u*1.6+9,v*1.6,t*7+3)-.5)*.5,wy=v+(fbm(u*1.6,v*1.6+5,t*7+4)-.5)*.5,dist=Math.hypot(wx,wy*(wy>0?1.55:1.15)),n=fbm(u*2.6+3,v*2.6+7,t*7),n2=fbm(u*6+1,v*6+2,t*7+1),al=ss(.02,.6,(1-dist)*1.05+(n-.5)*1.25-.12)*ss(1,.82,Math.max(Math.abs(u),Math.abs(v))),li=Math.max(0,Math.min(1,.5-wy*.42+(n-.5)*.75+(n2-.5)*.4)),q=4*((oy+y)*TS*2+ox+x);dd[q]=li*255;dd[q+1]=li*255;dd[q+2]=li*255;dd[q+3]=al*255}}
+const tex=gl.createTexture();let ready=false;function upload(){tg2.putImageData(im,0,0);
+gl.bindTexture(gl.TEXTURE_2D,tex);gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,tc);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);ready=true;wake()}
+(function nx(t){if(t<4){gen(t);setTimeout(()=>nx(t+1),30)}else upload()})(0);
+const VS=`attribute vec3 aP;attribute vec2 aC;attribute vec4 aI;uniform float uCam,uT,uDens,uAsp,uF,uSh;varying vec2 vU;varying float vA,vFog;
+void main(){float z=mod(aP.z-uCam,${D}.);float x=mod(aP.x+uT*(14.+aI.y*10.)+${XR}.,${2*XR}.)-${XR}.;float bob=sin(uT*.23+aP.z*.01)*10.;
+float s=aI.x*(1.+.05*sin(uT*.31+aP.x*.02));vec2 w=vec2(x+aC.x*s*aI.w,aP.y+bob+aC.y*s*.6);
+gl_Position=vec4(w.x*uF/uAsp,(w.y*uF)-uSh*max(z,1.),0.,max(z,1.));
+vec2 t=vec2(mod(aI.z,2.),floor(aI.z*.5))*.5;vU=t+(aC*vec2(.5,-.5)+.5)*.5;
+vA=smoothstep(${D}.,${D*.62}.,z)*smoothstep(20.,360.,z)*smoothstep(aI.y,aI.y+.14,uDens);vFog=z/${D}.;}`;
+const FS=`precision mediump float;uniform sampler2D uX;varying vec2 vU;varying float vA,vFog;
+void main(){vec4 t=texture2D(uX,vU);float a=t.a*vA;if(a<.004)discard;vec3 c=mix(vec3(.44,.52,.66),vec3(1.,.985,.96),smoothstep(.12,.8,t.r));c=mix(c,vec3(.83,.89,.95),vFog*.8);gl_FragColor=vec4(c*a,a);}`;
+const sh=(t,src)=>{const o=gl.createShader(t);gl.shaderSource(o,src);gl.compileShader(o);return o},pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
+if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return;gl.useProgram(pr);
+/* quads sorted far to near (descending z) so a wrapped camera only needs two draw calls */
+const qs=[];for(let i=0;i<NQ;i++){const y=-460+Math.pow(Math.random(),1.25)*760;qs.push({x:(Math.random()*2-1)*XR,y,z:Math.random()*D,s:430+Math.random()*420,th:Math.max(0,Math.min(.86,(y+460)/760*.8+Math.random()*.14-.05)),tl:Math.random()*4|0,fl:Math.random()<.5?-1:1})}
+qs.sort((a,b)=>b.z-a.z);const zs=qs.map(q=>q.z),buf=new Float32Array(NQ*6*9),CN=[[-1,-1],[1,-1],[1,1],[-1,-1],[1,1],[-1,1]];
+qs.forEach((q,i)=>CN.forEach((c,k)=>buf.set([q.x,q.y,q.z,c[0],c[1],q.s,q.th,q.tl,q.fl],(i*6+k)*9)));
+gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());gl.bufferData(gl.ARRAY_BUFFER,buf,gl.STATIC_DRAW);
+const at=(n,sz,off)=>{const l=gl.getAttribLocation(pr,n);gl.enableVertexAttribArray(l);gl.vertexAttribPointer(l,sz,gl.FLOAT,false,36,off)};at('aP',3,0);at('aC',2,12);at('aI',4,20);
+const U=n=>gl.getUniformLocation(pr,n),uCam=U('uCam'),uT=U('uT'),uDens=U('uDens'),uAsp=U('uAsp'),uF=U('uF'),uSh=U('uSh');
+gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);
+let top=1,wipeR=1,raf=0,T=0,last=0,on=false,cw=0,ch=0;
+function measureL(){const r=wrap.getBoundingClientRect();top=Math.max(1,r.top+scrollY);wipeR=Math.max(1,innerHeight*.8);
+const sc=mob?.55:.7,w=Math.max(2,Math.round(innerWidth*sc)),h=Math.max(2,Math.round(innerHeight*sc));if(w!=cw||h!=ch){cw=cv.width=w;ch=cv.height=h;gl.viewport(0,0,w,h)}wake()}
+function active(){return !document.hidden&&wrap.offsetParent!==null&&scrollY<top+wipeR+4}
+function frame(now){raf=0;if(!ready)return;if(!active()){if(on){on=false;sky.style.display='none'}return}
+if(!on){on=true;sky.style.display='block';last=now}
+const dt=Math.min((now-last)/1000,.05);last=now;T+=dt;
+const y=scrollY,a=Math.min(1,y/top),p=Math.max(0,Math.min(1,(y-top)/wipeR));
+const dens=p>0?1-ss(0,.85,p):.1+.9*ss(0,.9,a),skyO=p>0?1-ss(0,.55,p):1,shift=.5*(1-ss(0,.85,a));
+bg.style.opacity=skyO.toFixed(3);bg.style.setProperty('--e',Math.max(-1,top-y).toFixed(0)+'px');bg.style.setProperty('--f',(60*Math.min(1,a*3.5)).toFixed(1)+'vh');
+const cam=(T*46+y*1.7)%D;
+gl.clear(gl.COLOR_BUFFER_BIT);gl.uniform1f(uCam,cam);gl.uniform1f(uT,T);gl.uniform1f(uDens,dens);gl.uniform1f(uAsp,cw/ch);gl.uniform1f(uF,cw<ch?1.15:1.5);gl.uniform1f(uSh,shift);
+let i0=0;while(i0<NQ&&zs[i0]>=cam)i0++;
+if(i0<NQ)gl.drawArrays(gl.TRIANGLES,i0*6,(NQ-i0)*6);if(i0>0)gl.drawArrays(gl.TRIANGLES,0,i0*6);
+raf=requestAnimationFrame(frame)}
+function wake(){if(!raf)raf=requestAnimationFrame(frame)}
+addEventListener('scroll',wake,{passive:true});addEventListener('resize',measureL);addEventListener('load',measureL);document.addEventListener('visibilitychange',wake);addEventListener('popstate',()=>setTimeout(wake,60));addEventListener('click',()=>setTimeout(wake,400));
+measureL();
 })();
 /* marquee */
 const NP=[['clear','PORTALS'],['fast','WEBSITES'],['handy','APPS'],['tailored','SOFTWARE'],['easy','BOOKING'],['live','DASHBOARDS']].map(p=>`<span>${p[0]} <b>${p[1]}</b></span>`).join('');$('#mq').innerHTML=NP+NP;
@@ -806,7 +846,7 @@ let st=0,tr=-1,t0=0,last=performance.now(),spin=0;const GW=2*P/8,GR=[['Miami','C
 function lab(){cap.textContent=labs[st];dots.forEach((d,k)=>d.classList.toggle('on',k==st))}
 let heroRAF=0;function heroWake(){if(!heroRAF&&!document.hidden&&vis&&scrollY<=hero.offsetHeight*.65){last=performance.now();heroRAF=requestAnimationFrame(fr)}}
 addEventListener('scroll',heroWake,{passive:true});document.addEventListener('visibilitychange',heroWake);
-function fr(now){heroRAF=0;const dt=Math.min((now-last)/1000,.05);last=now;if(document.hidden||!vis||scrollY>hero.offsetHeight*.65)return;heroRAF=requestAnimationFrame(fr);T+=dt;
+function fr(now){heroRAF=0;const dt=Math.max(0,Math.min((now-last)/1000,.05));last=now;if(document.hidden||!vis||scrollY>hero.offsetHeight*.65)return;heroRAF=requestAnimationFrame(fr);T+=dt;
 if(tr<0){t0+=dt;if(t0>dur[st])tr=0}else{tr+=dt/1.1;if(tr>=1){st=(st+1)%5;if(st==0)spin++;tr=-1;t0=0;lab()}}
 const gtA=st==0?(tr<0?t0:dur[0]+tr*1.6):0,aA=spin*1.1+gtA*GW,aB=(spin+1)*1.1,gcA=Math.cos(aA),gsA=Math.sin(aA),gcB=Math.cos(aB),gsB=Math.sin(aB);const nx=(st+1)%5,cl=tr<0?t0:dur[st],cA=0,cB=0,R=dn?170:115,F=dn?16:9,id=rm?0:1,ripA=window.__lqRip||0;ctx.clearRect(0,0,W,H);
 for(let i=0;i<N;i++){gc=gcA;gs=gsA;tg(st,i,cl,cA);let X=TX,Y=TY,Z=TZ;if(tr>=0){const p=Math.min(Math.max((tr-dl[i]*.45)/.55,0),1),e=p*p*(3-2*p);gc=gcB;gs=gsB;tg(nx,i,0,cB);const s=Math.sin(P*e)*110;X+=(TX-X)*e+rx[i]*s;Y+=(TY-Y)*e+ry[i]*s;Z=1}
