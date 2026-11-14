@@ -233,19 +233,19 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 .lq-in{position:relative}
 .lq-in .vs{width:100%;flex:none}
 .lqs{display:none}
-.lq-ready .lq{height:225svh;--cp:0}
+.lq-ready .lq{height:225svh}
 .lq-ready .lq-in{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center;background:#0e1014}
-#sky{position:fixed;inset:0;z-index:30;pointer-events:none;display:none;contain:strict}
-#sky i{position:absolute;inset:0;-webkit-mask-image:linear-gradient(to bottom,transparent calc(var(--e,100vh) - var(--f,0vh)),#000 var(--e,100vh));mask-image:linear-gradient(to bottom,transparent calc(var(--e,100vh) - var(--f,0vh)),#000 var(--e,100vh));background:linear-gradient(#4f82bd 0%,#8fb4dc 45%,#d3e2f0 80%,#eef3f8 100%);opacity:0}
-#sky canvas{position:absolute;inset:0;width:100%;height:100%}
-@media(prefers-reduced-motion:reduce){.lq-ready .lq{height:auto}.lq-ready .lq-in{position:relative;height:auto;display:block}#sky{display:none!important}}
+.lq-ready .lqs{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.lqf{fill:#0e1014}
+.lqe{fill:none;stroke:#2B3FFF;stroke-width:.38;stroke-linecap:round;filter:drop-shadow(0 0 4px rgba(43,63,255,.85))}
+@media(prefers-reduced-motion:reduce){.lq-ready .lq{height:auto}.lq-ready .lq-in{position:relative;height:auto;display:block}.lq-ready .lqs{display:none}}
 
 /* Portfolio previews: fixed links, moving media, deliberate touch playback. */
 .preview-shell{position:relative}.preview-scene{position:absolute;inset:0;transform:translate3d(var(--px,0px),var(--py,0px),0) scale(1.04);transition:transform .45s cubic-bezier(.2,.7,.2,1);pointer-events:none}.preview-toggle{position:absolute;z-index:3;left:14px;bottom:16px;border:0;border-radius:8px;padding:12px 14px;background:#2B3FFF;color:white;font:700 12px var(--b);cursor:pointer}.preview-toggle:focus-visible{outline:3px solid white;outline-offset:3px}.preview-playing .wo{opacity:1;transform:none}.wp:focus-visible{outline:3px solid #2B3FFF;outline-offset:-4px}.preview-toggle[aria-pressed="true"]{background:#16181d}
 @media(prefers-reduced-motion:reduce){.preview-scene{transform:none;transition:none}.preview-toggle{display:none}}
 </style></head><body>
-<div id="sky" aria-hidden="true"><i></i><canvas></canvas></div>
 <div id="wipe"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="liqf" x="-25%" y="-40%" width="150%" height="180%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="n"/><feOffset id="liqo" in="n" dx="0" dy="0" result="o"/><feDisplacementMap id="liqd" in="SourceGraphic" in2="o" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
 <header id="hd"><div class="bar"><div class="lc"><a class="brand" href="/"><svg viewBox="110 70 710 660" aria-hidden="true"><path class="lg1" pathLength="1" d="M178 132H675Q750 132 750 205L520 590Q487 645 450 595L308 362"/><path class="lg2" pathLength="1" d="M435 160V372"/><circle class="lgh" r="40" style="offset-path:path('M178 132H675Q750 132 750 205L520 590Q487 645 450 595L308 362')"/></svg>TORALL VENTURES</a>
 <nav class="nav"><a href="/services/">Services</a><a href="/industries/">Industries</a><a href="/demo/">Live demo</a><a href="/work/">Our work</a><a href="/pricing/">Pricing</a><a href="/process/">Process</a><a href="/contact/">Contact</a></nav></div><a class="cta" href="/contact/">Start a project</a><button class="bg" id="bg" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button></div>
 <div class="mega"><div class="mg">
@@ -260,7 +260,7 @@ footer .fr{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;fo
 <div class="stack">
 <div id="hero" data-pg="home"><div class="hc"><h1>Making your business everyone’s business.</h1><p>Because doing good work is one thing. Making sure people know about it is another.</p><a class="btn" href="/contact/">Start a project</a><a class="btn o" href="/demo/" data-scroll="#demo">See it in action</a><a class="hn" href="/pricing/">Websites from $1,800. Written quotes, no surprises.</a></div><canvas id="c"></canvas><div id="dots"><span id="cap"></span><i></i><i></i><i></i><i></i><i></i></div><div class="cue">Scroll</div></div>
 
-<div class="lq" data-pg="home"><div class="lq-in"><section class="vs" data-pg="home" aria-label="What we build"><h2>Websites, apps and software, in under a minute.</h2><p class="sub">A quick look at what we build for restaurants, shops, builders, condos and more.</p><video id="sv" src="/media/showcase.mp4" poster="/media/showcase.jpg" muted loop playsinline preload="metadata" disablepictureinpicture tabindex="-1" aria-label="Video showing websites, mobile apps and custom software built by Torall Ventures"></video></section></div></div>
+<div class="lq" data-pg="home"><div class="lq-in"><section class="vs" data-pg="home" aria-label="What we build"><h2>Websites, apps and software, in under a minute.</h2><p class="sub">A quick look at what we build for restaurants, shops, builders, condos and more.</p><video id="sv" src="/media/showcase.mp4" poster="/media/showcase.jpg" muted loop playsinline preload="metadata" disablepictureinpicture tabindex="-1" aria-label="Video showing websites, mobile apps and custom software built by Torall Ventures"></video></section><svg class="lqs" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="lqf" d=""/><path class="lqe" d=""/></svg></div></div>
 <section id="demo" data-pg="home demo" aria-label="Live demo: a condo portal">
 <div class="rot" aria-hidden="true"><div class="rline" id="rl"><span id="rp"></span><span class="rwrap"><span class="rw" id="rw"></span></span></div></div>
 <div class="win"><aside class="sdb"><div class="pb"><i>H</i><div><b>Harbor Point</b><span>Resident portal</span></div></div>
@@ -399,69 +399,40 @@ let tickE=0,syncShowcase=()=>{},heroHeight=1,lastHero=-1;
 function measureHero(){heroHeight=heroE.offsetHeight||innerHeight;lastHero=-1;erase()}
 function erase(){const ep=rm?0:Math.max(0,Math.min(1,scrollY/(heroHeight*.8)));if(ep!==lastHero){heroE.style.setProperty('--ep',ep.toFixed(4));lastHero=ep}}
 addEventListener('scroll',()=>{if(!tickE)tickE=requestAnimationFrame(()=>{tickE=0;erase()})},{passive:true});addEventListener('resize',measureHero);addEventListener('load',measureHero);
-/* clouds: a live 3D cloud field you fly through from the hero into the showcase video */
+/* liquid transition: hero ripples, then a liquid veil drains off the video */
 (()=>{
-const wrap=$('.lq'),sky=$('#sky');if(!wrap||!sky)return;
+const wrap=$('.lq'),fill=$('.lqf'),edge=$('.lqe'),dm=$('#liqd'),off=$('#liqo'),hcEl=$('#hero .hc'),lqs=$('.lqs');
+if(!wrap||!fill||!edge)return;
 document.documentElement.classList.add('lq-ready');
-if(rm)return;
-const cv=sky.querySelector('canvas'),bg=sky.querySelector('i'),gl=cv.getContext('webgl',{alpha:true,premultipliedAlpha:true,antialias:false,powerPreference:'low-power'});
-if(!gl)return;
-const mob=matchMedia('(pointer:coarse)').matches||innerWidth<768,NQ=mob?150:260,D=3200,XR=2200;
-/* puff textures: 4 noise-shaped puffs in one atlas; r = light, a = density */
-const TS=256,tc=document.createElement('canvas');tc.width=tc.height=TS*2;const tg2=tc.getContext('2d'),im=tg2.createImageData(TS*2,TS*2),dd=im.data;
-const hs=(x,y,s)=>{let n=Math.sin(x*127.1+y*311.7+s*74.7)*43758.5453;return n-Math.floor(n)};
-const vn=(x,y,s)=>{const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf),a=hs(xi,yi,s),b=hs(xi+1,yi,s),c=hs(xi,yi+1,s),d=hs(xi+1,yi+1,s);return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v};
-const fbm=(x,y,s)=>{let f=0,a=.5;for(let o=0;o<4;o++){f+=a*vn(x,y,s+o);x*=2.03;y*=2.03;a*=.5}return f};
-const ss=(a,b,x)=>{x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x)};
-function gen(t){const ox=(t%2)*TS,oy=(t>>1)*TS,B=[];let sd=t*91.7+13;const R=()=>{sd=Math.sin(sd*12.9898+4.1)*43758.5453;sd-=Math.floor(sd);return sd};
-/* a cumulus puff = a heap of overlapping balls: wide ones along a flat base, smaller ones billowing on top */
-for(let i=0;i<6;i++)B.push([-.5+i*.2+(R()-.5)*.1,.2+(R()-.5)*.1,.25+R()*.1]);
-for(let i=0;i<9;i++){const x=(R()*2-1)*.48;B.push([x,-.02-R()*.34*(1-Math.abs(x)*1.3),.15+R()*.13])}
-for(let i=0;i<16;i++){const x=(R()*2-1)*.62;B.push([x,.14-R()*.42*(1-Math.abs(x)),.06+R()*.08])}
-for(let y=0;y<TS;y++)for(let x=0;x<TS;x++){const u0=x/TS*2-1,v0=y/TS*2-1,wn=fbm(u0*3+9,v0*3,t*7+3)-.5,wm=fbm(u0*3,v0*3+5,t*7+4)-.5,n3=fbm(u0*15+4,v0*15+8,t*7+2)-.5,u=u0+wn*.17+n3*.035,v=v0+wm*.17+n3*.035;
-let mh=0,sw=0,sl=0;for(let k=0;k<B.length;k++){const b=B[k],dx=(u-b[0])/b[2],dy=(v-b[1])/b[2],d2=dx*dx+dy*dy;if(d2>=1)continue;const h=Math.sqrt(1-d2),hz=h*b[2]*2.6,w=hz*hz*hz*hz;if(hz>mh)mh=hz;sw+=w;sl+=w*(-.38*dx-.62*dy+.69*h)}
-const n2=fbm(u0*7+1,v0*7+2,t*7+1)-.5,dens=mh+n2*.26+n3*.14+wn*.1,al=ss(.05,.42,dens)*ss(1,.86,Math.max(Math.abs(u0),Math.abs(v0)))*(v>.2?ss(.5,.22,v):1);
-let li=sw>0?sl/sw:0;li=.56+li*.44+n2*.34+n3*.2-Math.max(0,v+.05)*.5;li=Math.max(0,Math.min(1,li))*(.55+.45*ss(.06,.5,dens));
-const q=4*((oy+y)*TS*2+ox+x);dd[q]=dd[q+1]=dd[q+2]=li*255;dd[q+3]=al*255}}
-const tex=gl.createTexture();let ready=false;function upload(){tg2.putImageData(im,0,0);
-gl.bindTexture(gl.TEXTURE_2D,tex);gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,tc);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);ready=true;wake()}
-(function nx(t){if(t<4){gen(t);setTimeout(()=>nx(t+1),30)}else upload()})(0);
-const VS=`attribute vec3 aP;attribute vec2 aC;attribute vec4 aI;uniform float uCam,uT,uDens,uAsp,uF,uSh;varying vec2 vU;varying float vA,vFog;
-void main(){float z=mod(aP.z-uCam,${D}.);float x=mod(aP.x+uT*(14.+aI.y*10.)+${XR}.,${2*XR}.)-${XR}.;float bob=sin(uT*.23+aP.z*.01)*10.;
-float s=aI.x*(1.+.05*sin(uT*.31+aP.x*.02));vec2 w=vec2(x+aC.x*s*aI.w,aP.y+bob+aC.y*s*.6);
-gl_Position=vec4(w.x*uF/uAsp,(w.y*uF)-uSh*max(z,1.),0.,max(z,1.));
-vec2 t=vec2(mod(aI.z,2.),floor(aI.z*.5))*.5;vU=t+(aC*vec2(.5,-.5)+.5)*.5;
-vA=smoothstep(${D}.,${D*.62}.,z)*smoothstep(20.,360.,z)*smoothstep(aI.y,aI.y+.14,uDens);vFog=z/${D}.;}`;
-const FS=`precision mediump float;uniform sampler2D uX;varying vec2 vU;varying float vA,vFog;
-void main(){vec4 t=texture2D(uX,vU);float a=t.a*vA;if(a<.004)discard;vec3 c=mix(vec3(.47,.54,.67),vec3(1.,.99,.97),smoothstep(.1,.82,t.r));c=mix(c,vec3(.80,.87,.95),vFog*vFog*.75);gl_FragColor=vec4(c*a,a);}`;
-const sh=(t,src)=>{const o=gl.createShader(t);gl.shaderSource(o,src);gl.compileShader(o);return o},pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
-if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return;gl.useProgram(pr);
-/* quads sorted far to near (descending z) so a wrapped camera only needs two draw calls */
-const qs=[];for(let i=0;i<NQ;i++){const y=-460+Math.pow(Math.random(),1.25)*760;qs.push({x:(Math.random()*2-1)*XR,y,z:Math.random()*D,s:430+Math.random()*420,th:Math.max(0,Math.min(.86,(y+460)/760*.8+Math.random()*.14-.05)),tl:Math.random()*4|0,fl:Math.random()<.5?-1:1})}
-qs.sort((a,b)=>b.z-a.z);const zs=qs.map(q=>q.z),buf=new Float32Array(NQ*6*9),CN=[[-1,-1],[1,-1],[1,1],[-1,-1],[1,1],[-1,1]];
-qs.forEach((q,i)=>CN.forEach((c,k)=>buf.set([q.x,q.y,q.z,c[0],c[1],q.s,q.th,q.tl,q.fl],(i*6+k)*9)));
-gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());gl.bufferData(gl.ARRAY_BUFFER,buf,gl.STATIC_DRAW);
-const at=(n,sz,off)=>{const l=gl.getAttribLocation(pr,n);gl.enableVertexAttribArray(l);gl.vertexAttribPointer(l,sz,gl.FLOAT,false,36,off)};at('aP',3,0);at('aC',2,12);at('aI',4,20);
-const U=n=>gl.getUniformLocation(pr,n),uCam=U('uCam'),uT=U('uT'),uDens=U('uDens'),uAsp=U('uAsp'),uF=U('uF'),uSh=U('uSh');
-gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);
-let top=1,wipeR=1,raf=0,T=0,last=0,on=false,cw=0,ch=0;
-function measureL(){const r=wrap.getBoundingClientRect();top=Math.max(1,r.top+scrollY);wipeR=Math.max(1,innerHeight*.8);
-const sc=mob?.8:.9,w=Math.max(2,Math.round(innerWidth*sc)),h=Math.max(2,Math.round(innerHeight*sc));if(w!=cw||h!=ch){cw=cv.width=w;ch=cv.height=h;gl.viewport(0,0,w,h)}wake()}
-function active(){return !document.hidden&&wrap.offsetParent!==null&&scrollY<top+wipeR+4}
-function frame(now){raf=0;if(!ready)return;if(!active()){if(on){on=false;sky.style.display='none'}return}
-if(!on){on=true;sky.style.display='block';last=now}
-const dt=Math.min((now-last)/1000,.05);last=now;T+=dt;
-const y=scrollY,a=Math.min(1,y/top),p=Math.max(0,Math.min(1,(y-top)/wipeR));
-const dens=p>0?1-ss(0,.85,p):.1+.9*ss(0,.9,a),skyO=p>0?1-ss(0,.55,p):1,shift=.5*(1-ss(0,.85,a));
-bg.style.opacity=skyO.toFixed(3);bg.style.setProperty('--e',Math.max(-1,top-y).toFixed(0)+'px');bg.style.setProperty('--f',(60*Math.min(1,a*3.5)).toFixed(1)+'vh');
-const cam=(T*46+y*1.7)%D;
-gl.clear(gl.COLOR_BUFFER_BIT);gl.uniform1f(uCam,cam);gl.uniform1f(uT,T);gl.uniform1f(uDens,dens);gl.uniform1f(uAsp,cw/ch);gl.uniform1f(uF,cw<ch?1.15:1.5);gl.uniform1f(uSh,shift);
-let i0=0;while(i0<NQ&&zs[i0]>=cam)i0++;
-if(i0<NQ)gl.drawArrays(gl.TRIANGLES,i0*6,(NQ-i0)*6);if(i0>0)gl.drawArrays(gl.TRIANGLES,0,i0*6);
-raf=requestAnimationFrame(frame)}
-function wake(){if(!raf)raf=requestAnimationFrame(frame)}
-addEventListener('scroll',wake,{passive:true});addEventListener('resize',measureL);addEventListener('load',measureL);document.addEventListener('visibilitychange',wake);addEventListener('popstate',()=>setTimeout(wake,60));addEventListener('click',()=>setTimeout(wake,400));
-measureL();
+const canDistort=!rm&&dm&&off&&hcEl&&matchMedia('(pointer:fine)').matches&&matchMedia('(min-width:768px)').matches;
+let top=0,range=1,wipeR=1,raf=0,T=0,last=performance.now(),lp=-1,ld=-1,VU=100,ema=16,lowQ=false,lastY=scrollY,dir=1;
+function measureL(){const r=wrap.getBoundingClientRect();top=r.top+scrollY;range=Math.max(1,wrap.offsetHeight-innerHeight);wipeR=Math.max(1,innerHeight*.5);
+VU=100*innerHeight/Math.max(1,innerWidth);if(lqs)lqs.setAttribute('viewBox','0 0 100 '+VU.toFixed(2))}
+measureL();addEventListener('resize',measureL);addEventListener('load',measureL);
+function wavePath(p,t){const env=Math.sin(Math.PI*p),Y=VU+8-p*(VU+26),A=7*env,A2=3.2*env;
+let f='M-5 -5 L105 -5',e='';
+for(let x=105;x>=-5;x-=2.5){const y=Y+A*Math.sin(x*.11+t*1.15)+A2*Math.sin(x*.23-t*1.7);f+='L'+x+' '+y.toFixed(2);e+=(x==105?'M':'L')+x+' '+(y-1.1).toFixed(2)}
+return[f+'Z',e]}
+function frame(now){raf=0;if(document.hidden)return;const ms=now-last,dt=Math.min(ms/1000,.05);last=now;T+=dt;
+ema=ema*.95+ms*.05;if(!lowQ&&T>3&&ema>20)lowQ=true;
+const p=Math.max(0,Math.min(1,(scrollY-top)/wipeR)),up=dir<0;
+const[f,e]=wavePath(p,T);
+fill.setAttribute('d',(p>=1||up)?'':f);
+edge.setAttribute('d',(p>=1||p<=0||up)?'':e);
+edge.style.opacity=up?'0':Math.sin(Math.PI*p).toFixed(3);
+lp=p;
+const hd=canDistort&&!heroE.hidden&&!up?Math.sin(Math.PI*Math.max(0,Math.min(1,scrollY/(heroHeight*.6)))):0;
+window.__lqRip=hd;
+if(Math.abs(hd-ld)>.01){ld=hd;if(hd>0.01)hcEl.style.filter='url(#liqf)';else{hcEl.style.filter='';dm.setAttribute('scale',0)}}
+if(ld>0.01){if(lowQ){dm.setAttribute('scale',(ld*26).toFixed(1))}
+else{dm.setAttribute('scale',(ld*22+2.2*Math.sin(T*1.31)+1.5*Math.sin(T*2.17)).toFixed(2));
+off.setAttribute('dx',(34*Math.sin(T*.21)+12*Math.sin(T*.083)).toFixed(2));
+off.setAttribute('dy',(26*Math.cos(T*.17)+10*Math.cos(T*.061)).toFixed(2))}}
+if((p>0&&p<1)||(!lowQ&&ld>0.01))raf=requestAnimationFrame(frame)}
+function wake(){if(!raf&&!rm){last=performance.now();raf=requestAnimationFrame(frame)}}
+new IntersectionObserver(es=>{if(es[0].isIntersecting)wake()},{rootMargin:'120% 0px 120% 0px'}).observe(wrap);
+addEventListener('scroll',()=>{const y=scrollY,d=y-lastY;if(Math.abs(d)>2)dir=d>0?1:-1;lastY=y;if(!rm){const q=(y-top)/range;if(q>-1&&q<2)wake()}},{passive:true});
+document.addEventListener('visibilitychange',wake);
 })();
 /* marquee */
 const NP=[['clear','PORTALS'],['fast','WEBSITES'],['handy','APPS'],['tailored','SOFTWARE'],['easy','BOOKING'],['live','DASHBOARDS']].map(p=>`<span>${p[0]} <b>${p[1]}</b></span>`).join('');$('#mq').innerHTML=NP+NP;
